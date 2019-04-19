@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_19_180057) do
+ActiveRecord::Schema.define(version: 2019_04_19_215819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "comments", force: :cascade do |t|
-    t.string "comment"
+    t.string "value"
     t.integer "commentable_id"
     t.string "commentable_type"
     t.bigint "user_id"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(version: 2019_04_19_180057) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "voteable_type"
+    t.bigint "voteable_id"
+    t.boolean "upvote"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["voteable_type", "voteable_id"], name: "index_votes_on_voteable_type_and_voteable_id"
   end
 
   create_table "words", force: :cascade do |t|
