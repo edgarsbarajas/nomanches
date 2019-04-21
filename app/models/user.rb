@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_secure_token :auth_token
   has_many :words
 
-  validates :first_name, :last_name, :email, :username, :password, presence: true
+  validates :first_name, :last_name, :email, :username, presence: true
   validates :email, :username, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 

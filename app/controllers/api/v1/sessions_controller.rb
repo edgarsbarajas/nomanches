@@ -2,7 +2,9 @@ class Api::V1::SessionsController < Api::V1::ApiController
   skip_before_action :require_login, only: [:create], raise: false
 
   def create
+    p "*" * 100
     if user = User.valid_login?(params[:email], params[:password])
+      p "before allow_token_to_be_used_only_once_for"
       allow_token_to_be_used_only_once_for(user)
       send_auth_token_for_valid_login_of(user)
     else
