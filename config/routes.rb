@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:create]
       resources :words, only: [:create]
+      resources :votes, only: [:create]
 
       post "/login", to: "sessions#create"
       delete "/logout", to: "sessions#destroy"
