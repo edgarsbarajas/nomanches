@@ -13,7 +13,6 @@ class Api::V1::SessionsController < Api::V1::ApiController
   end
 
   def destroy
-    # logout
     user = User.find_by(auth_token: request.headers["Authorization"])
     user.invalidate_auth_token
   end
@@ -25,9 +24,5 @@ class Api::V1::SessionsController < Api::V1::ApiController
 
   def allow_token_to_be_used_only_once_for(user)
     user.regenerate_auth_token
-  end
-
-  def logout
-    current_user.invalidate_auth_token
   end
 end
