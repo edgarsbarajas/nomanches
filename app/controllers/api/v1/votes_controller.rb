@@ -15,8 +15,6 @@ class Api::V1::VotesController < Api::V1::ApiController
   def update
     vote = Vote.find(params[:id])
 
-    p "*" * 100
-    p vote_params
     if current_user.id == vote.user_id
       if vote && vote.update_columns(upvote: vote_params[:upvote])
         render json: vote
@@ -28,6 +26,26 @@ class Api::V1::VotesController < Api::V1::ApiController
     else
       render json: {
         vote: "You are not allowed to update this vote"
+      }, status: 401
+    end
+  end
+
+  def destroy
+    vote = Vote.find(params[:id])
+
+    if current_user.id == vote.user_id
+      if vote && vote.destroy
+        render json: {
+          vote: "Vote was successfully deleted"
+        }
+      else
+        render json: {
+          vote: "Error deleting vote"
+        }, status: 400
+      end
+    else
+      render json: {
+        vote: "You are not allowed to delete this vote"
       }, status: 401
     end
   end
