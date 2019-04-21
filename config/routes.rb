@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create]
       resources :words, only: [:create]
       resources :votes, only: [:create, :update, :destroy]
+      resources :comments, only: [:create]
 
       post "/login", to: "sessions#create"
       delete "/logout", to: "sessions#destroy"
