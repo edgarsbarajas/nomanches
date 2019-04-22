@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Login from './components/Login';
 import Register from './components/Register';
+import Nav from './components/Nav';
 
 
 class App extends Component {
@@ -8,6 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         Hello, World!
+        <Nav />
         <Register />
       </div>
     );
