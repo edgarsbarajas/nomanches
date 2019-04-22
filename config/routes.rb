@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create]
 
       post "/register", to: "users#create"
+      get "/users/:auth_token", to: "users#show"
       post "/login", to: "sessions#create"
       delete "/logout", to: "sessions#destroy"
     end

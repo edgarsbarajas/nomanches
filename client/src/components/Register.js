@@ -7,8 +7,8 @@ class Register extends Component {
   state = {
     firstName: 'Edgar',
     lastName: 'Barajas',
-    email: 'edgarsbarajas@me.com',
-    username: 'escarvr00m',
+    email: 'edgarsbarassjsadddds@me.com',
+    username: 'escsssarvdr00m',
     password: 'password'
   };
 

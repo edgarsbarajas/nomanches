@@ -1,17 +1,13 @@
 import axios from 'axios';
+import { setAuthTokenInLocalStorage, setAuthorizationHeader, setCurrentUser, setAuthErrors } from '../helpers';
 
 export const loginUser = ({ email, password }) => dispatch => {
   axios
     .post('/v1/login', {
       email, password
     })
-    .then(response => {
-      // Set auth token in localStorage
-      localStorage.setItem('auth_token', `Token ${response.data.auth_token}`);
-      // Set axios auth header
-      axios.defaults.headers.common['Authorization'] = `Token ${response.data.auth_token}`;
-    })
-    .catch(error => console.log('ERROR!!!!!!!!!!!', error))
+    .then(response => handleSuccess(response, dispatch))
+    .catch(error => dispatch(setAuthErrors(error.response.data)))
 }
 
 export const registerUser = ({ firstName, lastName, email, username, password }) => dispatch => {
@@ -25,11 +21,16 @@ export const registerUser = ({ firstName, lastName, email, username, password })
         password
       }
     })
-    .then(response => {
-      // Set auth token in localStorage
-      localStorage.setItem('auth_token', `Token ${response.data.auth_token}`);
-      // Set axios auth header
-      axios.defaults.headers.common['Authorization'] = `Token ${response.data.auth_token}`;
-    })
-    .catch(error => console.log('ERROR!!!!!!!!!!!', error))
+    .then(response => handleSuccess(response, dispatch))
+    .catch(error => dispatch(setAuthErrors(error.response.data)))
+}
+
+const handleSuccess = (response, dispatch) => {
+  const user = response.data;
+  // Set auth token in localStorage
+  setAuthTokenInLocalStorage(user.auth_token);
+  // Set axios auth header
+  setAuthorizationHeader(user.auth_token);
+  // Set current user in redux store
+  dispatch(setCurrentUser(user));
 }

@@ -1,14 +1,20 @@
-import { SET_LOGIN_INPUT } from '../actions/types';
+import {
+  SET_CURRENT_USER,
+  SET_AUTH_ERRORS
+} from '../actions/types';
 
 const INITIAL_STATE = {
-  email: 'edgarsbarajas@yahoo.com',
-  password: 'password'
+  user: {},
+  errors: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
+  console.log(action);
   switch(action.type) {
-    case SET_LOGIN_INPUT:
-      return {...state, [action.payload.name]: action.payload.value};
+    case SET_CURRENT_USER:
+      return {...state, user: action.payload};
+    case SET_AUTH_ERRORS:
+      return {...state, errors: action.payload};
     default:
       return state;
   }
