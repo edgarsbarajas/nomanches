@@ -9,11 +9,23 @@ export const setCurrentUser = user => {
 }
 
 export const setAuthTokenInLocalStorage = token => {
-  localStorage.setItem('auth_token', `Token ${token}`);
+  token = token || '';
+
+  if(token) {
+    return localStorage.setItem('auth_token', `Token ${token}`);
+  }
+
+  return localStorage.removeItem('auth_token');
 }
 
 export const setAuthorizationHeader = token => {
-  axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+  token = token || '';
+
+  if(token) {
+    return axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+  }
+
+  return axios.defaults.headers.common['Authorization'] = '';
 }
 
 export const setAuthErrors = errors => {

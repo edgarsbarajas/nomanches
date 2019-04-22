@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
+import { logoutUser } from '../actions/AuthActions';
 
 class Nav extends Component {
   state = {
@@ -8,14 +9,14 @@ class Nav extends Component {
   };
 
   render() {
-    const { user } = this.props;
+    const { user, logoutUser } = this.props;
 
     console.log('USER!!!', user);
 
     return (
       <nav>
         {
-          isEmpty(user) ? (<button>Login</button>) : (<button>Logout</button>)
+          isEmpty(user) ? (<button>Login</button>) : (<button onClick={logoutUser}>Logout</button>)
         }
       </nav>
     );
@@ -26,4 +27,4 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, {})(Nav);
+export default connect(mapStateToProps, { logoutUser })(Nav);

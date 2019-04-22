@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { setAuthTokenInLocalStorage, setAuthorizationHeader, setCurrentUser, setAuthErrors } from '../helpers';
+import {
+  setAuthTokenInLocalStorage,
+  setAuthorizationHeader,
+  setCurrentUser,
+  setAuthErrors,
+} from '../helpers';
 
 export const loginUser = ({ email, password }) => dispatch => {
   axios
@@ -23,6 +28,20 @@ export const registerUser = ({ firstName, lastName, email, username, password })
     })
     .then(response => handleSuccess(response, dispatch))
     .catch(error => dispatch(setAuthErrors(error.response.data)))
+}
+
+export const logoutUser = () => dispatch => {
+  axios
+    .delete('/v1/logout')
+    .then(response => {
+      // remove the token from localStorage
+      setAuthTokenInLocalStorage();
+      // clear the user from redux store
+      dispatch(setCurrentUser({}));
+      // clear the authorization header from axios
+      setAuthorizationHeader();
+    })
+    .catch(error => dispatch(setAuthErrors(error.response)))
 }
 
 const handleSuccess = (response, dispatch) => {
