@@ -3,9 +3,8 @@ class Api::V1::SessionsController < Api::V1::ApiController
 
   def create
     if user = User.valid_login?(params[:email], params[:password])
-      p "before allow_token_to_be_used_only_once_for"
       allow_token_to_be_used_only_once_for(user)
-      send_auth_token_for_valid_login_of(user)
+      render json: user
     else
       render_unauthorized("Error with your login or password")
     end
@@ -18,10 +17,6 @@ class Api::V1::SessionsController < Api::V1::ApiController
   private
   def logout
     current_user.invalidate_auth_token
-  end
-
-  def send_auth_token_for_valid_login_of(user)
-    render json: { auth_token: user.auth_token }
   end
 
   def allow_token_to_be_used_only_once_for(user)
