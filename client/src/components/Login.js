@@ -20,7 +20,7 @@ class Login extends Component {
 
     event.preventDefault();
 
-    this.props.loginUser({email, password});
+    loginUser({email, password});
   }
 
   render() {
