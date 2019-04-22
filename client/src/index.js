@@ -7,7 +7,7 @@ import axios from 'axios';
 import App from './App';
 import reducers from './reducers';
 
-// Set axios auth header from localStorage
+// Set axios auth header from localStoragefd
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
 
 const store = createStore(reducers, applyMiddleware(ReduxThunk));

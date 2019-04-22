@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Input from './common/Input';
-import { onInputChange, loginUser } from '../actions/LoginActions';
+import { onInputChange, loginUser } from '../actions/AuthActions';
 
 class Login extends Component {
   render() {
