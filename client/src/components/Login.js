@@ -1,26 +1,45 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Input from './common/Input';
-import { onInputChange, loginUser } from '../actions/AuthActions';
+import { loginUser } from '../actions/AuthActions';
 
 class Login extends Component {
+  state = {
+    email: 'edgarsbarajas@yahoo.com',
+    password: 'password'
+  };
+
+  onInputChange = event => {
+    console.log('input changed');
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  onSubmit = event => {
+    const { loginUser } = this.props;
+    const { email, password } = this.state;
+
+    event.preventDefault();
+
+    this.props.loginUser({email, password});
+  }
+
   render() {
-    const { email, password, onInputChange, loginUser } = this.props;
+    const { email, password } = this.state;
 
     return (
       <div>
-        <form onSubmit={loginUser({email, password})}>
+        <form onSubmit={this.onSubmit}>
           <Input
             type='email'
             name='email'
             value={email}
-            onChange={onInputChange}
+            onChange={this.onInputChange}
           />
           <Input
             type='password'
             name='password'
             value={password}
-            onChange={onInputChange}
+            onChange={this.onInputChange}
           />
           <button>Submit</button>
         </form>
@@ -29,11 +48,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    email: state.login.email,
-    password: state.login.password
-  }
-}
-
-export default connect(mapStateToProps, { onInputChange, loginUser })(Login);
+export default connect(null, { loginUser })(Login);
