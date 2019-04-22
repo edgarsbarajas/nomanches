@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Login from './components/Login';
 
 class App extends Component {
@@ -7,7 +6,7 @@ class App extends Component {
     return (
       <div className="App">
         Hello, World!
-        <Login />
+        
       </div>
     );
   }

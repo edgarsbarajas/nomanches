@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Input from './common/Input';
-import { onInputChange } from '../actions/LoginActions';
+import { onInputChange, loginUser } from '../actions/LoginActions';
 
 class Login extends Component {
   render() {
-    const { email, password, onInputChange } = this.props;
+    const { email, password, onInputChange, loginUser } = this.props;
 
     return (
       <div>
-        <form>
+        <form onSubmit={loginUser({email, password})}>
           <Input
             type='email'
             name='email'
@@ -22,6 +22,7 @@ class Login extends Component {
             value={password}
             onChange={onInputChange}
           />
+          <button>Submit</button>
         </form>
       </div>
     )
@@ -35,4 +36,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { onInputChange })(Login);
+export default connect(mapStateToProps, { onInputChange, loginUser })(Login);
