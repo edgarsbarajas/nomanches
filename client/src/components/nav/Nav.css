@@ -35,6 +35,11 @@ nav > div.menu-container {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+nav > div.menu-container.active {
+  display: block;
+  transition: all 0.3s ease-in;
+}
+
 nav > div.menu-container > .menu {
   position: relative;
   text-align: center;
