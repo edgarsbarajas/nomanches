@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import { logoutUser } from '../../actions/AuthActions';
 import './Nav.css';
 
@@ -14,14 +16,17 @@ class Nav extends Component {
       return (
         <div className='menu-container'>
           <div className='menu'>
-            <div>Add a word</div>
+            <Link to='/add' onClick={this.toggleMenuModal}>add a word</Link>
+            <Link to='/register' onClick={this.toggleMenuModal}>register</Link>
+            <Link to='/login' onClick={this.toggleMenuModal}>login</Link>
+            <Link to='/' onClick={this.toggleMenuModal}>logout</Link>
             <button className='close-menu' onClick={this.toggleMenuModal}></button>
           </div>
         </div>
       );
     }
 
-    return null;
+      return null;
   }
 
   toggleMenuModal = () => {
@@ -34,7 +39,7 @@ class Nav extends Component {
     return (
       <nav>
         <div className='nav-inner'>
-          <div className='logo'>spanglish dictionary</div>
+          <Link to='/' className='logo'>spanglish dictionary</Link>
           <button className='hamburger' onClick={this.toggleMenuModal}></button>
         </div>
         { this.renderMenuModal() }
