@@ -4,3 +4,10 @@ body {
   background-color: #fafafa;
   font-family: 'Poppins', sans-serif;
 }
+
+div.container {
+  width: 100%;
+  max-width: 1010px;
+  margin: 60px auto;
+  padding: 0 10px;
+}
