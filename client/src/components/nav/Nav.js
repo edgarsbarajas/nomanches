@@ -8,13 +8,17 @@ import './Nav.css';
 
 class Nav extends Component {
   state = {
-    menuOpen: false
+    menuOpen: false,
+    animateOut: false
   };
 
   renderMenuModal() {
     if(this.state.menuOpen) {
       return (
-        <div className='menu-container'>
+        <div className={classNames('menu-container', {
+            'shine-in': this.state.menuOpen,
+            'shine-out': this.state.animateOut
+          })}>
           <div className='menu'>
             <Link to='/add' onClick={this.toggleMenuModal}>add a word</Link>
             <Link to='/register' onClick={this.toggleMenuModal}>register</Link>
@@ -25,12 +29,18 @@ class Nav extends Component {
         </div>
       );
     }
-
-      return null;
   }
 
   toggleMenuModal = () => {
-    this.setState({ menuOpen: !this.state.menuOpen });
+    if(!this.state.menuOpen) {
+      this.setState({ menuOpen: !this.state.menuOpen });
+    } else {
+      this.setState({ animateOut: true });
+
+      setTimeout(() => {
+        this.setState({ menuOpen: !this.state.menuOpen, animateOut: false });
+      }, 500);
+    }
   }
 
   render() {
