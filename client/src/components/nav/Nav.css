@@ -71,3 +71,21 @@ nav > div.menu-container > div.menu > button.close-menu::after {
   content: "✕";
   font-size: 20px;
 }
+
+.shine-in {
+  animation: shine-in .5s;
+}
+
+.shine-out {
+  animation: shine-out .5s;
+}
+
+@keyframes shine-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes shine-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
