@@ -1,11 +1,12 @@
 import {
   SET_CURRENT_USER,
-  SET_AUTH_ERRORS
+  SET_LOGIN_ERRORS
 } from '../actions/types';
 
 const INITIAL_STATE = {
   user: {},
-  errors: {}
+  loginErrors: {},
+  registerErrors: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -13,8 +14,8 @@ export default (state = INITIAL_STATE, action) => {
   switch(action.type) {
     case SET_CURRENT_USER:
       return {...state, user: action.payload};
-    case SET_AUTH_ERRORS:
-      return {...state, errors: action.payload};
+    case SET_LOGIN_ERRORS:
+      return {...state, loginErrors: action.payload};
     default:
       return state;
   }

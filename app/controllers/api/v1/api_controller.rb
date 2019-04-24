@@ -7,12 +7,6 @@ class Api::V1::ApiController < ApplicationController
     @current_user ||= authenticate_token
   end
 
-  protected
-  def render_unauthorized(message)
-    errors = { errors: [ { detail: message } ] }
-    render json: errors, status: :unauthorized
-  end
-
   private
   def authenticate_token
     return authenticate_with_http_token do |token, options|

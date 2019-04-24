@@ -27,10 +27,3 @@ export const setAuthorizationHeader = token => {
 
   return axios.defaults.headers.common['Authorization'] = '';
 }
-
-export const setAuthErrors = errors => {
-  return {
-    type: SET_AUTH_ERRORS,
-    payload: errors
-  };
-}
