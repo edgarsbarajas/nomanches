@@ -21,14 +21,35 @@ class Nav extends Component {
           })}>
           <div className='menu'>
             <Link to='/add' onClick={this.toggleMenuModal}>add a word</Link>
-            <Link to='/register' onClick={this.toggleMenuModal}>register</Link>
-            <Link to='/login' onClick={this.toggleMenuModal}>login</Link>
-            <Link to='/' onClick={this.toggleMenuModal}>logout</Link>
+            { this.renderMenuModalAuthOptions() }
             <button className='close-menu' onClick={this.toggleMenuModal}></button>
           </div>
         </div>
       );
     }
+  }
+
+  renderMenuModalAuthOptions() {
+    if(isEmpty(this.props.user)) {
+      return (
+        <div>
+          <Link to='/register' onClick={this.toggleMenuModal}>register</Link>
+          <Link to='/login' onClick={this.toggleMenuModal}>login</Link>
+        </div>
+      );
+    }
+
+    return (
+      <Link to='/' onClick={this.onLogoutClick}>logout</Link>
+    );
+  }
+
+  onLogoutClick = () => {
+    this.toggleMenuModal();
+    
+    setTimeout(() => {
+      this.props.logoutUser();
+    }, 500);
   }
 
   toggleMenuModal = () => {
@@ -38,14 +59,12 @@ class Nav extends Component {
       this.setState({ animateOut: true });
 
       setTimeout(() => {
-        this.setState({ menuOpen: !this.state.menuOpen, animateOut: false });
+        this.setState({ animateOut: false, menuOpen: !this.state.menuOpen });
       }, 500);
     }
   }
 
   render() {
-    const { user, logoutUser } = this.props;
-
     return (
       <nav>
         <div className='nav-inner'>

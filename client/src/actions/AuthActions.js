@@ -31,6 +31,7 @@ export const registerUser = ({ firstName, lastName, email, username, password })
 }
 
 export const logoutUser = () => dispatch => {
+  console.log('LOGGING OJT NOW');
   axios
     .delete('/v1/logout')
     .then(response => {
