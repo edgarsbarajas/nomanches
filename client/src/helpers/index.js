@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, SET_AUTH_ERRORS } from '../actions/types';
+import { SET_CURRENT_USER } from '../actions/types';
 import axios from 'axios';
 
 export const setCurrentUser = user => {

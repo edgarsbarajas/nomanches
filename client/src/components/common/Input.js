@@ -11,7 +11,7 @@ class Input extends Component {
 
     if(error) {
       return (
-        <div className='error'>{error}</div>
+        <div className='input-error'>{error}</div>
       );
     }
 
@@ -22,24 +22,26 @@ class Input extends Component {
     const { type, name, value, label, error, onChange} = this.props;
 
     return (
-      <div className='input-container'>
-        <label
-          onClick={this.onLabelClick}
-          className={classNames({
-            'expanded': !value
-          })}
-        >
-          {label}
-        </label>
-          <input
-            className='post-input'
-            type={type}
-            name={name}
-            value={value}
-            onChange={event => onChange(event)}
-            ref={input => (this.input = input)}
-          />
-          { this.renderError() }
+      <div>
+        <div className='input-container'>
+          <label
+            onClick={this.onLabelClick}
+            className={classNames({
+              'expanded': !value
+            })}
+          >
+            {label}
+          </label>
+            <input
+              className='post-input'
+              type={type}
+              name={name}
+              value={value}
+              onChange={event => onChange(event)}
+              ref={input => (this.input = input)}
+            />
+        </div>
+        { this.renderError() }
       </div>
     )
   }

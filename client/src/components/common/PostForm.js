@@ -8,7 +8,7 @@ const PostForm = ({header, children, onSubmit, error}) => {
         {children}
         <button>submit</button>
       </form>
-      { error ? <div className='error'>{error}</div> : null }
+      { error ? <div className='form-error'>{error}</div> : null }
     </div>
   );
 }

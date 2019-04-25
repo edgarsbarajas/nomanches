@@ -4,14 +4,17 @@ import {
   setAuthorizationHeader,
   setCurrentUser,
 } from '../helpers';
-import { SET_LOGIN_ERRORS } from './types';
+import {
+  SET_LOGIN_ERRORS,
+  SET_REGISTER_ERRORS
+} from './types';
 
 export const loginUser = ({ email, password }) => dispatch => {
   axios
     .post('/v1/login', {
       email, password
     })
-    .then(response => handleSuccess(response, dispatch, SET_LOGIN_ERRORS))
+    .then(response => handleSuccess(response, dispatch))
     .catch(error => dispatch({ type: SET_LOGIN_ERRORS, payload: error.response.data}))
 }
 
@@ -26,8 +29,8 @@ export const registerUser = ({ firstName, lastName, email, username, password })
         password
       }
     })
-    .then(response => handleSuccess(response, dispatch, SET_LOGIN_ERRORS))
-    .catch(error => dispatch({ type: SET_LOGIN_ERRORS, payload: error.response.data}))
+    .then(response => handleSuccess(response, dispatch))
+    .catch(error => dispatch({ type: SET_REGISTER_ERRORS, payload: error.response.data}))
 }
 
 export const logoutUser = () => dispatch => {
@@ -46,8 +49,6 @@ export const logoutUser = () => dispatch => {
 }
 
 const handleSuccess = (response, dispatch, errorsToClear) => {
-  dispatch({ type: errorsToClear, payload: {}});
-  
   const user = response.data;
   // Set auth token in localStorage
   setAuthTokenInLocalStorage(user.auth_token);

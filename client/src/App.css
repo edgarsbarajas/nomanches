@@ -57,22 +57,22 @@ div.post-form-container > h1 {
   font-size: 20px;
 }
 
-div.post-form-container > form > div.input-container {
+div.post-form-container > form div.input-container {
   display: block;
   position: relative;
   margin: 15px 0;
 }
 
-div.post-form-container > form > div.input-container > label {
+div.post-form-container > form div.input-container > label {
   position: absolute;
   font-size: 10px;
-  top: 0;
+  top: 1.5px;
   left: 5px;
   color: #999;
   transition: all 0.1s ease-out;
 }
 
-div.post-form-container > form > div.input-container > label.expanded {
+div.post-form-container > form div.input-container > label.expanded {
   top: 50%;
   left: 8px;
   transform: translateY(-50%);
@@ -80,11 +80,11 @@ div.post-form-container > form > div.input-container > label.expanded {
   cursor: inherit;
 }
 
-div.post-form-container > form > div.input-container > input {
+div.post-form-container > form div.input-container > input {
   display: block;
   width: 100%;
-  height: 32px;
-  padding-top: 5px;
+  height: 30px;
+  padding-top: 9px;
   padding-left: 8px;
   background-color: #fafafa !important;
   border: 1px solid #e9e9e9;
@@ -92,7 +92,7 @@ div.post-form-container > form > div.input-container > input {
   font-size: 14px;
 }
 
-div.post-form-container > form > button {
+div.post-form-container > form button {
   display: block;
   width: 30%;
   height: 32px;
@@ -106,12 +106,17 @@ div.post-form-container > form > button {
   transition: background-color 0.2s ease-in;
 }
 
-div.post-form-container > form > button:hover {
+div.post-form-container > form button:hover {
   background-color: #ad1327;
 }
 
-div.post-form-container > .error,
-div.post-form-container > form > div.input-container > .error {
-  font-size: 14px;
+div.post-form-container .input-error {
+  font-size: 12px;
+  margin-top: -10px;
+  padding-left: 10px;
+}
+
+div.post-form-container > .form-error {
+  font-size: 12px;
   margin: 10px 0;
 }
