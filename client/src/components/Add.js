@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PostForm from './common/PostForm';
 import Input from './common/Input';
-import { loginUser } from '../actions/AuthActions';
+import { addWord } from '../actions/WordActions';
 
 class Add extends Component {
   state = {
-    email: 'edgarsbarajas@yahoo.com',
-    password: 'password'
+    word: '',
+    definition: '',
+    example: ''
   };
 
   onInputChange = event => {
@@ -15,23 +17,55 @@ class Add extends Component {
   }
 
   onSubmit = event => {
-    const { loginUser } = this.props;
-    const { email, password } = this.state;
+    const { addWord } = this.props;
+    const { word, definition, example } = this.state;
 
     event.preventDefault();
 
-    loginUser({email, password});
+    addWord({word, definition, example});
   }
 
   render() {
-    const { email, password } = this.state;
+    const { word, definition, example } = this.state;
+    const { errors } = this.props;
 
     return (
-      <div>
-        New word form
-      </div>
+      <PostForm
+        onSubmit={this.onSubmit}
+        header='add a word'
+        error={errors.add_word}
+      >
+        <Input
+          type='text'
+          name='word'
+          label='word'
+          value={word}
+          error={errors.word}
+          onChange={this.onInputChange}
+        />
+        <Input
+          type='text'
+          name='definition'
+          label='definition'
+          value={definition}
+          error={errors.definition}
+          onChange={this.onInputChange}
+        />
+        <Input
+          type='text'
+          name='example'
+          label='example'
+          value={example}
+          error={errors.example}
+          onChange={this.onInputChange}
+        />
+      </PostForm>
     )
   }
 }
 
-export default connect(null, { loginUser })(Add);
+const mapStateToProps = state => ({
+  errors: state.words.addWordErrors
+});
+
+export default connect(mapStateToProps, { addWord })(Add);

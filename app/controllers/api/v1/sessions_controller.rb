@@ -6,7 +6,9 @@ class Api::V1::SessionsController < Api::V1::ApiController
       allow_token_to_be_used_only_once_for(user)
       render json: user
     else
-      render_unauthorized("Error with your login or password")
+      render json: {
+        login: 'incorrect e-mail and/or password'
+      }, status: 401
     end
   end
 

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PostForm from './common/PostForm';
 import Input from './common/Input';
 import { loginUser } from '../actions/AuthActions';
 
 class Login extends Component {
   state = {
-    email: 'edgarsbarajas@yahoo.com',
-    password: 'password'
+    email: '',
+    password: ''
   };
 
   onInputChange = event => {
@@ -25,27 +26,37 @@ class Login extends Component {
 
   render() {
     const { email, password } = this.state;
+    const { errors } = this.props;
 
     return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-          <Input
-            type='email'
-            name='email'
-            value={email}
-            onChange={this.onInputChange}
-          />
-          <Input
-            type='password'
-            name='password'
-            value={password}
-            onChange={this.onInputChange}
-          />
-          <button>Submit</button>
-        </form>
-      </div>
+      <PostForm
+        onSubmit={this.onSubmit}
+        header='login'
+        error={errors.login}
+      >
+        <Input
+          type='email'
+          name='email'
+          label='e-mail'
+          value={email}
+          error={errors.email}
+          onChange={this.onInputChange}
+        />
+        <Input
+          type='password'
+          name='password'
+          label='password'
+          value={password}
+          error={errors.password}
+          onChange={this.onInputChange}
+        />
+      </PostForm>
     )
   }
 }
 
-export default connect(null, { loginUser })(Login);
+const mapStateToProps = state => ({
+  errors: state.auth.loginErrors
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);

@@ -46,7 +46,7 @@ class Nav extends Component {
 
   onLogoutClick = () => {
     this.toggleMenuModal();
-    
+
     setTimeout(() => {
       this.props.logoutUser();
     }, 500);
@@ -60,7 +60,7 @@ class Nav extends Component {
 
       setTimeout(() => {
         this.setState({ animateOut: false, menuOpen: !this.state.menuOpen });
-      }, 500);
+      }, 450);
     }
   }
 

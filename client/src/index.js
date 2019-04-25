@@ -6,7 +6,7 @@ import ReduxThunk from 'redux-thunk';
 import axios from 'axios';
 import App from './App';
 import reducers from './reducers';
-import { setAuthorizationHeader, setCurrentUser, setAuthErrors } from './helpers';
+import { setAuthorizationHeader, setCurrentUser } from './helpers';
 
 const store = createStore(reducers, applyMiddleware(ReduxThunk));
 let token = localStorage.getItem('auth_token');
@@ -21,7 +21,7 @@ if(token) {
   axios
     .get(`/v1/users/${token}`)
     .then(response => store.dispatch(setCurrentUser(response.data)))
-    .catch(errors => store.dispatch(setAuthErrors(errors.response.data)))
+    .catch(errors => console.log(errors))
 }
 
 ReactDOM.render(
