@@ -8,6 +8,12 @@ class Api::V1::ApiController < ApplicationController
   end
 
   private
+  def render_unauthorized(message)
+    render json: {
+      unauthorized: message
+    }, status: 401
+  end
+
   def authenticate_token
     return authenticate_with_http_token do |token, options|
       User.find_by(auth_token: token)
