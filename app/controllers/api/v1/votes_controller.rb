@@ -8,7 +8,7 @@ class Api::V1::VotesController < Api::V1::ApiController
     if vote.save
       render json: vote
     else
-      render json: vote.errors
+      render json: vote.errors, status: 400
     end
   end
 

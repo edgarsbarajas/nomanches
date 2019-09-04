@@ -66,13 +66,15 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav>
-        <div className='nav-inner'>
-          <Link to='/' className='logo'>spanglish dictionary</Link>
-          <button className='hamburger' onClick={this.toggleMenuModal}></button>
-        </div>
+      <div>
+        <nav>
+          <div className='nav-inner'>  
+            <Link to='/' className='logo'>spanglish dictionary</Link>
+            <button className='hamburger' onClick={this.toggleMenuModal}></button>
+          </div>
+        </nav>
         { this.renderMenuModal() }
-      </nav>
+      </div>
     );
   }
 }
