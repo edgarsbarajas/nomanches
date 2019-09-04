@@ -2,5 +2,5 @@ class Vote < ApplicationRecord
   belongs_to :user
   belongs_to :voteable, polymorphic: true
 
-  validates :upvote, presence: true
+  validates_inclusion_of :upvote, in: [true, false]
 end

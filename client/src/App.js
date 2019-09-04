@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
-import Feed from './components/Feed';
+import Feed from './components/feed/Feed';
 import Add from './components/Add';
 import Nav from './components/nav/Nav';
 import './App.css';

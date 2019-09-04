@@ -1,0 +1,62 @@
+div.word  {
+  padding: 20px;
+  max-width: 600px;
+  text-transform: lowercase;
+}
+
+div.word:not(:last-child)  {
+  margin-bottom: 30px;
+}
+
+div.word > h2 {
+  display: inline-block;
+  font-weight: 600;
+  padding: 5px 15px;
+  background-color: #DB162F;
+  color: #fff;
+  font-size: 18px;
+  margin: 0 0 5px;
+}
+
+div.word > p.definition,
+div.word > p.example {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+div.word > p.example {
+  font-style: italic;
+}
+
+div.word > div.publish-details a.author {
+  font-weight: 600;
+  display: inline-block;
+  color: #DB162F;
+}
+
+span.bullet::after {
+  content: "•";
+  font-size: 14px;
+  display: inline-block;
+  color: #000;
+  margin: 0 7px;
+}
+
+div.word > div.votes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+}
+
+div.word > div.votes > svg.vote {
+  padding-bottom: 11px;
+  cursor: pointer;
+}
+
+div.word > div.votes > svg.vote:not(.downvote) {
+}
+
+div.word > div.votes > svg.vote.downvote {
+  transform: rotate(180deg);
+}

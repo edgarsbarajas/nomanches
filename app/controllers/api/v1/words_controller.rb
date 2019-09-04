@@ -2,28 +2,19 @@ class Api::V1::WordsController < Api::V1::ApiController
   before_action :require_login, only: [:create]
 
   def index
-    if !current_user
-      words = Word.all.as_json(include: {
-        comments: {
-          include: :comments
-        },
-        votes: {}
-      })
+    words = Word.all.as_json(include: {
+      comments: {
+        include: :comments
+      },
+      votes: {
+        only: [:id, :user_id, :upvote]
+      },
+      user: {
+        only: [:username]
+      }
+    })
 
-      render json: words
-    else
-      # include the user id in the votes portion
-      words = Word.all.as_json(include: {
-        comments: {
-          include: :comments
-        },
-        votes: {
-          only: [:user_id, :upvote]
-        }
-      })
-
-      render json: words
-    end
+    render json: words
   end
 
   def create
@@ -32,7 +23,7 @@ class Api::V1::WordsController < Api::V1::ApiController
     if word.save
       render json: word
     else
-      render json: word.errors, status: 400
+      render json: word.errors.messages, status: 400
     end
   end
 
