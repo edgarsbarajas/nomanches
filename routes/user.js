@@ -37,10 +37,16 @@ router.put('/', authorizeUser, (req, res) => {
 
   User.updateOne(
     { id: req.current_user.id },
-    { '$set': updates },
+    { '$set': updates, '$inc': { __v: 1 } },
     { runValidators: true, context: 'query' }
   )
     .then(confirmation => res.json(confirmation))
+    .catch(error => res.status(400).json(error));
+});
+
+router.delete('/', authorizeUser, (req, res) => {
+  User.deleteOne({ id: req.current_user.id })
+    .then(deletedUser => res.json(deletedUser))
     .catch(error => res.status(400).json(error));
 });
 
