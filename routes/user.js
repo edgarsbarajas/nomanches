@@ -1,9 +1,10 @@
-const express = require('express');
+const express = require('express');const mongoose = require('mongoose');
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const router = express.Router();
-const { generateAuthToken } = require('../helpers');
+const { generateAuthToken, authorizeUser } = require('../helpers');
 
 router.get('/', (req, res) => {
   return res.json({ users: [] });
@@ -25,5 +26,22 @@ router.post('/', (req, res) => {
     .then(user => generateAuthToken(req, res, user))
     .catch(error => res.status(400).json(error));
 })
+
+// Edit user details
+router.put('/', authorizeUser, (req, res) => {
+  // do not allow the user to update id or password
+  const updates = req.body;
+  delete req.body.id;
+  delete req.body._id;
+  delete req.body.password;
+
+  User.updateOne(
+    { id: req.current_user.id },
+    { '$set': updates },
+    { runValidators: true, context: 'query' }
+  )
+    .then(confirmation => res.json(confirmation))
+    .catch(error => res.status(400).json(error));
+});
 
 module.exports = router;
