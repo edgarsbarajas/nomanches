@@ -12,11 +12,11 @@ const generateAuthToken = (req, res, payload) => {
 };
 
 const authorizeUser = (req, res, next) => {
-  const token = req.headers['authorization'].split(' ')[1];
+  if(req.headers['authorization']) {
+    // Remove 'Bearer' from the token value
+    const token = req.headers['authorization'].split(' ')[1];
 
-  // if there is a token available on the headers
-  if(token) {
-    // check to see if its validate
+    // check to see if the token is valid
     jwt.verify(token, process.env['JWT_SECRET'], (error, decoded) => {
       if(error) return res.status(403).json(error);
 
@@ -25,8 +25,7 @@ const authorizeUser = (req, res, next) => {
       next();
     });
   } else {
-    // return error if there is no token available
-    return res.status(400).json({ error: 'No token provided.' })
+    return res.status(404).json({ token: 'No valid auth token available.' })
   }
 }
 

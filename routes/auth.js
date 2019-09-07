@@ -7,6 +7,7 @@ const router = express.Router();
 const { generateAuthToken } = require('../helpers');
 
 router.post('/login', (req, res) => {
+  console.log('maybe here?');
   User.findOne({username: req.body.username})
     .then(user => {
       // check if a user if found

@@ -1,17 +1,13 @@
-const express = require('express');const mongoose = require('mongoose');
-
+const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const router = express.Router();
 const { generateAuthToken, authorizeUser } = require('../helpers');
 
-router.get('/', (req, res) => {
-  return res.json({ users: [] });
-})
-
-// Create a new user
+// Create user
 router.post('/', (req, res) => {
+  console.log('here 1!!!!!!!');
   // Attempt to save the user to the db
   const user = new User(req.body);
   const errors = user.validateSync();
@@ -27,8 +23,28 @@ router.post('/', (req, res) => {
     .catch(error => res.status(400).json(error));
 })
 
-// Edit user details
+// Read user
+router.get('/', authorizeUser, (req, res) => {
+  // Return the user's details if
+  User.findOne({ id: req.current_user.id })
+    .then(user => {
+      if(!user) return res.status(404).json({ user: 'No user found.'});
+
+      // Only send what is neccessary to Update
+      // Password is not being sent bc we need another way of changing password
+      return res.json({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username
+      });
+    })
+    .catch(error => res.status(400).json(error));
+});
+
+// Update user
 router.put('/', authorizeUser, (req, res) => {
+  console.log('here 3!!!!!!!');
   // do not allow the user to update id or password
   const updates = req.body;
   delete req.body.id;
@@ -44,7 +60,10 @@ router.put('/', authorizeUser, (req, res) => {
     .catch(error => res.status(400).json(error));
 });
 
+// Delete user
 router.delete('/', authorizeUser, (req, res) => {
+  console.log('here 4!!!!!!!');
+
   User.deleteOne({ id: req.current_user.id })
     .then(deletedUser => res.json(deletedUser))
     .catch(error => res.status(400).json(error));
