@@ -33,7 +33,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 6
-  }
+  },
+  words: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Word'
+  }]
 });
 
 userSchema.plugin(uniqueValidator);

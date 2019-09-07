@@ -7,8 +7,9 @@ const app = express();
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/users', require('./routes/user'))
 app.use('/auth', require('./routes/auth'));
+app.use('/users', require('./routes/users'));
+app.use('/words', require('./routes/words'));
 
 // Connect to database
 mongoose.connect(
