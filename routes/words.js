@@ -35,7 +35,7 @@ router.post('/', authorizeUser, (req, res) => {
 // Update word
 router.put('/:id', authorizeUser, (req, res) => {
   // Only allow to the user to edit the word if they defined the word
-  // Find both the current user's document so we can check if the word belongs to the user
+  // Find the current user's document so we can check if the word belongs to the user
   User.findOne({ _id: req.current_user.id })
     .then(user => {
       if(!user) return res.status(404).json({ user: 'No user found.'});
@@ -57,5 +57,23 @@ router.put('/:id', authorizeUser, (req, res) => {
 });
 
 // Delete word
+router.delete('/:id', authorizeUser, (req, res) => {
+  // Only allow to the user to delete the word if they defined the word
+  // Find the current user's document so we can check if the word belongs to the user
+  User.findOne({ _id: req.current_user.id })
+    .then(user => {
+      if(!user) return res.status(404).json({ user: 'No user found.'});
+
+      // Check to see if the user's word array includes a subdoc with the word id provided
+      // Boot them out if they do not own the word
+      const id = req.params.id;
+      if(!user.words.includes(id)) return res.status(403).json({ Forbidden: 'You do not have access to delete this word.' });
+
+      // If the word belongs to the user, Delete the word document
+      Word.deleteOne({ _id: id })
+        .then(deletedWord => res.json(deletedWord))
+        .catch(error => res.status(400).json(error));
+    })
+});
 
 module.exports = router;
