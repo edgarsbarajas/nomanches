@@ -27,10 +27,41 @@ router.post('/', authorizeUser, (req, res) => {
     .catch(error => res.status(400).json(error));
 });
 
-// Read word - not sure what to do here
-  // Option 1: return one word according to a an ID
-  // Option 2: return all words in pagination form (feed)
-  // Option 3: return defintiions for all words with the sane term
+// Read words - 3 options
+// Option 1: return one word according to a an ID - used to edit the word (eventually to have a dynamic share page) /words/:id
+router.get('/:id', (req, res) => {
+  Word.findOne({ _id: req.params.id })
+    .then(word => {
+      if(!word) return res.status(404).json({ Word: 'Word not found.' });
+
+      return res.json(word);
+    })
+    .catch(error => res.status(400).json(error));
+});
+
+// Option 2: return all words in pagination form (feed) words/feed/:page
+
+// Option 3: return defintions for all words with the sane term /words/value/:value
+router.get('/value/:value', (req, res) => {
+  Word.find({ value: req.params.value.toLowerCase() })
+    .then(words => {
+      if(words.length <= 0) return res.status(404).json({ Words: 'No words found.'});
+
+      return res.json(words);
+    })
+});
+
+// Option 4: return all word by a specific user /words/user/:username
+router.get('/user/:username', (req, res) => {
+  // Find the user document using the username parameter
+  User.findOne({ username: req.params.username })
+    .populate('words')
+    .then(user => {
+      if(!user) return res.status(404).json({ User: 'No user with that username found.' });
+
+      return res.json(user.words);
+    })
+})
 
 // Update word
 router.put('/:id', authorizeUser, (req, res) => {
