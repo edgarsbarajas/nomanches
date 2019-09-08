@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
   user.password = bcrypt.hashSync(user.password, 10);
 
   user.save()
-    .then(user => generateAuthToken(req, res, user))
+    .then(user => generateAuthToken(req, res, user.id))
     .catch(error => res.status(400).json(error));
 })
 

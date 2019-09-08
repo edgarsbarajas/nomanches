@@ -27,4 +27,16 @@ router.post('/', authorizeUser, (req, res) => {
     .catch(error => res.status(400).json(error));
 });
 
+// Read word - not sure what to do here
+  // Option 1: return one word according to a an ID
+  // Option 2: return all words in pagination form (feed)
+  // Option 3: return defintiions for all words with the sane term
+
+// Update word
+router.put('/:word_id', (req, res) => {
+  // only allow to the user to edit the word if they defined the word
+});
+
+// Delete word
+
 module.exports = router;

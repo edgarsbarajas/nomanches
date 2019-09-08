@@ -7,7 +7,6 @@ const router = express.Router();
 const { generateAuthToken } = require('../helpers');
 
 router.post('/login', (req, res) => {
-  console.log('maybe here?');
   User.findOne({username: req.body.username})
     .then(user => {
       // check if a user if found
@@ -21,7 +20,7 @@ router.post('/login', (req, res) => {
       }
 
       // if all passes, generate a token for the user
-      return generateAuthToken(req, res, user);
+      return generateAuthToken(req, res, user.id);
     })
     .catch(error => res.status(400).json(error));
 });

@@ -21,7 +21,7 @@ const authorizeUser = (req, res, next) => {
       if(error) return res.status(403).json(error);
 
       // if it is, attach the decoded to the req
-      req.current_user = decoded.payload;
+      req.current_user = { id: decoded.payload };
       next();
     });
   } else {
