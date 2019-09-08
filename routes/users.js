@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
 // Read user
 router.get('/', authorizeUser, (req, res) => {
   // Return the user's details if
-  User.findOne({ id: req.current_user.id })
+  User.findOne({ _id: req.current_user.id })
     .then(user => {
       // Return 404 if there is no user found with that ID
       if(!user) return res.status(404).json({ user: 'No user found.'});
@@ -51,7 +51,7 @@ router.put('/', authorizeUser, (req, res) => {
   delete req.body.password;
 
   User.updateOne(
-    { id: req.current_user.id },
+    { _id: req.current_user.id },
     { '$set': updates, '$inc': { __v: 1 } },
     { runValidators: true, context: 'query' }
   )
@@ -61,7 +61,7 @@ router.put('/', authorizeUser, (req, res) => {
 
 // Delete user
 router.delete('/', authorizeUser, (req, res) => {
-  User.deleteOne({ id: req.current_user.id })
+  User.deleteOne({ _id: req.current_user.id })
     .then(deletedUser => res.json(deletedUser))
     .catch(error => res.status(400).json(error));
 });

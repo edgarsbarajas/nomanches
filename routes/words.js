@@ -7,7 +7,7 @@ const User = require('../models/User');
 // Create word
 router.post('/', authorizeUser, (req, res) => {
   // Find the current user's document so we can push to their words array
-  User.findOne({ id: req.current_user.id })
+  User.findOne({ _id: req.current_user.id })
     .then(user => {
       // return an error if there is no user found
       if(!user) return res.status(404).json({ user: 'No user found.' });
@@ -33,8 +33,27 @@ router.post('/', authorizeUser, (req, res) => {
   // Option 3: return defintiions for all words with the sane term
 
 // Update word
-router.put('/:word_id', (req, res) => {
-  // only allow to the user to edit the word if they defined the word
+router.put('/:id', authorizeUser, (req, res) => {
+  // Only allow to the user to edit the word if they defined the word
+  // Find both the current user's document so we can check if the word belongs to the user
+  User.findOne({ _id: req.current_user.id })
+    .then(user => {
+      if(!user) return res.status(404).json({ user: 'No user found.'});
+
+      // Check to see if the user's word array includes a subdoc with the word id provided
+      // Boot them out if they do not own the word
+      const id = req.params.id;
+      if(!user.words.includes(id)) return res.status(403).json({ Forbidden: 'You do not have access to update this word.' });
+
+      // If the word belongs to the user, Update the word document
+      Word.updateOne(
+        { _id: id },
+        { '$set': req.body, '$inc': { __v: 1 } },
+        { runValidators: true, context: 'query' }
+      )
+        .then(confirmation => res.json(confirmation))
+        .catch(error => res.status(400).json(error));
+    })
 });
 
 // Delete word
