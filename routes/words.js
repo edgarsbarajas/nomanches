@@ -101,10 +101,17 @@ router.delete('/:id', authorizeUser, (req, res) => {
       if(!user.words.includes(id)) return res.status(403).json({ Forbidden: 'You do not have access to delete this word.' });
 
       // If the word belongs to the user, Delete the word document
-      Word.deleteOne({ _id: id })
-        .then(deletedWord => res.json(deletedWord))
-        .catch(error => res.status(400).json(error));
+      return Word.deleteOne({ _id: id })
+        .then(deletedWord => {
+          // Once the word document is deleted, remove it from the user's words array
+          user.words.remove(id);
+
+          // Save the user document once the word is removed
+          return user.save()
+            .then(user => res.json({ usersRemainingWords: user.words }));
+        })
     })
+    .catch(error => res.status(400).json(error));
 });
 
 module.exports = router;
