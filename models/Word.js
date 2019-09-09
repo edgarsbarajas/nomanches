@@ -17,6 +17,10 @@ const wordSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
     maxlength: 120
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
   }
 });
 

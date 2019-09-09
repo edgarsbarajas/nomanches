@@ -6,24 +6,10 @@ const User = require('../models/User');
 
 // Create word
 router.post('/', authorizeUser, (req, res) => {
-  // Find the current user's document so we can push to their words array
-  User.findOne({ _id: req.current_user.id })
-    .then(user => {
-      // return an error if there is no user found
-      if(!user) return res.status(404).json({ user: 'No user found.' });
-
-      // Now that we have the user, create a new Word document
-      return new Word(req.body)
-        .save()
-        .then(word => {
-          // Add the new word document to the user's words array
-          user.words.push(word.id);
-
-          // resave the user to store the word within the user's words array
-          return user.save()
-            .then(user => res.json(word)) // return the new word for now, possibly respond with the user's updated word collection
-        })
-    })
+  // Add the current user's id as the user reference
+  new Word({...req.body, value: req.body.value.toLowerCase(), user: req.current_user.id})
+    .save()
+    .then(word => res.json(word))
     .catch(error => res.status(400).json(error));
 });
 
@@ -31,6 +17,7 @@ router.post('/', authorizeUser, (req, res) => {
 // Option 1: return one word according to a an ID - used to edit the word (eventually to have a dynamic share page) /words/:id
 router.get('/:id', (req, res) => {
   Word.findOne({ _id: req.params.id })
+    .populate('user')
     .then(word => {
       if(!word) return res.status(404).json({ Word: 'Word not found.' });
 
@@ -40,76 +27,68 @@ router.get('/:id', (req, res) => {
 });
 
 // Option 2: return all words in pagination form (feed) words/feed/:page
+router.get('/feed/:page', (req, res) => {
+  const wordsPerPage = 8;
+  Word.find()
+    .populate('user')
+    .skip((req.params.page - 1) * wordsPerPage)
+    .limit(wordsPerPage)
+    .then(words => res.json(words))
+    .catch(error => res.status(400).json(error));
+});
 
 // Option 3: return defintions for all words with the sane term /words/value/:value
 router.get('/value/:value', (req, res) => {
   Word.find({ value: req.params.value.toLowerCase() })
-    .then(words => {
-      if(words.length <= 0) return res.status(404).json({ Words: 'No words found.'});
-
-      return res.json(words);
-    })
+    .populate('user')
+    .then(words => res.json(words))
+    .catch(error => res.status(400).json(error));
 });
 
 // Option 4: return all word by a specific user /words/user/:username
 router.get('/user/:username', (req, res) => {
   // Find the user document using the username parameter
   User.findOne({ username: req.params.username })
-    .populate('words')
     .then(user => {
       if(!user) return res.status(404).json({ User: 'No user with that username found.' });
 
-      return res.json(user.words);
+      // Find words with the user's id
+      return Word.find({ 'user': user.id })
+        .populate('user')
+        .then(words => res.json(words))
     })
+    .catch(error => res.status(400).json(error));
 })
 
 // Update word
 router.put('/:id', authorizeUser, (req, res) => {
-  // Only allow to the user to edit the word if they defined the word
-  // Find the current user's document so we can check if the word belongs to the user
-  User.findOne({ _id: req.current_user.id })
-    .then(user => {
-      if(!user) return res.status(404).json({ user: 'No user found.'});
+  Word.findOne({ _id: req.params.id })
+    .then(word => {
+      if(!word) return res.status(404).json({ Word: 'No word found.' });
+      // Boot the user if they did not author the word
+      if(word.user != req.current_user.id) return res.status(403).json({ Forbidden: 'You do not have access to update this word.' });
 
-      // Check to see if the user's word array includes a subdoc with the word id provided
-      // Boot them out if they do not own the word
-      const id = req.params.id;
-      if(!user.words.includes(id)) return res.status(403).json({ Forbidden: 'You do not have access to update this word.' });
-
-      // If the word belongs to the user, Update the word document
-      Word.updateOne(
-        { _id: id },
+      return Word.updateOne(
+        { _id: word.id },
         { '$set': req.body, '$inc': { __v: 1 } },
         { runValidators: true, context: 'query' }
       )
-        .then(confirmation => res.json(confirmation))
-        .catch(error => res.status(400).json(error));
+        .then(confirmation => res.json({ Success: 'Word updated successfully.' }))
     })
+    .catch(error => res.status(400).json(error));
 });
 
 // Delete word
 router.delete('/:id', authorizeUser, (req, res) => {
   // Only allow to the user to delete the word if they defined the word
-  // Find the current user's document so we can check if the word belongs to the user
-  User.findOne({ _id: req.current_user.id })
-    .then(user => {
-      if(!user) return res.status(404).json({ user: 'No user found.'});
+  Word.findOne({ _id: req.params.id })
+    .then(word => {
+      if(!word) return res.status(404).json({ Word: 'No word found.' });
+      // Boot the user if they did not author the word
+      if(word.user != req.current_user.id) return res.status(403).json({ Forbidden: 'You do not have access to delete this word.' });
 
-      // Check to see if the user's word array includes a subdoc with the word id provided
-      // Boot them out if they do not own the word
-      const id = req.params.id;
-      if(!user.words.includes(id)) return res.status(403).json({ Forbidden: 'You do not have access to delete this word.' });
-
-      // If the word belongs to the user, Delete the word document
-      return Word.deleteOne({ _id: id })
-        .then(deletedWord => {
-          // Once the word document is deleted, remove it from the user's words array
-          user.words.remove(id);
-
-          // Save the user document once the word is removed
-          return user.save()
-            .then(user => res.json({ usersRemainingWords: user.words }));
-        })
+      return Word.deleteOne({ _id: word.id })
+        .then(confirmation => res.json({ Success: 'Word deleted successfully.' }))
     })
     .catch(error => res.status(400).json(error));
 });
