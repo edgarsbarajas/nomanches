@@ -16,9 +16,13 @@ router.post('/word/:word_id', authorizeUser, (req, res) => {
       return new Vote({...req.body, word: word.id, user: req.current_user.id })
         .save()
         .then(vote => {
-          // push the new vote to the Word doc's votes array
-          word.votes.push(vote);
-
+          // push the new vote to the Word doc's votes array depending on its 'upvote' property
+          if(vote.upvote) {
+            word.votes.up.push(vote);
+          } else {
+            word.votes.down.push(vote);
+          }
+          
           // save the Word doc
           return word.save()
             .then(word => res.json(word))
