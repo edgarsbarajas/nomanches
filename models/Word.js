@@ -20,8 +20,13 @@ const wordSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.ObjectId,
-    ref: 'User'
-  }
+    ref: 'User',
+    required: true
+  },
+  votes: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Vote'
+  }]
 });
 
 module.exports = mongoose.model('Word', wordSchema);
