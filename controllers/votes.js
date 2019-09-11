@@ -31,7 +31,7 @@ router.post('/word/:word_id', authorizeUser, (req, res) => {
     .catch(error => res.status(400).json(error));
 });
 
-// Read vote
+// Read vote - Not sure if we need this at the moment, I'll add it in later if neccessary
 
 // Update vote
 router.put('/:id', authorizeUser, (req, res) => {
@@ -54,7 +54,7 @@ router.put('/:id', authorizeUser, (req, res) => {
           return Word.findOne({ _id: unmodifiedVote.word })
             .then(word => {
               if(!word) return res.status(404).json({ Word: 'No word found.' });
-              
+
               // Where do we want to pull from and push to? Whatever the unmodified vote upvote vslue is
               if(unmodifiedVote.upvote) {
                 word.votes.up.pull(unmodifiedVote.id);
