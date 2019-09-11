@@ -22,7 +22,7 @@ router.post('/word/:word_id', authorizeUser, (req, res) => {
           } else {
             word.votes.down.push(vote);
           }
-          
+
           // save the Word doc
           return word.save()
             .then(word => res.json(word))
@@ -36,5 +36,28 @@ router.post('/word/:word_id', authorizeUser, (req, res) => {
 // Update vote
 
 // Delete vote
+router.delete('/:id', authorizeUser, (req, res) => {
+  Vote.findOneAndRemove({ _id: req.params.id })
+    .then(deletedVote => {
+      // One we delete the word, delete it's reference from the words array
+      // Find the word document
+      return Word.findOne({ _id: deletedVote.word })
+        .then(word => {
+          if(!word) return res.status(404).json({ Word: 'No word found.'});
+
+          // Remove from the up or down array depending on the deleted vote's upvote value
+          if(deletedVote.upvote) {
+            word.votes.up.pull(deletedVote.id);
+          } else {
+            word.votes.down.pull(deletedVote.id);
+          }
+
+          // save the Word doc
+          return word.save()
+            .then(word => res.json(word))
+        })
+    })
+    .catch(error => res.status(400).json({ Vote: 'Error removing vote.' }));
+});
 
 module.exports = router;

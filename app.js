@@ -19,4 +19,6 @@ mongoose.connect(
   () => console.log('db connected')
 );
 
+mongoose.set('useFindAndModify', false);
+
 app.listen(3001, () => console.log('app listening'));
