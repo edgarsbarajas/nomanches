@@ -15,13 +15,4 @@ export const addWord = ({ word, definition, example }) => dispatch => {
       dispatch({ type: SET_ADD_WORD_ERRORS, payload: {}})
     })
     .catch(error => dispatch({ type: SET_ADD_WORD_ERRORS, payload: error.response.data}))
-}
-
-export const fetchFeed = () => dispatch => {
-  axios
-    .get('/v1/words')
-    .then(response => dispatch(setFeed(response.data)))
-    .catch(error => console.log(error))
-}
-
-export const setFeed = words => ({ type: SET_FEED, payload: words });
+};

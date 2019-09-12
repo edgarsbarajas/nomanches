@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import Word from './Word';
-import { fetchFeed } from '../../actions/WordActions';
 
+// COOL TO HAVE: global error box modal
 class Feed extends Component {
+  state = {
+    feed: []
+  };
   componentDidMount() {
-    this.props.fetchFeed();
+    axios
+      .get('http://localhost:3001/words/feed/1')
+      .then(response => this.setState({ feed: response.data }))
+      .catch(error => console.log(error))
   }
 
   render() {
-    const { feed, user } = this.props;
+    const { feed } = this.state;
     console.log(feed);
     return (
       <div className='feed'>
@@ -20,8 +27,7 @@ class Feed extends Component {
 }
 
 const mapStateToProps = state => ({
-  feed: state.words.feed,
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { fetchFeed })(Feed)
+export default connect(mapStateToProps, {})(Feed)

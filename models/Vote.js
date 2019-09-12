@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const voteSchema = new mongoose.Schema({
   upvote: {
     type: Boolean,
-    required: true
+    required: true,
+    select: false
   },
   user: {
     type: mongoose.Schema.ObjectId,
@@ -13,7 +14,8 @@ const voteSchema = new mongoose.Schema({
   word: {
     type: mongoose.Schema.ObjectId,
     ref: 'Word',
-    required: true
+    required: true,
+    select: false
   }
 });
 
