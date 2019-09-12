@@ -20,7 +20,10 @@ router.post('/login', (req, res) => {
       }
 
       // if all passes, generate a token for the user
-      return generateAuthToken(req, res, user.id);
+      return generateAuthToken(req, res, {
+        id: user.id,
+        username: user.username
+      });
     })
     .catch(error => res.status(400).json(error));
 });

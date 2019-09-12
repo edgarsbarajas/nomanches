@@ -12,7 +12,7 @@ export const setAuthTokenInLocalStorage = token => {
   token = token || '';
 
   if(token) {
-    return localStorage.setItem('auth_token', `Token ${token}`);
+    return localStorage.setItem('auth_token', `Bearer ${token}`);
   }
 
   return localStorage.removeItem('auth_token');
@@ -22,7 +22,7 @@ export const setAuthorizationHeader = token => {
   token = token || '';
 
   if(token) {
-    return axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+    return axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }
 
   return axios.defaults.headers.common['Authorization'] = '';

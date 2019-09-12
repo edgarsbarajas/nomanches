@@ -7,8 +7,7 @@ const voteSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: true
+    ref: 'User'
   },
   word: {
     type: mongoose.Schema.ObjectId,

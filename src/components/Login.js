@@ -6,26 +6,24 @@ import { loginUser } from '../actions/AuthActions';
 
 class Login extends Component {
   state = {
-    email: '',
+    username: '',
     password: ''
   };
 
   onInputChange = event => {
-    console.log('input changed');
     this.setState({ [event.target.name]: event.target.value });
   }
 
   onSubmit = event => {
-    const { loginUser } = this.props;
-    const { email, password } = this.state;
-
     event.preventDefault();
+    const { loginUser } = this.props;
+    const { username, password } = this.state;
 
-    loginUser({email, password});
+    loginUser({username, password});
   }
 
   render() {
-    const { email, password } = this.state;
+    const { username, password } = this.state;
     const { errors } = this.props;
 
     return (
@@ -35,11 +33,11 @@ class Login extends Component {
         error={errors.login}
       >
         <Input
-          type='email'
-          name='email'
-          label='e-mail'
-          value={email}
-          error={errors.email}
+          type='text'
+          name='username'
+          label='username'
+          value={username}
+          error={errors.username}
           onChange={this.onInputChange}
         />
         <Input

@@ -5,24 +5,12 @@ import moment from 'moment';
 import './Word.css';
 import VoteIcon from './VoteIcon';
 
-// click upvote or downvote - calls handleVoteOptionClick
-  // if user has never voted:
-  //   POST votes
-  // if user clicks on vote that they have voted on:
-  //   DELETE the vote
-  // if user clicks on other vote option once theyve already
-
-
 class Word extends Component {
-  state = {
-
-  };
-
   renderUpvotes() {
     const { user, word } = this.props;
-    const currentUsersUpvote = this.state.upvotes.filter(upvote => upvote.user_id === user.id)[0];
+    const currentUsersUpvote = user.id ? word.votes.up.filter(upvote => upvote.user === user.id) : [];
 
-    if(user && currentUsersUpvote) {
+    if(Object.keys(user).length > 0 && currentUsersUpvote.length > 0) {
       return <VoteIcon
               fill='#00B300'
               upvote
@@ -37,9 +25,9 @@ class Word extends Component {
 
   renderDownvotes() {
     const { user, word } = this.props;
-    const currentUsersDownvote = this.state.downvotes.filter(down => down.user_id === user.id)[0];
+    const currentUsersDownvote = user.id ? word.votes.down.filter(downvote => downvote.user === user.id) : [];
 
-    if(user && currentUsersDownvote) {
+    if(Object.keys(user).length > 0 && currentUsersDownvote.length > 0) {
       return <VoteIcon
               fill='#DB162F'
               voted
@@ -51,42 +39,28 @@ class Word extends Component {
     return <VoteIcon wordId={word.id} />
   }
 
-  componentDidMount() {
-    const { votes } = this.props.word;
-
-    const upvotes = votes.filter(vote => vote.upvote);
-    const downvotes = votes.filter(vote => !vote.upvote);
-
-    this.setState({ upvotes, downvotes });
-  }
-
   render() {
     const { word } = this.props;
-    const { comments } = word;
-    const { upvotes, downvotes } = this.state;
+    const { votes } = word;
 
-    if(upvotes && downvotes) {
-      return (
-        <div className='word white-container'>
-          <h2>{word.word}</h2>
-          <p className='definition'>{word.definition}</p>
-          <p className='example'>{word.example}</p>
-          <div className='publish-details'>
-            <p>
-              by <Link to={`/words/${word.user.username}`} className='author'> {word.user.username}</Link> <span className='bullet'></span> {moment(word.created_at).format('MMMM Do, YYYY')}
-            </p>
-          </div>
-          <div className='votes'>
-            <span>{upvotes.length}</span>
-            {this.renderUpvotes()}
-            {this.renderDownvotes()}
-            <span>{downvotes.length}</span>
-          </div>
+    return (
+      <div className='word white-container'>
+        <h2>{word.value}</h2>
+        <p className='definition'>{word.definition}</p>
+        <p className='example'>{word.example}</p>
+        <div className='publish-details'>
+          <p>
+            by <Link to={`/words/${word.user.username}`} className='author'> {word.user.username}</Link> <span className='bullet'></span> {moment(word.created_at).format('MMMM Do, YYYY')}
+          </p>
         </div>
-      );
-    }
-
-    return null;
+        <div className='votes'>
+          <span>{votes.up.length}</span>
+          {this.renderUpvotes()}
+          {this.renderDownvotes()}
+          <span>{votes.down.length}</span>
+        </div>
+      </div>
+    );
   }
 }
 

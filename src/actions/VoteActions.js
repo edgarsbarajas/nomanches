@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { setFeed } from './WordActions';
 
 export const deleteVote = voteId => dispatch => {
   axios
