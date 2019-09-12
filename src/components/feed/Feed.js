@@ -16,11 +16,11 @@ class Feed extends Component {
   }
 
   render() {
-    const { feed } = this.state;
-    console.log(feed);
+    if(this.state.feed.length <= 0) return null;
+
     return (
       <div className='feed'>
-        { feed.map(word => <Word key={word.id} word={word} />) }
+        { this.state.feed.map(word => <Word key={word.id} word={word} />) }
       </div>
     );
   }

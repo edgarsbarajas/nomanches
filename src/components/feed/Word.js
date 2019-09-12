@@ -8,9 +8,9 @@ import VoteIcon from './VoteIcon';
 class Word extends Component {
   renderUpvotes() {
     const { user, word } = this.props;
-    const currentUsersUpvote = user._id && word.votes.up.filter(upvote => upvote.user === user._id)[0];
+    const currentUsersUpvote = user.id ? word.votes.up.filter(upvote => upvote.user === user.id) : [];
 
-    if(Object.keys(user).length > 0 && currentUsersUpvote) {
+    if(Object.keys(user).length > 0 && currentUsersUpvote.length > 0) {
       return <VoteIcon
               fill='#00B300'
               upvote
@@ -25,10 +25,7 @@ class Word extends Component {
 
   renderDownvotes() {
     const { user, word } = this.props;
-    console.log('user from downvotes', user);
-    const currentUsersDownvote = user.id ? word.votes.down.filter(downvote => downvote.user === user.id)[0] : [];
-
-    console.log('current ');
+    const currentUsersDownvote = user.id ? word.votes.down.filter(downvote => downvote.user === user.id) : [];
 
     if(Object.keys(user).length > 0 && currentUsersDownvote.length > 0) {
       return <VoteIcon
