@@ -11,23 +11,12 @@ class VoteIcon extends Component {
     if(voted) {
       this.props.deleteVote(id);
     } else {
-      console.log('votrf', this.props);
       this.props.submitVote({ voteable_id: wordId, voteable_type: 'Word', upvote });
     }
-
-
-
-    // user has not voted
-      // if a vote already exists
-        // update the vote
-      // else
-        // create a new vote
-
-
   }
 
   render() {
-    const { fill='#000', upvote, onClick } = this.props;
+    const { fill='#000', upvote } = this.props;
 
     return (
       <svg
@@ -53,4 +42,4 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(null, { deleteVote, submitVote })(VoteIcon);
+export default connect(mapStateToProps, { deleteVote, submitVote })(VoteIcon);

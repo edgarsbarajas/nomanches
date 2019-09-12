@@ -19,7 +19,7 @@ class Input extends Component {
   }
 
   render() {
-    const { type, name, value, label, error, onChange} = this.props;
+    const { type, name, value, label, onChange} = this.props;
 
     return (
       <div>

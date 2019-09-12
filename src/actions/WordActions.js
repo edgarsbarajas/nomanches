@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_ADD_WORD_ERRORS, SET_FEED } from './types';
+import { SET_ADD_WORD_ERRORS } from './types';
 
 
 export const addWord = ({ word, definition, example }) => dispatch => {

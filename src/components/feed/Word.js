@@ -42,7 +42,6 @@ class Word extends Component {
   render() {
     const { word } = this.props;
     const { votes } = word;
-    const { comments } = word;
 
     return (
       <div className='word white-container'>
