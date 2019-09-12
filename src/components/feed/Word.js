@@ -25,10 +25,12 @@ class Word extends Component {
 
   renderDownvotes() {
     const { user, word } = this.props;
-    const currentUsersDownvote = user._id && word.votes.down.filter(downvote => downvote.user === user._id)[0];
+    console.log('user from downvotes', user);
+    const currentUsersDownvote = user.id ? word.votes.down.filter(downvote => downvote.user === user.id)[0] : [];
 
-    if(Object.keys(user).length > 0 && currentUsersDownvote) {
-      console.log('why here');
+    console.log('current ');
+
+    if(Object.keys(user).length > 0 && currentUsersDownvote.length > 0) {
       return <VoteIcon
               fill='#DB162F'
               voted

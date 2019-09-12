@@ -7,7 +7,7 @@ const generateAuthToken = (req, res, payload) => {
     { expiresIn: '48h' },
     (error, token) => {
       if(error) return res.status(400).json(error);
-      return res.json({token});
+      return res.json({...payload, token});
   });
 };
 
@@ -21,7 +21,7 @@ const authorizeUser = (req, res, next) => {
       if(error) return res.status(403).json(error);
 
       // if it is, attach the decoded to the req
-      req.current_user = { id: decoded.payload };
+      req.current_user = { id: decoded.payload.id };
       next();
     });
   } else {

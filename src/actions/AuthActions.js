@@ -9,10 +9,10 @@ import {
   SET_REGISTER_ERRORS
 } from './types';
 
-export const loginUser = ({ email, password }) => dispatch => {
+export const loginUser = ({ username, password }) => dispatch => {
   axios
-    .post('/v1/login', {
-      email, password
+    .post('http://localhost:3001/auth/login', {
+      username, password
     })
     .then(response => handleSuccess(response, dispatch))
     .catch(error => dispatch({ type: SET_LOGIN_ERRORS, payload: error.response.data}))
@@ -22,8 +22,8 @@ export const registerUser = ({ firstName, lastName, email, username, password })
   axios
     .post('/v1/register', {
       user: {
-        first_name: firstName,
-        last_name: lastName,
+        firstName,
+        lastName,
         email,
         username,
         password
@@ -34,26 +34,21 @@ export const registerUser = ({ firstName, lastName, email, username, password })
 }
 
 export const logoutUser = () => dispatch => {
-  console.log('LOGGING OJT NOW');
-  axios
-    .delete('/v1/logout')
-    .then(response => {
-      // remove the token from localStorage
-      setAuthTokenInLocalStorage();
-      // clear the user from redux store
-      dispatch(setCurrentUser({}));
-      // clear the authorization header from axios
-      setAuthorizationHeader();
-    })
-    .catch(error => console.log(error))
+  // remove the token from localStorage
+  setAuthTokenInLocalStorage();
+  // clear the user from redux store
+  dispatch(setCurrentUser({}));
+  // clear the authorization header from axios
+  setAuthorizationHeader();
 }
 
 const handleSuccess = (response, dispatch, errorsToClear) => {
   const user = response.data;
+  console.log('user from handle success', user);
   // Set auth token in localStorage
-  setAuthTokenInLocalStorage(user.auth_token);
+  // setAuthTokenInLocalStorage(user.token);
   // Set axios auth header
-  setAuthorizationHeader(user.auth_token);
+  setAuthorizationHeader(user.token);
   // Set current user in redux store
   dispatch(setCurrentUser(user));
 }

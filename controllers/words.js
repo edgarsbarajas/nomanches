@@ -30,9 +30,10 @@ router.get('/:id', (req, res) => {
 router.get('/feed/:page', (req, res) => {
   const wordsPerPage = 8;
   Word.find()
-    .populate('user')
-    .populate('votes.up')
-    .populate('votes.down')
+    .lean()
+    .populate('user', 'username')
+    .populate('votes.up', 'user')
+    .populate('votes.down', 'user')
     .skip((req.params.page - 1) * wordsPerPage)
     .limit(wordsPerPage)
     .then(words => res.json(words))

@@ -5,13 +5,11 @@ require('mongoose-type-email');
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: true,
-    select: false
+    required: true
   },
   lastName: {
     type: String,
-    required: true,
-    select: false
+    required: true
   },
   username: {
     type: String,
@@ -29,14 +27,12 @@ const userSchema = new mongoose.Schema({
       validator: (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
       message: () => 'Email is not valid'
     },
-    unique: true,
-    select: false
+    unique: true
   },
   password: {
     type: String,
     required: true,
-    minlength: 6,
-    select: false
+    minlength: 6
   }
 });
 
