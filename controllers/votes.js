@@ -71,7 +71,6 @@ router.post('/word/:word_id', authorizeUser, (req, res) => {
                       } else {
                         word.votes.down.push(newVote);
                       }
-                      console.log('33333333');
                       // save the Word doc
                       return word.save()
                         .then(word => res.json(word))

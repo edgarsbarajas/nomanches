@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { Link } from 'react-router-dom';
@@ -66,15 +66,15 @@ class Nav extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <nav>
-          <div className='nav-inner'>  
+          <div className='nav-inner'>
             <Link to='/' className='logo'>spanglish dictionary</Link>
             <button className='hamburger' onClick={this.toggleMenuModal}></button>
           </div>
         </nav>
         { this.renderMenuModal() }
-      </div>
+      </Fragment>
     );
   }
 }
