@@ -20,15 +20,14 @@ export const loginUser = ({ username, password }) => dispatch => {
 
 export const registerUser = ({ firstName, lastName, email, username, password }) => dispatch => {
   axios
-    .post('/v1/register', {
-      user: {
+    .post('/users', {
         firstName,
         lastName,
         email,
         username,
         password
       }
-    })
+    )
     .then(response => handleSuccess(response, dispatch))
     .catch(error => dispatch({ type: SET_REGISTER_ERRORS, payload: error.response.data}))
 }
