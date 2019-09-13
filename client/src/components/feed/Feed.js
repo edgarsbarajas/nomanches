@@ -10,7 +10,7 @@ class Feed extends Component {
   };
   componentDidMount() {
     axios
-      .get('http://localhost:3001/words/feed/1')
+      .get('/words/feed/1')
       .then(response => this.setState({ feed: response.data }))
       .catch(error => console.log(error))
   }
