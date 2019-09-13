@@ -6,6 +6,9 @@ import { setGlobalModalComponent } from '../../../actions/GlobalModalActions';
 import './GlobalModal.css';
 
 class GlobalModal extends Component {
+  componentDidUpdate() {
+    console.log('change deteched');
+  }
   renderModalComponent() {
     switch(this.props.GlobalModalComponent) {
       case 'Login':
@@ -16,6 +19,7 @@ class GlobalModal extends Component {
         return null;
     }
   }
+
   render() {
     const { GlobalModalComponent } = this.props;
 
