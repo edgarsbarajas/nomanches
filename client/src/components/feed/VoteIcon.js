@@ -6,14 +6,14 @@ import { deleteVote } from '../../actions/VoteActions';
 
 class VoteIcon extends Component {
   onVoteOptionClick = () => {
+    console.log('clicked vote icon', this.props.wordId);
     axios
       .post(`/votes/word/${this.props.wordId}`, {
         upvote: this.props.upvote
       })
-      .then(response => {
-        this.props.onVoteSuccess(response.data);
-      })
+      .then(response => this.props.onVoteSuccess(response.data))
       .catch(error => {
+        // global Error modal would be great here
         console.log(error);
       })
   }
