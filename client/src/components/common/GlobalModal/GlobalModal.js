@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Login from '../../Login';
+import NavMenu from '../../nav/NavMenu';
 import { setGlobalModalComponent } from '../../../actions/GlobalModalActions';
 import './GlobalModal.css';
 
@@ -8,7 +9,9 @@ class GlobalModal extends Component {
   renderModalComponent() {
     switch(this.props.GlobalModalComponent) {
       case 'Login':
-        return <Login />
+        return <Login />;
+      case 'NavMenu':
+        return <NavMenu />;
       default:
         return null;
     }
