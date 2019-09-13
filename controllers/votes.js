@@ -9,6 +9,9 @@ router.post('/word/:word_id', authorizeUser, (req, res) => {
   // A user can vote on any word, including their own
   // Find Word document using the req param
   Word.findOne({ _id: req.params.word_id })
+    .populate('user', 'username')
+    .populate('votes.up', 'user')
+    .populate('votes.down', 'user')
     .then(word => {
       if(!word) return res.status(404).json({ Word: 'No word found.'});
 

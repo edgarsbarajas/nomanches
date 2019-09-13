@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { deleteVote, submitVote } from '../../actions/VoteActions';
+import axios from 'axios';
+import { deleteVote } from '../../actions/VoteActions';
 
 class VoteIcon extends Component {
-
   onVoteOptionClick = () => {
-    const { id, wordId, upvote = false, voted = false } = this.props;
-
-    if(voted) {
-      this.props.deleteVote(id);
-    } else {
-      this.props.submitVote({ voteable_id: wordId, voteable_type: 'Word', upvote });
-    }
+    axios
+      .post(`/votes/word/${this.props.wordId}`, {
+        upvote: this.props.upvote
+      })
+      .then(response => {
+        this.props.onVoteSuccess(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   render() {
@@ -42,4 +45,4 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { deleteVote, submitVote })(VoteIcon);
+export default connect(mapStateToProps, { deleteVote })(VoteIcon);

@@ -20,7 +20,7 @@ class Feed extends Component {
 
     return (
       <div className='feed'>
-        { this.state.feed.map(word => <Word key={word.id} word={word} />) }
+        { this.state.feed.map(word => <Word key={word._id} word={word} />) }
       </div>
     );
   }

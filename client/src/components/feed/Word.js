@@ -6,43 +6,64 @@ import './Word.css';
 import VoteIcon from './VoteIcon';
 
 class Word extends Component {
+  state = {
+    word: this.props.word
+  };
+
+  onVoteSuccess = word => {
+    this.setState({ word });
+  }
+
   renderUpvotes() {
-    const { user, word } = this.props;
+    const { user } = this.props;
+    const { word } = this.state;
     const currentUsersUpvote = user.id ? word.votes.up.filter(upvote => upvote.user === user.id) : [];
 
     if(Object.keys(user).length > 0 && currentUsersUpvote.length > 0) {
       return <VoteIcon
-              fill='#00B300'
-              upvote
-              voted
-              id={currentUsersUpvote.id}
-              wordId={word.id}
+               fill='#00B300'
+               upvote={true}
+               voted
+               wordId={word._id}
+               onVoteSuccess={this.onVoteSuccess}
              />
     }
 
-    return <VoteIcon upvote wordId={word.id}/>
+    return <VoteIcon
+             upvote={true}
+             wordId={word._id}
+             onVoteSuccess={this.onVoteSuccess}
+           />
   }
 
   renderDownvotes() {
-    const { user, word } = this.props;
+    const { user } = this.props;
+    const { word } = this.state;
     const currentUsersDownvote = user.id ? word.votes.down.filter(downvote => downvote.user === user.id) : [];
 
     if(Object.keys(user).length > 0 && currentUsersDownvote.length > 0) {
       return <VoteIcon
-              fill='#DB162F'
-              voted
-              wordId={word.id}
-              id={currentUsersDownvote.id}
+               fill='#DB162F'
+               upvote={false}
+               voted
+               wordId={word._id}
+               onVoteSuccess={this.onVoteSuccess}
              />
     }
 
-    return <VoteIcon wordId={word.id} />
+    return <VoteIcon
+             upvote={false}
+             wordId={word._id}
+             onVoteSuccess={this.onVoteSuccess}
+           />
   }
 
   render() {
-    const { word } = this.props;
+    const { word } = this.state;
     const { votes } = word;
 
+    console.log('WORD state', word);
+    console.log('WORD props', this.props.word);
     return (
       <div className='word white-container'>
         <h2>{word.value}</h2>
