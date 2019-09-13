@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import axios from 'axios';
-import { deleteVote } from '../../actions/VoteActions';
+import { logoutUser } from '../../actions/AuthActions';
 import { setGlobalModalComponent } from '../../actions/GlobalModalActions';
 
 class VoteIcon extends Component {
   onVoteOptionClick = () => {
-    console.log('clicked vote icon', this.props.wordId);
     axios
       .post(`/votes/word/${this.props.wordId}`, {
         upvote: this.props.upvote
@@ -16,6 +15,7 @@ class VoteIcon extends Component {
       .catch(error => {
         // if there is an error, open a modal to login
         if(error.response.data.token) {
+          this.props.logoutUser();
           this.props.setGlobalModalComponent('Login');
         }
       })
@@ -48,4 +48,4 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { deleteVote, setGlobalModalComponent })(VoteIcon);
+export default connect(mapStateToProps, { setGlobalModalComponent, logoutUser })(VoteIcon);

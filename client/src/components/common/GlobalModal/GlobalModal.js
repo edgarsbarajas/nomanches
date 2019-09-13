@@ -24,7 +24,7 @@ class GlobalModal extends Component {
           { this.renderModalComponent() }
         </div>
         <div
-          class='global-modal-bg'
+          className='global-modal-bg'
           onClick={(e) => this.props.setGlobalModalComponent(null)}
         >
       </div>
