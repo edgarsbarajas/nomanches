@@ -9,26 +9,78 @@ router.post('/word/:word_id', authorizeUser, (req, res) => {
   // A user can vote on any word, including their own
   // Find Word document using the req param
   Word.findOne({ _id: req.params.word_id })
+    .populate('user', 'username')
+    .populate('votes.up', 'user')
+    .populate('votes.down', 'user')
     .then(word => {
       if(!word) return res.status(404).json({ Word: 'No word found.'});
 
-      // Now that we have a word doc, create a new Vote doc
-      return new Vote({...req.body, word: word.id, user: req.current_user.id })
-        .save()
+      const newUpvoteValue = req.body.upvote;
+      // check to see if the user has already voted on this word
+      return Vote.findOne({ user: req.current_user.id, word: word.id })
         .then(vote => {
-          // push the new vote to the Word doc's votes array depending on its 'upvote' property
-          if(vote.upvote) {
-            word.votes.up.push(vote);
-          } else {
-            word.votes.down.push(vote);
-          }
 
-          // save the Word doc
-          return word.save()
-            .then(word => res.json(word))
+          // if there is no vote, go ahead and create it
+          if(!vote) {
+            return new Vote({ upvote: newUpvoteValue, word: word.id, user: req.current_user.id })
+              .save()
+              .then(newVote => {
+                // push the new vote to the Word doc's votes array depending on its 'upvote' property
+                if(newVote.upvote) {
+                  word.votes.up.push(newVote);
+                } else {
+                  word.votes.down.push(newVote);
+                }
+                // save the Word doc
+                return word.save()
+                  .then(word => res.json(word))
+              })
+            } else {
+              // if there IS a vote and it has the same value as the new upvote, delete the vote that exists
+              if(newUpvoteValue === vote.upvote) {
+                return Vote.findOneAndRemove({ _id: vote.id })
+                .then(deletedVote => {
+                  // One we delete the word, delete it's reference from the words array
+                  if(deletedVote.upvote) {
+                    word.votes.up.pull(deletedVote.id);
+                  } else {
+                    word.votes.down.pull(deletedVote.id);
+                  }
+
+                  // save the Word doc
+                  return word.save()
+                    .then(word => res.json(word))
+                })
+              } else {
+                return Vote.findOneAndRemove({ _id: vote.id })
+                .then(deletedVote => {
+                  // One we delete the word, delete it's reference from the words array
+                  if(deletedVote.upvote) {
+                    word.votes.up.pull(deletedVote.id);
+                  } else {
+                    word.votes.down.pull(deletedVote.id);
+                  }
+
+                  // Create the new Vote doc
+                  return new Vote({ upvote: newUpvoteValue, word: word.id, user: req.current_user.id })
+                    .save()
+                    .then(newVote => {
+                      // push the new vote to the Word doc's votes array depending on its 'upvote' property
+                      if(newVote.upvote) {
+                        word.votes.up.push(newVote);
+                      } else {
+                        word.votes.down.push(newVote);
+                      }
+                      console.log('33333333');
+                      // save the Word doc
+                      return word.save()
+                        .then(word => res.json(word))
+                    })
+                })
+              }
+            }
+          })
         })
-    })
-    .catch(error => res.status(400).json(error));
 });
 
 // Read vote - Not sure if we need this at the moment, I'll add it in later if neccessary

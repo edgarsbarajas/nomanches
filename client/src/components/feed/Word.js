@@ -3,44 +3,19 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import './Word.css';
-import VoteIcon from './VoteIcon';
+import VoteSection from './VoteSection';
 
 class Word extends Component {
-  renderUpvotes() {
-    const { user, word } = this.props;
-    const currentUsersUpvote = user.id ? word.votes.up.filter(upvote => upvote.user === user.id) : [];
+  state = {
+    word: this.props.word
+  };
 
-    if(Object.keys(user).length > 0 && currentUsersUpvote.length > 0) {
-      return <VoteIcon
-              fill='#00B300'
-              upvote
-              voted
-              id={currentUsersUpvote.id}
-              wordId={word.id}
-             />
-    }
-
-    return <VoteIcon upvote wordId={word.id}/>
-  }
-
-  renderDownvotes() {
-    const { user, word } = this.props;
-    const currentUsersDownvote = user.id ? word.votes.down.filter(downvote => downvote.user === user.id) : [];
-
-    if(Object.keys(user).length > 0 && currentUsersDownvote.length > 0) {
-      return <VoteIcon
-              fill='#DB162F'
-              voted
-              wordId={word.id}
-              id={currentUsersDownvote.id}
-             />
-    }
-
-    return <VoteIcon wordId={word.id} />
+  onVoteSuccess = word => {
+    this.setState({ word });
   }
 
   render() {
-    const { word } = this.props;
+    const { word } = this.state;
     const { votes } = word;
 
     return (
@@ -53,12 +28,10 @@ class Word extends Component {
             by <Link to={`/words/${word.user.username}`} className='author'> {word.user.username}</Link> <span className='bullet'></span> {moment(word.created_at).format('MMMM Do, YYYY')}
           </p>
         </div>
-        <div className='votes'>
-          <span>{votes.up.length}</span>
-          {this.renderUpvotes()}
-          {this.renderDownvotes()}
-          <span>{votes.down.length}</span>
-        </div>
+        <VoteSection
+          word={word}
+          onVoteSuccess={this.onVoteSuccess}
+        />
       </div>
     );
   }
