@@ -1,8 +1,12 @@
-.global-modal {
+.global-modal-container {
   position: fixed;
+  z-index: 100;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 100;
+}
+
+.global-modal {
+  /* position: fixed; */
 }
 
 .global-modal-bg {
@@ -13,4 +17,23 @@
   left: 0;
   z-index: 99;
   background: rgba(0, 0, 0, 0.8);
+}
+
+button.close {
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  position: fixed;
+  top: -2%;
+  right: -5%;
+  z-index: 101;
+}
+
+button.close::after {
+  background-color: #e9e9e9;
+  border-radius: 1000px;
+  padding: 6px 10px;
+  content: "✕";
+  font-size: 20px;
 }

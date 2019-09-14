@@ -18,7 +18,15 @@ const NavMenu = (props) => {
                 <Link to='/login' onClick={() => props.setGlobalModalComponent(null)}>login</Link>
               </div>
             ) : (
-              <Link to='/' onClick={() => props.setGlobalModalComponent(null)}>logout</Link>
+              <Link
+                to='/'
+                onClick={() => {
+                  props.logoutUser()
+                  props.setGlobalModalComponent(null)
+                }}
+              >
+                logout
+              </Link>
             )
           }
       </div>
