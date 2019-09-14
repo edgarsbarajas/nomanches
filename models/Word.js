@@ -32,6 +32,11 @@ const wordSchema = new mongoose.Schema({
       type: mongoose.Schema.ObjectId,
       ref: 'Vote'
     }]
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: new Date
   }
 });
 
