@@ -25,7 +25,7 @@ class Word extends Component {
         <p className='example'>{word.example}</p>
         <div className='publish-details'>
           <p>
-            by <Link to={`/words/${word.user.username}`} className='author'> {word.user.username}</Link> <span className='bullet'></span> {moment(word.created_at).format('MMMM Do, YYYY')}
+            by <Link to={`/words/${word.user.username}`} className='author'> {word.user.username}</Link> <span className='bullet'></span> {moment(word.createdAt).format('MMMM Do, YYYY')}
           </p>
         </div>
         <VoteSection
