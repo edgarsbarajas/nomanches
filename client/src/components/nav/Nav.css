@@ -36,21 +36,3 @@ nav > div.nav-inner > button.hamburger::after {
   content: "☰";
   font-size: 22px;
 }
-
-.shine-in {
-  animation: shine-in .5s;
-}
-
-.shine-out {
-  animation: shine-out .5s;
-}
-
-@keyframes shine-in {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@keyframes shine-out {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
-}

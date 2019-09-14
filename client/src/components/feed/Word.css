@@ -5,7 +5,7 @@ div.word  {
 }
 
 div.word:not(:last-child)  {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 div.word > h2 {
@@ -45,8 +45,6 @@ span.bullet::after {
 div.word > div.votes {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100px;
 }
 
 div.word > div.votes > svg.vote {
@@ -55,8 +53,11 @@ div.word > div.votes > svg.vote {
 }
 
 div.word > div.votes > svg.vote:not(.downvote) {
+  margin-left: 10px;
 }
 
 div.word > div.votes > svg.vote.downvote {
   transform: rotate(180deg);
+  margin-right: 10px;
+  margin-left: 5px;
 }

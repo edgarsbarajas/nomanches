@@ -27,21 +27,21 @@ class GlobalModal extends Component {
 
     return (
       <Fragment>
-      <div className='global-modal-container'>
-        <div className='global-modal'>
-          { this.renderModalComponent() }
+        <div className='global-modal-container shine-in'>
+          <div className='global-modal'>
+            { this.renderModalComponent() }
+          </div>
+          <button
+            className='close'
+            onClick={(e) => this.props.setGlobalModalComponent(null)}
+          >
+          </button>
         </div>
-        <button
-          className='close'
+        <div
+          className='global-modal-bg'
           onClick={(e) => this.props.setGlobalModalComponent(null)}
         >
-        </button>
-      </div>
-      <div
-        className='global-modal-bg'
-        onClick={(e) => this.props.setGlobalModalComponent(null)}
-      >
-      </div>
+        </div>
       </Fragment>
     );
   }

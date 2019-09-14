@@ -2,11 +2,11 @@
   position: fixed;
   z-index: 100;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(1);
 }
 
 .global-modal {
-  /* position: fixed; */
+
 }
 
 .global-modal-bg {
@@ -36,4 +36,22 @@ button.close::after {
   padding: 6px 10px;
   content: "✕";
   font-size: 20px;
+}
+
+.shine-in {
+  animation: shine-in 0.5s;
+}
+
+.shine-out {
+  animation: shine-out .5s;
+}
+
+@keyframes shine-in {
+  0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+@keyframes shine-out {
+  0% { opacity: 1; transform: translateX(-50%) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) scale(0.5); }
 }
