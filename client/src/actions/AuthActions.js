@@ -8,6 +8,7 @@ import {
   SET_LOGIN_ERRORS,
   SET_REGISTER_ERRORS
 } from './types';
+import { setGlobalModalComponent } from './GlobalModalActions';
 
 export const loginUser = ({ username, password }) => dispatch => {
   axios
@@ -50,4 +51,6 @@ const handleSuccess = (response, dispatch, errorsToClear) => {
   setAuthorizationHeader(user.token);
   // Set current user in redux store
   dispatch(setCurrentUser(user));
+  // Close the global modal if user is logging in through the modal
+  dispatch(setGlobalModalComponent(null));
 }

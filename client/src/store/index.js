@@ -10,7 +10,8 @@ import { setAuthorizationHeader } from '../helpers';
 const persistConfig = {
  key: 'root',
  storage: storage,
- stateReconciler: autoMergeLevel2 // see "Merge Process" section for details.
+ stateReconciler: autoMergeLevel2,
+ blacklist: ['globalModalComponent']
 };
 
 export const store = createStore(persistReducer(persistConfig, rootReducer), applyMiddleware(ReduxThunk));

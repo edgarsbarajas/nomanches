@@ -8,6 +8,7 @@ import Register from './components/Register';
 import Feed from './components/feed/Feed';
 import Add from './components/Add';
 import Nav from './components/nav/Nav';
+import GlobalModal from './components/common/GlobalModal/GlobalModal';
 import LoadingView from './components/LoadingView';
 import './App.css';
 
@@ -19,6 +20,7 @@ class App extends Component {
         <PersistGate loading={<LoadingView />} persistor={persistor}>
           <Router>
             <Nav />
+            <GlobalModal />
             <div className='container'>
               <Switch>
                 <Route path='/' exact component={Feed}/>
