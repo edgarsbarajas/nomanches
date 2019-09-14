@@ -73,7 +73,7 @@ router.put('/:id', authorizeUser, (req, res) => {
 
       return Word.updateOne(
         { _id: word.id },
-        { '$set': req.body, '$inc': { __v: 1 } },
+        { '$set': {...req.body, updatedAt: new Date }, '$inc': { __v: 1 } },
         { runValidators: true, context: 'query' }
       )
         .then(confirmation => res.json({ Success: 'Word updated successfully.' }))
