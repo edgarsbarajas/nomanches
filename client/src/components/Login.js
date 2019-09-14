@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PostForm from './common/PostForm';
 import Input from './common/Input';
 import { loginUser } from '../actions/AuthActions';
+import { setGlobalModalComponent } from '../actions/GlobalModalActions';
 
 class Login extends Component {
   state = {
@@ -48,6 +50,13 @@ class Login extends Component {
           error={errors.password}
           onChange={this.onInputChange}
         />
+        <Link
+          to='/register'
+          className='sub-message'
+          onClick={() => this.props.setGlobalModalComponent(null)}
+        >
+          new to no manches? <span>sign up</span>
+        </Link>
       </PostForm>
     )
   }
@@ -57,4 +66,4 @@ const mapStateToProps = state => ({
   errors: state.auth.loginErrors
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(mapStateToProps, { loginUser, setGlobalModalComponent })(Login);

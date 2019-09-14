@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PostForm from './common/PostForm';
 import Input from './common/Input';
@@ -78,7 +79,8 @@ class Register extends Component {
           error={errors.password}
           onChange={this.onInputChange}
         />
-        </PostForm>
+      <Link to='/login' className='sub-message'>already have an account? <span>sign in</span></Link>
+      </PostForm>
     )
   }
 }

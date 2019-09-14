@@ -47,6 +47,20 @@ div.post-form-container {
   max-width: 375px;
   margin: 0 auto;
   padding: 80px 0;
+  position: relative;
+}
+
+div.post-form-container a.sub-message {
+  font-size: 14px;
+  bottom: 5%;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+div.post-form-container a.sub-message span {
+  text-decoration: underline;
 }
 
 div.white-container {
