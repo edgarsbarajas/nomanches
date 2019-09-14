@@ -30,7 +30,10 @@ export const registerUser = ({ firstName, lastName, email, username, password })
       }
     )
     .then(response => handleSuccess(response, dispatch))
-    .catch(error => dispatch({ type: SET_REGISTER_ERRORS, payload: error.response.data}))
+    .catch(error => {
+      console.log('error', error.response.data.errors);
+      dispatch({ type: SET_REGISTER_ERRORS, payload: error.response.data.errors})
+    })
 }
 
 export const logoutUser = () => dispatch => {

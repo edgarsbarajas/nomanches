@@ -143,6 +143,10 @@ div.post-form-container .input-error {
   padding-left: 10px;
 }
 
+div.post-form-container .input-error:last-child {
+  margin-bottom: 15px;
+}
+
 div.post-form-container > .form-error {
   font-size: 12px;
   margin: 10px 0;
