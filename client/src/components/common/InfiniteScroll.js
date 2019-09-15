@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import { connect } from 'react-redux';
 import Word from '../feed/Word';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 
