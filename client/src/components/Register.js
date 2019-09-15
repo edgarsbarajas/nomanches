@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PostForm from './common/PostForm';
 import Input from './common/Input';
@@ -18,19 +19,18 @@ class Register extends Component {
   }
 
   onSubmit = event => {
+    event.preventDefault();
     const { registerUser } = this.props;
     const { firstName, lastName, email, username, password } = this.state;
-
-    event.preventDefault();
 
     registerUser({firstName, lastName, email, username, password});
   }
 
   render() {
     const { firstName, lastName, email, username, password } = this.state;
-    const { errors } = this.props;
+    console.log('errors', this.props.errors);
 
-    console.log(errors);
+    const { errors } = this.props;
 
     return (
       <PostForm
@@ -43,7 +43,7 @@ class Register extends Component {
           name='firstName'
           label='first name'
           value={firstName}
-          error={errors.first_name}
+          error={errors.firstName}
           onChange={this.onInputChange}
         />
         <Input
@@ -51,7 +51,7 @@ class Register extends Component {
           name='lastName'
           label='last name'
           value={lastName}
-          error={errors.last_name}
+          error={errors.lastName}
           onChange={this.onInputChange}
         />
         <Input
@@ -78,7 +78,8 @@ class Register extends Component {
           error={errors.password}
           onChange={this.onInputChange}
         />
-        </PostForm>
+      <Link to='/login' className='sub-message'>already have an account? <span>sign in</span></Link>
+      </PostForm>
     )
   }
 }

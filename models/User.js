@@ -5,24 +5,24 @@ require('mongoose-type-email');
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: true
+    required: [true, 'first name is required']
   },
   lastName: {
     type: String,
-    required: true
+    required: [true, 'last name is required']
   },
   username: {
     type: String,
-    required: true,
-    unique: true,
+    required: [true, 'username is required'],
+    unique: [true, 'username is taken'],
     validate: {
       validator: username => /^[_A-z0-9]*((-|\s)*[_A-z0-9])*$/g.test(username),
-      message: () => 'No special characters (ex. !@$*)'
+      message: () => 'no special characters allowed (ex. !@$*)'
     }
   },
   email: {
     type: String,
-    required: true,
+    required: [true, 'e-mail is required'],
     validate: {
       validator: (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
       message: () => 'Email is not valid'
@@ -31,8 +31,8 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
-    minlength: 6
+    required: [true, 'password is required'],
+    minlength: [6, 'password must be at least 6 characters']
   }
 });
 

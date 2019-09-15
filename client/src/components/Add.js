@@ -1,46 +1,54 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import PostForm from './common/PostForm';
 import Input from './common/Input';
-import { addWord } from '../actions/WordActions';
 
 class Add extends Component {
   state = {
     word: '',
     definition: '',
-    example: ''
+    example: '',
+    errors: {}
   };
 
   onInputChange = event => {
-    console.log('input changed');
     this.setState({ [event.target.name]: event.target.value });
   }
 
   onSubmit = event => {
+    event.preventDefault();
     const { addWord } = this.props;
     const { word, definition, example } = this.state;
 
-    event.preventDefault();
-
-    addWord({word, definition, example});
+    axios
+      .post('/words', {
+        value: word,
+        definition,
+        example
+      })
+      .then(response => {
+        // display global modal with success/instructions
+        console.log(response.data);
+      })
+      .catch(error => this.setState({errors: error.response.data.errors}))
   }
 
   render() {
-    const { word, definition, example } = this.state;
-    const { errors } = this.props;
-
+    const { word, definition, example, errors } = this.state;
+    
     return (
       <PostForm
         onSubmit={this.onSubmit}
         header='add a word'
-        error={errors.add_word}
+        error={errors.addWord}
       >
         <Input
           type='text'
           name='word'
           label='word'
           value={word}
-          error={errors.word}
+          error={errors.value}
           onChange={this.onInputChange}
         />
         <Input
@@ -64,8 +72,4 @@ class Add extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  errors: state.words.addWordErrors
-});
-
-export default connect(mapStateToProps, { addWord })(Add);
+export default connect(null, {})(Add);

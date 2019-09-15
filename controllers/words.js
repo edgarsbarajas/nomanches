@@ -6,8 +6,9 @@ const User = require('../models/User');
 
 // Create word
 router.post('/', authorizeUser, (req, res) => {
+  console.log('jfnqjnfq fjqnfqje fqne fqje fjq refkjan rfak vakfqair');
   // Add the current user's id as the user reference
-  new Word({...req.body, value: req.body.value.toLowerCase(), user: req.current_user.id})
+  new Word({...req.body, value: req.body.value, user: req.current_user.id})
     .save()
     .then(word => res.json(word))
     .catch(error => res.status(400).json(error));
