@@ -1,6 +1,5 @@
 div.word  {
   padding: 20px;
-  max-width: 600px;
   text-transform: lowercase;
 }
 
@@ -60,4 +59,10 @@ div.word > div.votes > svg.vote.downvote {
   transform: rotate(180deg);
   margin-right: 10px;
   margin-left: 5px;
+}
+
+@media(min-width: 768px) {
+  div.word  {
+    width: 60%;
+  }
 }

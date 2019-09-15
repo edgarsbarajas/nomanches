@@ -6,7 +6,6 @@ const User = require('../models/User');
 
 // Create word
 router.post('/', authorizeUser, (req, res) => {
-  console.log('jfnqjnfq fjqnfqje fqne fqje fjq refkjan rfak vakfqair');
   // Add the current user's id as the user reference
   new Word({...req.body, value: req.body.value, user: req.current_user.id})
     .save()
@@ -29,7 +28,7 @@ router.get('/:id', (req, res) => {
 
 // Option 2: return all words in pagination form (feed) words/feed/:page
 router.get('/feed/:page', (req, res) => {
-  const wordsPerPage = 8;
+  const wordsPerPage = 6;
   Word.find()
     .lean()
     .populate('user', 'username')
