@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import PostForm from './common/PostForm';
 import Input from './common/Input';
-import { registerUser } from '../actions/AuthActions';
+import { handleAuthSuccess } from '../actions/AuthActions';
 
 class Register extends Component {
   state = {
@@ -11,7 +12,8 @@ class Register extends Component {
     lastName: '',
     email: '',
     username: '',
-    password: ''
+    password: '',
+    errors: {}
   };
 
   onInputChange = event => {
@@ -20,17 +22,23 @@ class Register extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const { registerUser } = this.props;
     const { firstName, lastName, email, username, password } = this.state;
 
-    registerUser({firstName, lastName, email, username, password});
+    axios
+      .post('/users', {
+          firstName,
+          lastName,
+          email,
+          username,
+          password
+        }
+      )
+      .then(response => this.props.handleAuthSuccess(response.data))
+      .catch(error => this.setState({ errors: error.response.data.errors }))
   }
 
   render() {
-    const { firstName, lastName, email, username, password } = this.state;
-    console.log('errors', this.props.errors);
-
-    const { errors } = this.props;
+    const { firstName, lastName, email, username, password, errors } = this.state;
 
     return (
       <PostForm
@@ -88,4 +96,4 @@ const mapStateToProps = state => ({
   errors: state.auth.registerErrors
 });
 
-export default connect(mapStateToProps, { registerUser })(Register);
+export default connect(mapStateToProps, { handleAuthSuccess })(Register);

@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import PostForm from './common/PostForm';
 import Input from './common/Input';
-import { loginUser } from '../actions/AuthActions';
+import { handleAuthSuccess } from '../actions/AuthActions';
 import { setGlobalModalComponent } from '../actions/GlobalModalActions';
 
 class Login extends Component {
   state = {
-    username: '',
-    password: ''
+    username: 'edgar6',
+    password: 'babycakes1',
+    errors: {}
   };
 
   onInputChange = event => {
@@ -21,12 +23,16 @@ class Login extends Component {
     const { loginUser } = this.props;
     const { username, password } = this.state;
 
-    loginUser({username, password});
+    axios
+      .post('/auth/login', {
+        username, password
+      })
+      .then(response => this.props.handleAuthSuccess(response.data))
+      .catch(error => this.setState({ errors: error.response.data }))
   }
 
   render() {
-    const { username, password } = this.state;
-    const { errors } = this.props;
+    const { username, password, errors } = this.state;
 
     return (
       <PostForm
@@ -66,4 +72,4 @@ const mapStateToProps = state => ({
   errors: state.auth.loginErrors
 });
 
-export default connect(mapStateToProps, { loginUser, setGlobalModalComponent })(Login);
+export default connect(mapStateToProps, { setGlobalModalComponent, handleAuthSuccess })(Login);
