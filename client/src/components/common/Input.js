@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import classNames from 'classnames';
 
 class Input extends Component {
@@ -13,6 +13,38 @@ class Input extends Component {
     return <div className='input-error'>{error.message}</div>;
   }
 
+  renderInputType = () => {
+    const { type, name, value, label, onChange, placeholder } = this.props;
+
+    if(type === 'textarea') {
+      return (
+        <Fragment>
+          <span className='char-count'>{value.length}/120</span>
+          <textarea
+            className='post-input'
+            type={type}
+            name={name}
+            value={value}
+            placeholder={placeholder}
+            onChange={event => onChange(event)}
+            ref={input => (this.input = input)}
+          />
+        </Fragment>
+      )
+    } else {
+      return (
+        <input
+          className='post-input'
+          type={type}
+          name={name}
+          value={value}
+          onChange={event => onChange(event)}
+          ref={input => (this.input = input)}
+        />
+      )
+    }
+  }
+
   render() {
     const { type, name, value, label, onChange} = this.props;
 
@@ -22,19 +54,12 @@ class Input extends Component {
           <label
             onClick={this.onLabelClick}
             className={classNames({
-              'expanded': !value
+              'expanded': !value && type !== 'textarea'
             })}
           >
-            {label}
+            { label }
           </label>
-          <input
-            className='post-input'
-            type={type}
-            name={name}
-            value={value}
-            onChange={event => onChange(event)}
-            ref={input => (this.input = input)}
-          />
+          { this.renderInputType() }
         </div>
         { this.renderError() }
       </div>

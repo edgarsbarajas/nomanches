@@ -36,7 +36,7 @@ class Add extends Component {
 
   render() {
     const { word, definition, example, errors } = this.state;
-    
+
     return (
       <PostForm
         onSubmit={this.onSubmit}
@@ -52,17 +52,19 @@ class Add extends Component {
           onChange={this.onInputChange}
         />
         <Input
-          type='text'
+          type='textarea'
           name='definition'
           label='definition'
+          placeholder='this is a placeholder for an example of a word'
           value={definition}
           error={errors.definition}
           onChange={this.onInputChange}
         />
         <Input
-          type='text'
+          type='textarea'
           name='example'
           label='example'
+          placeholder='this is a placeholder for an example of a word'
           value={example}
           error={errors.example}
           onChange={this.onInputChange}
