@@ -36,7 +36,13 @@ router.get('/feed/:page', (req, res) => {
     .populate('votes.down', 'user')
     .skip((req.params.page - 1) * wordsPerPage)
     .limit(wordsPerPage)
-    .then(words => res.json(words))
+    .then(words => {
+      // res.json(words)
+      return Word.countDocuments()
+        .then(count => {
+          return res.json({ words, lastPage: Math.ceil(count / wordsPerPage) })
+        })
+    })
     .catch(error => res.status(400).json(error));
 });
 
