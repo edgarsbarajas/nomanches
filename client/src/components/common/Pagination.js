@@ -8,7 +8,8 @@ class Pagination extends Component {
   state = {
     content: [],
     totalWordCount: null,
-    lastPage: null
+    lastPage: null,
+    requestDone: false
   };
 
   componentDidMount = () => {
@@ -28,7 +29,8 @@ class Pagination extends Component {
         this.setState({
           content: response.data.words,
           totalWordCount: response.data.totalWordCount,
-          lastPage: response.data.lastPage
+          lastPage: response.data.lastPage,
+          requestDone: true
         });
         animateScrollTo(0);
       })
@@ -51,7 +53,8 @@ class Pagination extends Component {
   }
 
   render() {
-    if(this.state.content.length <= 0) return 'No results';
+    if(this.state.content.length <= 0 && !this.state.requestDone) return null;
+    if(this.state.content.length <= 0 && this.state.requestDone) return 'No results';
 
     return (
       <Fragment>
