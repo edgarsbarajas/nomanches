@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Pagination from '../common/Pagination';
 
-class Feed extends Component {
+class Home extends Component {
   render() {
     return (
       <div className='feed'>
         <Pagination
+          headline=''
           query='/words/feed'
           currentPage={this.props.location.search.split('?page=')[1] || 1}
         />
@@ -14,4 +15,4 @@ class Feed extends Component {
   }
 }
 
-export default Feed;
+export default Home;
