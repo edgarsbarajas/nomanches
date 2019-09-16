@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/home/Home';
 import Add from './components/Add';
+import WordsByUser from './components/WordsByUser';
 import Nav from './components/nav/Nav';
 import GlobalModal from './components/common/GlobalModal/GlobalModal';
 import './App.css';
@@ -26,6 +27,7 @@ class App extends Component {
                 <Route path='/login' component={Login}/>
                 <Route path='/register' component={Register}/>
                 <Route path='/add' component={Add}/>
+                <Route path='/:username' component={WordsByUser}/>
               </Switch>
             </div>
           </Router>

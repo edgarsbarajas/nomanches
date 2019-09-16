@@ -7,6 +7,7 @@ import Word from '../home/Word';
 class Pagination extends Component {
   state = {
     content: [],
+    totalWordCount: null,
     lastPage: null
   };
 
@@ -26,6 +27,7 @@ class Pagination extends Component {
       .then(response => {
         this.setState({
           content: response.data.words,
+          totalWordCount: response.data.totalWordCount,
           lastPage: response.data.lastPage
         });
         animateScrollTo(0);
@@ -33,31 +35,42 @@ class Pagination extends Component {
       .catch(error => console.log(error.response))
   }
 
-  hasReachedBottom = () => {
-    // Increase the page number and fetch the new batch of words
-    this.setState({ page: this.state.page + 1 }, () => {
-      this.fetchWords();
-    })
+  renderHeadline() {
+    let { headline } = this.props;
+
+    if(!headline) return null;
+
+    if(headline.includes('[word count]')) {
+      headline = headline.replace('[word count]', this.state.totalWordCount);
+      if(this.state.totalWordCount === 1) {
+        headline = headline.replace('definitions', 'defintion');
+      }
+    }
+
+    return <h1>{ headline }</h1>;
   }
 
   render() {
-    if(this.state.content.length <= 0) return null;
+    if(this.state.content.length <= 0) return 'No results';
 
     return (
-      <div className='content'>
-        { this.state.content.map(word => <Word key={word._id} word={word} />) }
-        <div className='pagination' style={styles.container}>
-          <div className='white-container' style={styles.pageNumbers}>
-            <Link to={`/?page=${parseInt(this.props.currentPage) - 1}`} className='arrow' style={styles.arrows}>{'<'}</Link>
-            <span className='pipe' style={styles.pipes}></span>
-            <div className='pages'>
-              { this.props.currentPage } of { this.state.lastPage }
+      <Fragment>
+        { this.renderHeadline() }
+        <div className='content'>
+          { this.state.content.map(word => <Word key={word._id} word={word} />) }
+          <div className='pagination' style={styles.container}>
+            <div className='white-container' style={styles.pageNumbers}>
+              <Link to={`?page=${parseInt(this.props.currentPage) - 1}`} className='arrow' style={styles.arrows}>{'<'}</Link>
+              <span className='pipe' style={styles.pipes}></span>
+              <div className='pages'>
+                { this.props.currentPage } of { this.state.lastPage }
+              </div>
+              <span className='pipe' style={styles.pipes}></span>
+              <Link to={`?page=${parseInt(this.props.currentPage) + 1}`} className='arrow' style={styles.arrows}>{'>'}</Link>
             </div>
-            <span className='pipe' style={styles.pipes}></span>
-            <Link to={`/?page=${parseInt(this.props.currentPage) + 1}`} className='arrow' style={styles.arrows}>{'>'}</Link>
           </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

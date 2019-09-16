@@ -6,6 +6,7 @@ class Home extends Component {
     return (
       <div className='feed'>
         <Pagination
+          headline=''
           query='/words/feed'
           currentPage={this.props.location.search.split('?page=')[1] || 1}
         />

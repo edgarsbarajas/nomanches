@@ -40,7 +40,7 @@ router.get('/feed/:page', (req, res) => {
       // res.json(words)
       return Word.countDocuments()
         .then(count => {
-          return res.json({ words, lastPage: Math.ceil(count / wordsPerPage) })
+          return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) })
         })
     })
     .catch(error => res.status(400).json(error));
@@ -55,16 +55,28 @@ router.get('/value/:value', (req, res) => {
 });
 
 // Option 4: return all word by a specific user /words/user/:username
-router.get('/user/:username', (req, res) => {
+router.get('/user/:username/:page', (req, res) => {
   // Find the user document using the username parameter
   User.findOne({ username: req.params.username })
     .then(user => {
       if(!user) return res.status(404).json({ User: 'No user with that username found.' });
 
       // Find words with the user's id
-      return Word.find({ 'user': user.id })
-        .populate('user')
-        .then(words => res.json(words))
+      const wordsPerPage = 6;
+      return Word.find({ user: user.id })
+        .lean()
+        .populate('user', 'username')
+        .populate('votes.up', 'user')
+        .populate('votes.down', 'user')
+        .skip((req.params.page - 1) * wordsPerPage)
+        .limit(wordsPerPage)
+        .then(words => {
+          // res.json(words)
+          return Word.countDocuments({ user: user.id })
+            .then(count => {
+              return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) })
+            })
+        })
     })
     .catch(error => res.status(400).json(error));
 })
