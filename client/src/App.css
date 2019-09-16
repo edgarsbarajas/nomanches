@@ -40,6 +40,11 @@ a {
   transition: color 0.3s ease-in;
 }
 
+a.inactive-link {
+  pointer-events: none;
+  cursor: default;
+}
+
 a:not(.logo):hover {
   color: #DB162F;
 }

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import classnames from 'classnames'
 import animateScrollTo from 'animated-scroll-to';
 import Word from '../home/Word';
 
@@ -66,13 +67,28 @@ class Pagination extends Component {
           { this.state.content.map(word => <Word key={word._id} word={word} />) }
           <div className='pagination' style={styles.container}>
             <div className='white-container' style={styles.pageNumbers}>
-              <Link to={`?page=${parseInt(this.props.currentPage) - 1}`} className='arrow' style={styles.arrows}>{'<'}</Link>
+              <Link
+                to={`?page=${parseInt(this.props.currentPage) - 1}`}
+                className={classnames('arrow', {
+                  'inactive-link': this.props.currentPage == 1
+                })}
+                style={styles.arrows}>
+                  {'<'}
+              </Link>
               <span className='pipe' style={styles.pipes}></span>
               <div className='pages'>
                 { this.props.currentPage } of { this.state.lastPage }
               </div>
               <span className='pipe' style={styles.pipes}></span>
-              <Link to={`?page=${parseInt(this.props.currentPage) + 1}`} className='arrow' style={styles.arrows}>{'>'}</Link>
+              <Link
+                to={`?page=${parseInt(this.props.currentPage) + 1}`}
+                className={classnames('arrow', {
+                  'inactive-link': this.props.currentPage == this.state.lastPage
+                })}
+                name='right'
+                style={styles.arrows}>
+                  {'>'}
+              </Link>
             </div>
           </div>
         </div>
