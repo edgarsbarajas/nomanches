@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import InfiniteScroll from '../common/InfiniteScroll';
+import Pagination from '../common/Pagination';
 
 class Feed extends Component {
   render() {
     return (
       <div className='feed'>
-        <InfiniteScroll
-          url='/words/feed'
+        <Pagination
+          query='/words/feed'
+          currentPage={this.props.location.search.split('?page=')[1] || 1}
         />
       </div>
     );
