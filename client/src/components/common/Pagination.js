@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import animateScrollTo from 'animated-scroll-to';
-import Word from '../feed/Word';
+import Word from '../home/Word';
 
 class Pagination extends Component {
   state = {

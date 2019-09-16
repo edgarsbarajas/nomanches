@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistor, store } from './store';
 import Login from './components/Login';
 import Register from './components/Register';
-import Feed from './components/feed/Feed';
+import Home from './components/home/Home';
 import Add from './components/Add';
 import Nav from './components/nav/Nav';
 import GlobalModal from './components/common/GlobalModal/GlobalModal';
@@ -22,7 +22,7 @@ class App extends Component {
             <GlobalModal />
             <div className='container'>
               <Switch>
-                <Route path='/' exact component={Feed}/>
+                <Route path='/' exact component={Home}/>
                 <Route path='/login' component={Login}/>
                 <Route path='/register' component={Register}/>
                 <Route path='/add' component={Add}/>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Pagination from '../common/Pagination';
 
-class Feed extends Component {
+class Home extends Component {
   render() {
     return (
       <div className='feed'>
@@ -14,4 +14,4 @@ class Feed extends Component {
   }
 }
 
-export default Feed;
+export default Home;
