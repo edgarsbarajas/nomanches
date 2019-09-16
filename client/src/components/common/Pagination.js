@@ -34,7 +34,10 @@ class Pagination extends Component {
         });
         animateScrollTo(0);
       })
-      .catch(error => console.log(error.response))
+      .catch(error => {
+        this.setState({ requestDone: true });
+        console.log(error.response)
+    })
   }
 
   renderHeadline() {
