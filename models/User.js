@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
       validator: (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
       message: () => 'Email is not valid'
     },
-    unique: true
+    unique: [true, 'email is taken']
   },
   password: {
     type: String,
@@ -36,6 +36,6 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-userSchema.plugin(uniqueValidator);
+userSchema.plugin(uniqueValidator, { message: '{PATH} is taken' });
 
 module.exports = new mongoose.model('User', userSchema);

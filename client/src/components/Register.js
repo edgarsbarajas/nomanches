@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import PostForm from './common/PostForm';
@@ -13,7 +14,8 @@ class Register extends Component {
     email: '',
     username: '',
     password: '',
-    errors: {}
+    errors: {},
+    redirect: false
   };
 
   onInputChange = event => {
@@ -33,12 +35,20 @@ class Register extends Component {
           password
         }
       )
-      .then(response => this.props.handleAuthSuccess(response.data))
+      .then(response => {
+        // Set the new user in redux, auth header, etc.
+        this.props.handleAuthSuccess(response.data)
+
+        // Redirect to the homepage
+        this.setState({ redirect: true });
+      })
       .catch(error => this.setState({ errors: error.response.data.errors }))
   }
 
   render() {
-    const { firstName, lastName, email, username, password, errors } = this.state;
+    const { firstName, lastName, email, username, password, errors, redirect } = this.state;
+
+    if(redirect) return <Redirect to='/' />;
 
     return (
       <PostForm
