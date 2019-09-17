@@ -43,6 +43,7 @@ a {
 a.inactive-link {
   pointer-events: none;
   cursor: default;
+  color: #e9e9e9;
 }
 
 a:not(.logo):hover {
