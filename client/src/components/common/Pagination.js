@@ -4,13 +4,15 @@ import axios from 'axios';
 import classnames from 'classnames'
 import animateScrollTo from 'animated-scroll-to';
 import Word from '../home/Word';
+import LoadingScreen from './LoadingScreen';
 
 class Pagination extends Component {
   state = {
     content: [],
     totalWordCount: null,
     lastPage: null,
-    requestDone: false
+    requestDone: false,
+    loading: true
   };
 
   componentDidMount = () => {
@@ -31,12 +33,13 @@ class Pagination extends Component {
           content: response.data.words,
           totalWordCount: response.data.totalWordCount,
           lastPage: response.data.lastPage,
-          requestDone: true
+          requestDone: true,
+          loading: false
         });
         animateScrollTo(0);
       })
       .catch(error => {
-        this.setState({ requestDone: true });
+        this.setState({ requestDone: true, loading: false });
         console.log(error.response)
     })
   }
@@ -57,15 +60,19 @@ class Pagination extends Component {
   }
 
   render() {
+    if(this.state.loading) return <LoadingScreen />
+
     if(this.state.content.length <= 0 && !this.state.requestDone) return null;
     if(this.state.content.length <= 0 && this.state.requestDone) return 'No results';
+
+
 
     return (
       <Fragment>
         { this.renderHeadline() }
         <div className='content w-100'>
           { this.state.content.map(word => <Word key={word._id} word={word} />) }
-          <div className=''>
+          <div>
             <div className='pagination white-container flex flex-row jc-c ai-c p-a'>
               <Link
                 to={`?page=${parseInt(this.props.currentPage) - 1}`}
