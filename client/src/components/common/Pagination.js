@@ -53,7 +53,7 @@ class Pagination extends Component {
       }
     }
 
-    return <h1>{ headline }</h1>;
+    return <h1 className='mb-l'>{ headline }</h1>;
   }
 
   render() {
@@ -63,30 +63,28 @@ class Pagination extends Component {
     return (
       <Fragment>
         { this.renderHeadline() }
-        <div className='content'>
+        <div className='content w-100'>
           { this.state.content.map(word => <Word key={word._id} word={word} />) }
-          <div className='pagination' style={styles.container}>
-            <div className='white-container' style={styles.pageNumbers}>
+          <div className=''>
+            <div className='pagination white-container flex flex-row jc-c ai-c p-a'>
               <Link
                 to={`?page=${parseInt(this.props.currentPage) - 1}`}
                 className={classnames('arrow', {
                   'inactive-link': this.props.currentPage == 1
-                })}
-                style={styles.arrows}>
+                })}>
                   {'<'}
               </Link>
-              <span className='pipe' style={styles.pipes}></span>
+              <span className='pipes'></span>
               <div className='pages'>
                 { this.props.currentPage } of { this.state.lastPage }
               </div>
-              <span className='pipe' style={styles.pipes}></span>
+              <span className='pipes'></span>
               <Link
                 to={`?page=${parseInt(this.props.currentPage) + 1}`}
                 className={classnames('arrow', {
                   'inactive-link': this.props.currentPage == this.state.lastPage
                 })}
-                name='right'
-                style={styles.arrows}>
+                name='right'>
                   {'>'}
               </Link>
             </div>
@@ -94,27 +92,6 @@ class Pagination extends Component {
         </div>
       </Fragment>
     );
-  }
-}
-
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  pageNumbers: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '8px 18px',
-    borderRadius: '1000px'
-  },
-  arrows: {},
-  pipes: {
-    width: '1px',
-    height: '100%',
-    backgroundColor: '#e9e9e9',
-    margin: '0 15px'
   }
 }
 

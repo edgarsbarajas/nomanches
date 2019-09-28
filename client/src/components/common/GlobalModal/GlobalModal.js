@@ -9,6 +9,7 @@ class GlobalModal extends Component {
   componentDidUpdate() {
     console.log('change deteched');
   }
+
   renderModalComponent() {
     switch(this.props.GlobalModalComponent) {
       case 'Login':

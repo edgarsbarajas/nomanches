@@ -19,13 +19,13 @@ class Word extends Component {
     const { votes } = word;
 
     return (
-      <div className='word white-container'>
-        <h2>{word.value}</h2>
-        <p className='definition'>{word.definition}</p>
-        <p className='example'>{word.example}</p>
-        <div className='publish-details'>
+      <div className='word white-container p-l mb-l lowercase'>
+        <h2 className='d-ib bg-dark fs-m fc-light mb-s pt-s pb-s pr-l pl-l'>{word.value}</h2>
+        <p className='definition fs-r mt-m mb-m'>{word.definition}</p>
+        <p className='example fs-r italic mt-m mb-m'>{word.example}</p>
+        <div className='publish-details fs-r mt-m mb-m'>
           <p>
-            by <Link to={`/${word.user.username}`} className='author'> {word.user.username}</Link> <span className='bullet'></span> {moment(word.createdAt).format('MMMM Do, YYYY')}
+            by <Link to={`/${word.user.username}`} className='author d-ib fw-b fc-dark'> {word.user.username}</Link> <span className='bullet'></span> {moment(word.createdAt).format('MMMM Do, YYYY')}
           </p>
         </div>
         <VoteSection

@@ -27,7 +27,10 @@ class VoteIcon extends Component {
     return (
       <svg
         onClick={this.onVoteOptionClick}
-        className={classNames('vote', {'downvote': !upvote})}
+        className={classNames('vote', {
+          'downvote mr-m ml-s': !upvote,
+          'ml-m' : upvote
+        })}
         fill={fill}
         height="35"
         width="35"

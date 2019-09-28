@@ -1,7 +1,10 @@
+/***** TAGS *****/
 * {
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
     -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
     outline: none !important;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -9,28 +12,13 @@ body {
   padding: 0;
   background-color: #fafafa;
   font-family: 'Poppins', sans-serif;
+  position: relative;
 }
 
 h1 {
   text-align: center;
   font-size: 20px;
   font-weight: 600;
-}
-
-div.container {
-  width: 100%;
-  max-width: 1010px;
-  margin: 90px auto 30px;
-  padding: 0 10px;
-  box-sizing: border-box;
-}
-
-div.container {
-  width: 100%;
-  max-width: 1010px;
-  margin: 90px auto 30px;
-  padding: 0 10px;
-  box-sizing: border-box;
 }
 
 a {
@@ -50,11 +38,90 @@ a:not(.logo):hover {
   color: #DB162F;
 }
 
+/***** COMMON *****/
+.d-b { display: block; }
+.d-ib { display: inline-block; }
+.flex { display: flex; }
+.fd-r { flex-direction: row; }
+.fd-c { flex-direction: column; }
+.jc-c { justify-content: center; }
+.ai-c { align-items: center; }
+.w-100 { width: 100%; }
+.bs-bb { box-sizing: border-box; }
+.p-a { position: absolute; }
+.p-r { position: relative; }
+.f-r { font-size: 16px; }
+.fs-m { font-size: 18px; }
+.fs-l { font-size: 20px; }
+.italic { font-style: italic; }
+.fc-light { color: #fff; }
+.fc-dark { color: #DB162F; }
+.fw-b { font-weight: 600; }
+.bg-dark { background-color: #DB162F; }
+.m-s { margin: 5px; }
+.m-m { margin: 10px; }
+.m-l { margin: 20px; }
+.mt-s { margin-top: 5px; }
+.mt-m { margin-top: 10px; }
+.mt-l { margin-top: 20px; }
+.mr-s { margin-right: 5px; }
+.mr-m { margin-right: 10px; }
+.mr-l { margin-right: 20px; }
+.mb-s { margin-bottom: 5px; }
+.mb-m { margin-bottom: 10px; }
+.mb-l { margin-bottom: 20px; }
+.ml-s { margin-left: 5px; }
+.ml-m { margin-left: 10px; }
+.ml-l { margin-left: 20px; }
+.p-s { padding: 5px; }
+.p-m { padding: 10px; }
+.p-l { padding: 20px; }
+.pt-s { padding-top: 5px; }
+.pt-m { padding-top: 10px; }
+.pt-l { padding-top: 20px; }
+.pr-s { padding-right: 5px; }
+.pr-m { padding-right: 10px; }
+.pr-l { padding-right: 20px; }
+.pb-s { padding-bottom: 5px; }
+.pb-m { padding-bottom: 10px; }
+.pb-l { padding-bottom: 20px; }
+.pl-s { padding-left: 5px; }
+.pl-m { padding-left: 10px; }
+.pl-l { padding-left: 20px; }
+.lowercase { text-transform: lowercase; }
+.br { border-radius: 2px; }
+
+/***** CONTAINER *****/
+div.container {
+  max-width: 1010px;
+  margin: 90px auto 0;
+  padding: 0 10px 90px;
+}
+
+/***** FEED / PAGINATION *****/
+.feed > .sidebar {
+  display: none;
+}
+
+.pagination {
+  width: fit-content;
+  height: 28px;
+  padding: 8px 18px;
+  border-radius: 1000px !important;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pipes {
+  width: 1px;
+  height: 100%;
+  background-color: #e9e9e9;
+  margin: 0 15px;
+}
+
+/***** FORMS *****/
 div.post-form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 90vw;
   max-width: 375px;
   margin: 0 auto;
@@ -84,11 +151,6 @@ div.white-container {
 div.post-form-container > form {
   width: 80%;
   max-width: 250px;
-}
-
-div.post-form-container > form > button {
-  display: block;
-  margin: 0 auto;
 }
 
 div.post-form-container > h1 {
@@ -151,22 +213,39 @@ div.post-form-container > form div.input-container > textarea {
   resize: none;
 }
 
-div.post-form-container > form button {
-  display: block;
-  width: 30%;
-  height: 32px;
-  background-color: #DB162F;
-  color: #fff;
+/***** BUTTONS *****/
+
+.cta {
+  display: inline-block;
   cursor: pointer;
   border-width: 0;
   border-radius: 2px;
   font-size: 14px;
   font-weight: 600;
-  transition: background-color 0.2s ease-in;
+  transition: all 0.2s ease-in;
+  padding: 7px 14px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-div.post-form-container > form button:hover {
+.cta.button-dark {
+  background-color: #DB162F;
+  color: #fff;
+}
+
+.cta.button-dark:hover {
   background-color: #ad1327;
+}
+
+.cta.button-light {
+  background-color: #fff;
+  color: #000;
+}
+
+.cta.button-light:hover {
+  background-color: #e9e9e9;
+  color: #000;
 }
 
 div.post-form-container .input-error {
@@ -182,4 +261,19 @@ div.post-form-container .input-error:last-child {
 div.post-form-container > .form-error {
   font-size: 12px;
   margin: 10px 0;
+}
+
+@media(min-width: 768px) {
+  .feed .content {
+    width: 70%;
+  }
+
+  .feed > .sidebar {
+    display: block;
+    position: sticky;
+    height: fit-content;
+    top: 75px;
+    width: 30%;
+    margin-left: 20px;
+  }
 }

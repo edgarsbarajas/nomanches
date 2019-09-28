@@ -5,10 +5,6 @@
   transform: translateX(-50%) scale(1);
 }
 
-.global-modal {
-
-}
-
 .global-modal-bg {
   position: fixed;
   width: 100vw;

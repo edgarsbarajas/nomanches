@@ -48,7 +48,7 @@ class VoteSection extends Component {
   render() {
     const { up, down } = this.props.word.votes;
     return (
-      <div className='votes'>
+      <div className='votes flex ai-c mt-l'>
         <span>{up.length}</span>
         {this.renderUpvotes()}
         {this.renderDownvotes()}
