@@ -21,6 +21,8 @@ export const logoutUser = () => dispatch => {
 export const handleAuthSuccess = user => dispatch => {
   // Set axios auth header
   setAuthorizationHeader(user.token)
+  // Set token in localStorage
+  setAuthTokenInLocalStorage(user.token)
   // Set current user in redux store
   dispatch(setCurrentUser(user))
   // Close the global modal if user is logging in through the modal
