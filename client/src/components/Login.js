@@ -10,7 +10,7 @@ import { setGlobalModalComponent } from '../actions/GlobalModalActions';
 
 class Login extends Component {
   state = {
-    username: 'edgar6',
+    username: 'thebestever',
     password: 'babycakes1',
     errors: {},
     redirect: false

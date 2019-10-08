@@ -14,7 +14,8 @@ const generateAuthToken = (req, res, payload) => {
 const authorizeUser = (req, res, next) => {
   if(req.headers['authorization']) {
     // Remove 'Bearer' from the token value
-    const token = req.headers['authorization'].split(' ')[1];
+    let token = req.headers['authorization'].split(' ');
+    token = token[token.length - 1];
 
     // check to see if the token is valid
     jwt.verify(token, process.env['JWT_SECRET'], (error, decoded) => {

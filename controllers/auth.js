@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-const { generateAuthToken } = require('../helpers');
+const { generateAuthToken, authorizeUser} = require('../helpers');
 
 router.post('/login', (req, res) => {
   User.findOne({username: req.body.username})
@@ -26,6 +26,10 @@ router.post('/login', (req, res) => {
       });
     })
     .catch(error => res.status(400).json(error));
+});
+
+router.get('/authenticate', authorizeUser, (req, res) => {
+  return res.json(req.current_user);
 });
 
 module.exports = router;
