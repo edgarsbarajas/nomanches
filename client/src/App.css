@@ -50,7 +50,7 @@ a:not(.logo):hover {
 .bs-bb { box-sizing: border-box; }
 .p-a { position: absolute; }
 .p-r { position: relative; }
-.f-r { font-size: 16px; }
+.fs-r { font-size: 16px; }
 .fs-m { font-size: 18px; }
 .fs-l { font-size: 20px; }
 .italic { font-style: italic; }
@@ -90,6 +90,7 @@ a:not(.logo):hover {
 .pl-l { padding-left: 20px; }
 .lowercase { text-transform: lowercase; }
 .br { border-radius: 2px; }
+.full { width: 100%; }
 
 /***** CONTAINER *****/
 div.container {

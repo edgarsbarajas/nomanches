@@ -1,5 +1,5 @@
 nav {
-  height: 55px;
+  /* height: 55px; */
   background-color: #fff;
   border-bottom: 1px solid #e9e9e9;
   position: fixed;
@@ -14,25 +14,55 @@ nav > div.nav-inner {
   justify-content: space-between;
   font-weight: 600;
   font-size: 22px;
-  padding: 0 10px;
+  padding: 5px 10px;
   height: 100%;
   max-width: 1010px;
   margin: 0 auto;
 }
 
-nav > div.nav-inner > .logo{
+nav > div.nav-inner > .logo {
   font-size: 24px;
 }
 
-nav > div.nav-inner > button.hamburger{
+nav div.right-nav {
+  width: 80%;
+}
+
+nav > div.nav-inner button.hamburger{
   border: none;
   background: transparent;
   outline: none;
   cursor: pointer;
 }
 
-nav > div.nav-inner > button.hamburger::after {
+nav > div.nav-inner button.hamburger::after {
   border: none;
   content: "☰";
-  font-size: 22px;
+  font-size: 32px;
+}
+
+nav .search {
+  position: relative;
+}
+
+nav .search input {
+  border: 2px solid #DB162F;
+  box-sizing: border-box;
+}
+
+nav .search button {
+  border: none;
+  position: absolute;
+  height: calc(100% - 2px);
+  right: 0;
+  bottom: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding: 9px 9px;
+}
+
+@media(min-width: 768px) {
+  nav div.right-nav {
+    width: 50%;
+  }
 }
