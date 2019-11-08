@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+import axios from 'axios';
 import SVG from '../common/SVG';
 
 class Search extends Component {
   state = {
     searchValue: '',
-    searchResults: ['tacones', 'tacefdde', 'tqefef', 'teranos']
+    searchResults: []
   };
 
   handleValueChange = event => {
-    this.setState({ searchValue: event.target.value });
+    this.setState({ searchValue: event.target.value }, () => {
+      axios
+        .get(`/words?potential_search=${this.state.searchValue}`)
+        .then(response => {
+          this.setState({searchResults: response.data});
+        })
+        .catch(error => {})
+    });
+
   }
 
   handleSearchSubmit = event => {
@@ -40,7 +49,7 @@ class Search extends Component {
           <div className='p-a full br'>
             <ul className='search-results full bs-bb white-container'>
             {
-              this.state.searchValue.split('').map(result => (
+              this.state.searchResults.map(result => (
                 <li className='pl-s pr-s fs-r fw-r pt-s pb-s pl-m'>
                   <Link to='/hello' className=''>{result}</Link>
                 </li>

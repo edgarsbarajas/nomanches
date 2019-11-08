@@ -17,7 +17,6 @@ router.post('/', authorizeUser, (req, res) => {
 // Option 0: Return words that match what the user is typing in the search bar
 router.get('/', (req, res) => {
   if(req.query.potential_search) {
-    console.log('got here');
     // Find the user document using the username parameter
     Word.find({ value: new RegExp(req.query.potential_search, 'i') }, '-_id value')
       .then(words => {
