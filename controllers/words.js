@@ -13,7 +13,32 @@ router.post('/', authorizeUser, (req, res) => {
     .catch(error => res.status(400).json(error));
 });
 
-// Read words - 3 options
+// Read words - 5 options
+// Option 0: Return words that match what the user is typing in the search bar
+router.get('/', (req, res) => {
+  if(req.query.potential_search) {
+    console.log('got here');
+    // Find the user document using the username parameter
+    Word.find({ value: new RegExp(req.query.potential_search, 'i') }, '-_id value')
+      .then(words => {
+        if(!words) return res.status(404).json({ Words: 'No words that match your term match.' });
+
+        // remove any duplicates
+        let uniqueWordsMap = {};
+        let uniqueWords = [];
+        for(let word of words) {
+          if(!uniqueWordsMap[word.value]) {
+            uniqueWordsMap[word.value] = word.value;
+            uniqueWords.push(word.value);
+          }
+        }
+
+        return res.json(uniqueWords);
+      })
+      .catch(error => res.status(400).json(error));
+  }
+})
+
 // Option 1: return one word according to a an ID - used to edit the word (eventually to have a dynamic share page) /words/:id
 router.get('/:id', (req, res) => {
   Word.findOne({ _id: req.params.id })
