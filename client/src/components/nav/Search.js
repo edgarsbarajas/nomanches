@@ -24,8 +24,13 @@ class Search extends Component {
 
   handleSearchSubmit = event => {
     event.preventDefault();
-
+    this.clearSearchResults();
     alert(this.state.searchValue);
+  }
+
+  clearSearchResults = () => {
+    // This will make the list of search results below the search input disappear
+    this.setState({ searchResults: [] });
   }
 
   render() {
@@ -39,6 +44,8 @@ class Search extends Component {
             type='text'
             value={this.state.value}
             onChange={this.handleValueChange}
+            onFocus={this.handleValueChange}
+            onBlur={this.clearSearchResults}
             className='br fs-r pr-m pl-m pt-s pb-s bs-bb full'
           />
         <button className='bg-dark fc-light'>
@@ -57,7 +64,7 @@ class Search extends Component {
 
                 return (
                   <li className='pl-s pr-s fs-r fw-r pt-s pb-s pl-m'>
-                    <Link to='/thebestever' className=''>
+                    <Link to='/thebestever' className='' onClick={this.clearSearchResults}>
                       {frontEnd}
                       <b>{searchValue}</b>
                       {backEnd}
