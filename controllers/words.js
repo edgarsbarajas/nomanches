@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
   if(req.query.potential_search) {
     // Find the user document using the username parameter
     Word.find({ value: new RegExp(req.query.potential_search, 'i') }, '-_id value')
+      .limit(8)
       .then(words => {
         if(!words) return res.status(404).json({ Words: 'No words that match your term match.' });
 
@@ -31,6 +32,9 @@ router.get('/', (req, res) => {
             uniqueWords.push(word.value);
           }
         }
+
+        // sort unique words in alphatical/descending order
+        uniqueWords = uniqueWords.sort();
 
         return res.json(uniqueWords);
       })

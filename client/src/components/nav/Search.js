@@ -29,7 +29,8 @@ class Search extends Component {
   }
 
   render() {
-    const hasValidSearchResults = this.state.searchResults.length > 0 && this.state.searchValue;
+    const { searchValue, searchResults } = this.state;
+    const hasValidSearchResults = searchResults.length > 0 && searchValue;
 
     return (
       <div className='search p-r mr-l full'>
@@ -49,11 +50,21 @@ class Search extends Component {
           <div className='p-a full br'>
             <ul className='search-results full bs-bb white-container'>
             {
-              this.state.searchResults.map(result => (
-                <li className='pl-s pr-s fs-r fw-r pt-s pb-s pl-m'>
-                  <Link to='/hello' className=''>{result}</Link>
-                </li>
-              ))
+              this.state.searchResults.map(result => {
+                const searchValueIndex = result.indexOf(searchValue);
+                const frontEnd = searchValueIndex !== 0 ? result.substr(0, searchValueIndex) : null;
+                const backEnd = result.substr(searchValueIndex + searchValue.length, result.length - searchValue.length);
+
+                return (
+                  <li className='pl-s pr-s fs-r fw-r pt-s pb-s pl-m'>
+                    <Link to='/thebestever' className=''>
+                      {frontEnd}
+                      <b>{searchValue}</b>
+                      {backEnd}
+                    </Link>
+                  </li>
+                )
+              })
             }
             </ul>
           </div>
