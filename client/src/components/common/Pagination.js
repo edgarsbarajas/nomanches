@@ -40,7 +40,6 @@ class Pagination extends Component {
       })
       .catch(error => {
         this.setState({ requestDone: true, loading: false });
-        console.log(error.response)
     })
   }
 
@@ -64,8 +63,6 @@ class Pagination extends Component {
 
     if(this.state.content.length <= 0 && !this.state.requestDone) return null;
     if(this.state.content.length <= 0 && this.state.requestDone) return 'No results';
-
-
 
     return (
       <Fragment>
