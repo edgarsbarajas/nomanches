@@ -18,12 +18,14 @@ class Search extends Component {
 
   handleValueChange = event => {
     this.setState({ searchValue: event.target.value, searchResultsOpen: true }, () => {
-      axios
-        .get(`/words?potential_search=${this.state.searchValue}`)
-        .then(response => {
-          this.setState({searchResults: response.data});
-        })
-        .catch(error => {})
+      if(this.state.searchValue) {
+        axios
+          .get(`/words?potential_search=${this.state.searchValue}`)
+          .then(response => {
+            this.setState({searchResults: response.data});
+          })
+          .catch(error => {})
+      }
     });
   }
 
