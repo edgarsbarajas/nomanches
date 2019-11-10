@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/home/Home';
 import Add from './components/Add';
+import WordsByValue from './components/WordsByValue';
 import WordsByUser from './components/WordsByUser';
 import Nav from './components/nav/Nav';
 import GlobalModal from './components/common/GlobalModal/GlobalModal';
@@ -48,6 +49,7 @@ class App extends Component {
                 isAuthenticated={this.userIsLoggedIn}
                 redirectTo='/login?redirect=true'
               />
+              <Route path='/words/:value' exact component={WordsByValue} />
               <Route path='/:username' component={WordsByUser} />
             </Switch>
           </div>

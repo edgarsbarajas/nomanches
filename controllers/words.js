@@ -82,6 +82,23 @@ router.get('/value/:value', (req, res) => {
     .catch(error => res.status(400).json(error));
 });
 
+// Option 3.5: return defintions for all words with the sane term /words/value/:value/page/:page
+router.get('/value/:value/page/:page', (req, res) => {
+  const wordsPerPage = 6;
+  Word.find({ value: req.params.value.toLowerCase() })
+    .lean()
+    .populate('user', 'username')
+    .populate('votes.up', 'user')
+    .populate('votes.down', 'user')
+    .skip((req.params.page - 1) * wordsPerPage)
+    .limit(wordsPerPage)
+    .then(words => {
+      const count = words.length;
+      return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) })
+    })
+    .catch(error => res.status(400).json(error));
+});
+
 // Option 4: return all word by a specific user /words/user/:username
 router.get('/user/:username/:page', (req, res) => {
   // Find the user document using the username parameter

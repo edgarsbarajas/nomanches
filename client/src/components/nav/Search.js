@@ -7,11 +7,17 @@ import SVG from '../common/SVG';
 class Search extends Component {
   state = {
     searchValue: '',
-    searchResults: []
+    searchResults: [],
+    searchResultsOpen: false,
+    mousedownHappened: false
   };
 
+  toggleSearchResults = () => {
+    this.setState({ searchResultsOpen: !this.state.searchResultsOpen });
+  }
+
   handleValueChange = event => {
-    this.setState({ searchValue: event.target.value }, () => {
+    this.setState({ searchValue: event.target.value, searchResultsOpen: true }, () => {
       axios
         .get(`/words?potential_search=${this.state.searchValue}`)
         .then(response => {
@@ -19,22 +25,40 @@ class Search extends Component {
         })
         .catch(error => {})
     });
-
   }
 
   handleSearchSubmit = event => {
     event.preventDefault();
-    this.clearSearchResults();
-    alert(this.state.searchValue);
+    if(this.state.searchValue) {
+      window.location = `/words/${this.state.searchValue}`;
+    }
   }
 
-  clearSearchResults = () => {
-    // This will make the list of search results below the search input disappear
-    this.setState({ searchResults: [] });
+  handleSearchResultClick = event => {
+    this.setState({
+      searchValue: event.target.href.split('/words/')[1].split('-').join(' '),
+      mousedownHappened: false
+    }, this.toggleSearchResults());
+  }
+
+  handleSearchResultMousedown = () => {
+    this.setState({ mousedownHappened: true });
+  }
+
+  handleSearchOnFocus = () => {
+    if(this.state.searchValue) {
+      this.setState({ searchResultsOpen: true });
+    }
+  }
+
+  handleSearchOnBlur = () => {
+    if(!this.state.mousedownHappened) {
+      this.setState({ searchResultsOpen: false });
+    }
   }
 
   render() {
-    const { searchValue, searchResults } = this.state;
+    const { searchValue, searchResults, searchResultsOpen } = this.state;
     const hasValidSearchResults = searchResults.length > 0 && searchValue;
 
     return (
@@ -42,10 +66,10 @@ class Search extends Component {
         <form className='full' onSubmit={this.handleSearchSubmit}>
           <input
             type='text'
-            value={this.state.value}
+            value={searchValue}
             onChange={this.handleValueChange}
-            onFocus={this.handleValueChange}
-            onBlur={this.clearSearchResults}
+            onFocus={this.handleSearchOnFocus}
+            onBlur={this.handleSearchOnBlur}
             className='br fs-r pr-m pl-m pt-s pb-s bs-bb full'
           />
         <button className='bg-dark fc-light'>
@@ -53,7 +77,7 @@ class Search extends Component {
         </button>
       </form>
       {
-        hasValidSearchResults ? (
+        hasValidSearchResults && searchResultsOpen ? (
           <div className='p-a full br'>
             <ul className='search-results full bs-bb white-container'>
             {
@@ -64,10 +88,15 @@ class Search extends Component {
 
                 return (
                   <li className='pl-s pr-s fs-r fw-r pt-s pb-s pl-m'>
-                    <Link to='/thebestever' className='' onClick={this.clearSearchResults}>
-                      {frontEnd}
-                      <b>{searchValue}</b>
-                      {backEnd}
+                    <Link
+                      to={`/words/${result.split(' ').join('-')}`}
+                      className=''
+                      onClick={this.handleSearchResultClick}
+                      onMouseDown={this.handleSearchResultMousedown}
+                    >
+                        {frontEnd}
+                        <b>{searchValue}</b>
+                        {backEnd}
                     </Link>
                   </li>
                 )

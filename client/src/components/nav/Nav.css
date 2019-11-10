@@ -58,6 +58,7 @@ nav .search button {
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
   padding: 9px 9px;
+  cursor: pointer;
 }
 
 nav .search ul.search-results {
