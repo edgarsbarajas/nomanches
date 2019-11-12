@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import classnames from 'classnames';
 import axios from 'axios';
 import SVG from '../common/SVG';
@@ -32,7 +32,8 @@ class Search extends Component {
   handleSearchSubmit = event => {
     event.preventDefault();
     if(this.state.searchValue) {
-      window.location = `/words/${this.state.searchValue}`;
+      // window.location = `/words/${this.state.searchValue}`;
+      // return <Redirect to={{ pathname: `/words/${this.state.searchValue}` }} />
     }
   }
 

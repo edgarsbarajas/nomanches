@@ -20,7 +20,7 @@ class Pagination extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevProps.currentPage !== this.props.currentPage) {
+    if(prevProps.currentPage !== this.props.currentPage || prevProps.query !== this.props.query) {
       this.fetchWords();
     }
   }
