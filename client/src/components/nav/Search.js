@@ -9,22 +9,27 @@ class Search extends Component {
     searchValue: '',
     searchResults: [],
     searchResultsOpen: false,
-    mousedownHappened: false
+    mousedownHappened: false,
+    redirect: false
   };
 
   toggleSearchResults = () => {
     this.setState({ searchResultsOpen: !this.state.searchResultsOpen });
   }
 
+  fetchSearchResults = () => {
+    axios
+      .get(`/words?potential_search=${this.state.searchValue}`)
+      .then(response => {
+        this.setState({ searchResults: response.data });
+      })
+      .catch(error => {})
+  }
+
   handleValueChange = event => {
-    this.setState({ searchValue: event.target.value, searchResultsOpen: true }, () => {
+    this.setState({ searchValue: event.target.value.toLowerCase(), searchResultsOpen: true }, () => {
       if(this.state.searchValue) {
-        axios
-          .get(`/words?potential_search=${this.state.searchValue}`)
-          .then(response => {
-            this.setState({searchResults: response.data});
-          })
-          .catch(error => {})
+        this.fetchSearchResults();
       }
     });
   }
@@ -32,16 +37,19 @@ class Search extends Component {
   handleSearchSubmit = event => {
     event.preventDefault();
     if(this.state.searchValue) {
-      // window.location = `/words/${this.state.searchValue}`;
-      // return <Redirect to={{ pathname: `/words/${this.state.searchValue}` }} />
+      this.setState({ redirect: true }, () => this.setState({ redirect: false }));
+      this.handleSearchOnBlur();
     }
   }
 
-  handleSearchResultClick = event => {
+  handleSearchResultClick = (event, searchValue) => {
     this.setState({
-      searchValue: event.target.href.split('/words/')[1].split('-').join(' '),
+      searchValue,
       mousedownHappened: false
-    }, this.toggleSearchResults());
+    }, () => {
+      this.toggleSearchResults();
+      this.fetchSearchResults();
+    });
   }
 
   handleSearchResultMousedown = () => {
@@ -60,16 +68,53 @@ class Search extends Component {
     }
   }
 
-  render() {
+  renderSearchResults = () => {
     const { searchValue, searchResults, searchResultsOpen } = this.state;
     const hasValidSearchResults = searchResults.length > 0 && searchValue;
+    let searchValueIndex;
+    let frontEnd;
+    let backEnd;
 
+    if(hasValidSearchResults && searchResultsOpen) {
+      return (
+        <div className='p-a full br'>
+          <ul className='search-results full bs-bb white-container'>
+          {
+            this.state.searchResults.map(result => {
+              searchValueIndex = result.indexOf(searchValue);
+              frontEnd = searchValueIndex !== 0 ? result.substr(0, searchValueIndex) : null;
+              backEnd = result.substr(searchValueIndex + searchValue.length, result.length - searchValue.length);
+
+              return (
+                <li className='pl-s pr-s fs-r fw-r pt-s pb-s pl-m' key={result}>
+                  <Link
+                    to={`/words/${result.split(' ').join('-')}`}
+                    className=''
+                    onClick={event => this.handleSearchResultClick(event, result)}
+                    onMouseDown={this.handleSearchResultMousedown}
+                  >
+                      {frontEnd}
+                      <b>{searchValue}</b>
+                      {backEnd}
+                  </Link>
+                </li>
+              )
+            })
+          }
+          </ul>
+        </div>
+      )
+    }
+  }
+
+  render() {
     return (
       <div className='search p-r mr-l full'>
+        { this.state.redirect && <Redirect to={`/words/${this.state.searchValue.trim()}`} /> }
         <form className='full' onSubmit={this.handleSearchSubmit}>
           <input
             type='text'
-            value={searchValue}
+            value={this.state.searchValue}
             onChange={this.handleValueChange}
             onFocus={this.handleSearchOnFocus}
             onBlur={this.handleSearchOnBlur}
@@ -79,36 +124,7 @@ class Search extends Component {
           <SVG fill='#fff' width={20} viewBox='0 0 179.76 179.92' name='search' />
         </button>
       </form>
-      {
-        hasValidSearchResults && searchResultsOpen ? (
-          <div className='p-a full br'>
-            <ul className='search-results full bs-bb white-container'>
-            {
-              this.state.searchResults.map(result => {
-                const searchValueIndex = result.indexOf(searchValue);
-                const frontEnd = searchValueIndex !== 0 ? result.substr(0, searchValueIndex) : null;
-                const backEnd = result.substr(searchValueIndex + searchValue.length, result.length - searchValue.length);
-
-                return (
-                  <li className='pl-s pr-s fs-r fw-r pt-s pb-s pl-m'>
-                    <Link
-                      to={`/words/${result.split(' ').join('-')}`}
-                      className=''
-                      onClick={this.handleSearchResultClick}
-                      onMouseDown={this.handleSearchResultMousedown}
-                    >
-                        {frontEnd}
-                        <b>{searchValue}</b>
-                        {backEnd}
-                    </Link>
-                  </li>
-                )
-              })
-            }
-            </ul>
-          </div>
-        ) : null
-      }
+      { this.renderSearchResults() }
     </div>
     );
   }

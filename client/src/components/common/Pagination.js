@@ -12,20 +12,27 @@ class Pagination extends Component {
     totalWordCount: null,
     lastPage: null,
     requestDone: false,
-    loading: true
+    loading: false
   };
 
   componentDidMount = () => {
+    this.setState({ loading: true });
     this.fetchWords();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevProps.currentPage !== this.props.currentPage || prevProps.query !== this.props.query) {
+    if(prevProps.currentPage !== this.props.currentPage) {
+      this.fetchWords();
+    }
+
+    if(prevProps.query !== this.props.query) {
+      this.setState({ loading: true });
       this.fetchWords();
     }
   }
 
   fetchWords() {
+    console.log(this.props.query);
     axios
       .get(`${this.props.query}/${this.props.currentPage}`)
       .then(response => {
