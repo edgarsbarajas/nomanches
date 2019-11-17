@@ -109,7 +109,7 @@ class Search extends Component {
 
   render() {
     return (
-      <div className='search p-r mr-l full'>
+      <div className='search p-r ml-l mr-l full'>
         { this.state.redirect && <Redirect to={`/words/${this.state.searchValue.trim()}`} /> }
         <form className='full' onSubmit={this.handleSearchSubmit}>
           <input
@@ -118,7 +118,7 @@ class Search extends Component {
             onChange={this.handleValueChange}
             onFocus={this.handleSearchOnFocus}
             onBlur={this.handleSearchOnBlur}
-            className='br fs-r pr-m pl-m pt-s pb-s bs-bb full'
+            className='br fs-r pl-m pt-s pb-s bs-bb full'
           />
         <button className='bg-dark fc-light'>
           <SVG fill='#fff' width={20} viewBox='0 0 179.76 179.92' name='search' />

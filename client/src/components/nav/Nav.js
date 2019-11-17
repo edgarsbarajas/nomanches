@@ -12,8 +12,8 @@ class Nav extends Component {
       <Fragment>
         <nav>
           <div className='nav-inner'>
-            <Link to='/' className='logo'>¡nm!</Link>
-            <div className='right-nav flex ai-c'>
+            <Link to='/' className='logo d-ib fs-l fc-light pt-s pb-s pr-l pl-l'></Link>
+            <div className='right-nav flex ai-c '>
               <Search />
               <button className='hamburger' onClick={() => this.props.setGlobalModalComponent('NavMenu')}></button>
             </div>

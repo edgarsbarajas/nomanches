@@ -20,7 +20,11 @@ nav > div.nav-inner {
 }
 
 nav > div.nav-inner > .logo {
-  font-size: 24px;
+  background-color: #000;
+}
+
+nav > div.nav-inner > .logo::after {
+  content: "¡nm!";
 }
 
 nav div.right-nav {
@@ -47,6 +51,7 @@ nav .search {
 nav .search input {
   border: 2px solid #DB162F;
   font-family: inherit;
+  padding-right: 45px;
 }
 
 nav .search button {
@@ -83,5 +88,8 @@ nav .search ul.search-results li:not(:last-child) {
 @media(min-width: 768px) {
   nav div.right-nav {
     width: 50%;
+  }
+  nav > div.nav-inner > .logo::after {
+    content: "¡no manches!";
   }
 }
