@@ -47,6 +47,7 @@ a:not(.logo):hover {
 .jc-c { justify-content: center; }
 .ai-c { align-items: center; }
 .w-100 { width: 100%; }
+.w-fc { width: fit-content; }
 .bs-bb { box-sizing: border-box; }
 .p-a { position: absolute; }
 .p-r { position: relative; }
@@ -150,23 +151,23 @@ div.post-form-container a.sub-message span {
   border: 1px solid #e9e9e9;
 }
 
-div.post-form-container > form {
+div.post-form-container form {
   width: 80%;
   max-width: 250px;
 }
 
-div.post-form-container > h1 {
+div.post-form-container h1 {
   margin: 0;
   font-size: 20px;
 }
 
-div.post-form-container > form div.input-container {
+div.post-form-container form div.input-container {
   display: block;
   position: relative;
   margin: 15px 0;
 }
 
-div.post-form-container > form div.input-container > label {
+div.post-form-container form div.input-container > label {
   position: absolute;
   font-size: 10px;
   top: 1.5px;
@@ -175,7 +176,7 @@ div.post-form-container > form div.input-container > label {
   transition: all 0.1s ease-out;
 }
 
-div.post-form-container > form div.input-container > label.expanded {
+div.post-form-container form div.input-container > label.expanded {
   top: 50%;
   left: 8px;
   transform: translateY(-50%);
@@ -183,7 +184,7 @@ div.post-form-container > form div.input-container > label.expanded {
   cursor: inherit;
 }
 
-div.post-form-container > form div.input-container > span.char-count {
+div.post-form-container form div.input-container > span.char-count {
   position: absolute;
   right: 2%;
   bottom: 0;
@@ -191,8 +192,8 @@ div.post-form-container > form div.input-container > span.char-count {
   color: #999;
 }
 
-div.post-form-container > form div.input-container > input,
-div.post-form-container > form div.input-container > textarea {
+div.post-form-container form div.input-container > input,
+div.post-form-container form div.input-container > textarea {
   display: block;
   width: 100%;
   padding-left: 8px;
@@ -204,12 +205,12 @@ div.post-form-container > form div.input-container > textarea {
   box-sizing: border-box;
 }
 
-div.post-form-container > form div.input-container > input {
+div.post-form-container form div.input-container > input {
   height: 42px;
   padding-top: 9px;
 }
 
-div.post-form-container > form div.input-container > textarea {
+div.post-form-container form div.input-container > textarea {
   height: 120px;
   padding-top: 16px;
   resize: none;
@@ -260,7 +261,7 @@ div.post-form-container .input-error:last-child {
   margin-bottom: 15px;
 }
 
-div.post-form-container > .form-error {
+div.post-form-container .form-error {
   font-size: 12px;
   margin: 10px 0;
 }

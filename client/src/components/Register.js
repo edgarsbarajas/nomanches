@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import MainContainer from './common/MainContainer';
 import PostForm from './common/PostForm';
 import Input from './common/Input';
 import { handleAuthSuccess } from '../actions/AuthActions';
@@ -51,53 +52,55 @@ class Register extends Component {
     if(redirect) return <Redirect to='/' />;
 
     return (
-      <PostForm
-        onSubmit={this.onSubmit}
-        header='register'
-        error={errors.register}
-      >
-        <Input
-          type='text'
-          name='firstName'
-          label='first name'
-          value={firstName}
-          error={errors.firstName}
-          onChange={this.onInputChange}
-        />
-        <Input
-          type='text'
-          name='lastName'
-          label='last name'
-          value={lastName}
-          error={errors.lastName}
-          onChange={this.onInputChange}
-        />
-        <Input
-          type='email'
-          name='email'
-          label='e-mail'
-          value={email}
-          error={errors.email}
-          onChange={this.onInputChange}
-        />
-        <Input
-          type='text'
-          name='username'
-          label='username'
-          value={username}
-          error={errors.username}
-          onChange={this.onInputChange}
-        />
-        <Input
-          type='password'
-          name='password'
-          label='password'
-          value={password}
-          error={errors.password}
-          onChange={this.onInputChange}
-        />
-      <Link to='/login' className='sub-message'>already have an account? <span>sign in</span></Link>
-      </PostForm>
+      <MainContainer>
+        <PostForm
+          onSubmit={this.onSubmit}
+          header='register'
+          error={errors.register}
+        >
+          <Input
+            type='text'
+            name='firstName'
+            label='first name'
+            value={firstName}
+            error={errors.firstName}
+            onChange={this.onInputChange}
+          />
+          <Input
+            type='text'
+            name='lastName'
+            label='last name'
+            value={lastName}
+            error={errors.lastName}
+            onChange={this.onInputChange}
+          />
+          <Input
+            type='email'
+            name='email'
+            label='e-mail'
+            value={email}
+            error={errors.email}
+            onChange={this.onInputChange}
+          />
+          <Input
+            type='text'
+            name='username'
+            label='username'
+            value={username}
+            error={errors.username}
+            onChange={this.onInputChange}
+          />
+          <Input
+            type='password'
+            name='password'
+            label='password'
+            value={password}
+            error={errors.password}
+            onChange={this.onInputChange}
+          />
+        <Link to='/login' className='sub-message'>already have an account? <span>sign in</span></Link>
+        </PostForm>
+      </MainContainer>
     )
   }
 }
