@@ -1,10 +1,11 @@
 import React from 'react';
+import MainContainer from './common/MainContainer';
 
 const AddWordSuccess = () => {
   return (
-    <div>
+    <MainContainer classNames='post-form-container ai-c'>
       Success!
-    </div>
+    </MainContainer>
   );
 }
 

@@ -8,9 +8,9 @@ import { setGlobalModalComponent } from '../actions/GlobalModalActions';
 
 class Add extends Component {
   state = {
-    word: '',
-    definition: '',
-    example: '',
+    word: 'owowowowwowowo',
+    definition: 'owowowowowowoowowow',
+    example: 'owowowoowwowowowo',
     errors: {}
   };
 

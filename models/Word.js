@@ -43,6 +43,11 @@ const wordSchema = new mongoose.Schema({
     type: Date,
     required: true,
     default: new Date
+  },
+  approved: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 });
 
