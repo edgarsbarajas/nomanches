@@ -15,3 +15,8 @@ div.word > div.votes > svg.vote {
 div.word > div.votes > svg.vote.downvote {
   transform: rotate(180deg);
 }
+
+div.word > div.votes > span {
+  min-width: 10px;
+  text-align: center;
+}
