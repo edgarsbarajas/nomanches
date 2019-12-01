@@ -93,14 +93,23 @@ a:not(.logo):hover {
 .lowercase { text-transform: lowercase; }
 .br { border-radius: 2px; }
 .full { width: 100%; }
+.ta-c { text-align: center; }
 
 /***** CONTAINER *****/
-div.container {
+.tall {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  min-height: 325px;
+}
+.fixed-width {
+  width: 90vw;
+  max-width: 375px;
+}
+.container {
   max-width: 1010px;
   margin: 90px auto 0;
   padding: 0 10px 90px;
 }
-
 /***** FEED / PAGINATION *****/
 .feed > .sidebar {
   display: none;
@@ -114,6 +123,7 @@ div.container {
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
+  box-sizing: content-box !important;
 }
 
 .pipes {
@@ -124,15 +134,12 @@ div.container {
 }
 
 /***** FORMS *****/
-div.post-form-container {
-  width: 90vw;
-  max-width: 375px;
+div.form-container {
   margin: 0 auto;
-  padding: 80px 0;
   position: relative;
 }
 
-div.post-form-container a.sub-message {
+div.form-container a.sub-message {
   font-size: 14px;
   bottom: 5%;
   left: 50%;
@@ -141,7 +148,7 @@ div.post-form-container a.sub-message {
   white-space: nowrap;
 }
 
-div.post-form-container a.sub-message span {
+div.form-container a.sub-message span {
   text-decoration: underline;
 }
 
@@ -149,25 +156,26 @@ div.post-form-container a.sub-message span {
   background-color: #fff;
   border-radius: 2px;
   border: 1px solid #e9e9e9;
+  box-sizing: border-box;
 }
 
-div.post-form-container form {
+div.form-container form {
   width: 80%;
   max-width: 250px;
 }
 
-div.post-form-container h1 {
+div.form-container h1 {
   margin: 0;
   font-size: 20px;
 }
 
-div.post-form-container form div.input-container {
+div.form-container form div.input-container {
   display: block;
   position: relative;
   margin: 15px 0;
 }
 
-div.post-form-container form div.input-container > label {
+div.form-container form div.input-container > label {
   position: absolute;
   font-size: 10px;
   top: 1.5px;
@@ -176,7 +184,7 @@ div.post-form-container form div.input-container > label {
   transition: all 0.1s ease-out;
 }
 
-div.post-form-container form div.input-container > label.expanded {
+div.form-container form div.input-container > label.expanded {
   top: 50%;
   left: 8px;
   transform: translateY(-50%);
@@ -184,7 +192,7 @@ div.post-form-container form div.input-container > label.expanded {
   cursor: inherit;
 }
 
-div.post-form-container form div.input-container > span.char-count {
+div.form-container form div.input-container > span.char-count {
   position: absolute;
   right: 2%;
   bottom: 0;
@@ -192,8 +200,8 @@ div.post-form-container form div.input-container > span.char-count {
   color: #999;
 }
 
-div.post-form-container form div.input-container > input,
-div.post-form-container form div.input-container > textarea {
+div.form-container form div.input-container > input,
+div.form-container form div.input-container > textarea {
   display: block;
   width: 100%;
   padding-left: 8px;
@@ -205,12 +213,12 @@ div.post-form-container form div.input-container > textarea {
   box-sizing: border-box;
 }
 
-div.post-form-container form div.input-container > input {
+div.form-container form div.input-container > input {
   height: 42px;
   padding-top: 9px;
 }
 
-div.post-form-container form div.input-container > textarea {
+div.form-container form div.input-container > textarea {
   height: 120px;
   padding-top: 16px;
   resize: none;
@@ -251,17 +259,17 @@ div.post-form-container form div.input-container > textarea {
   color: #000;
 }
 
-div.post-form-container .input-error {
+div.form-container .input-error {
   font-size: 12px;
   margin-top: -10px;
   padding-left: 10px;
 }
 
-div.post-form-container .input-error:last-child {
+div.form-container .input-error:last-child {
   margin-bottom: 15px;
 }
 
-div.post-form-container .form-error {
+div.form-container .form-error {
   font-size: 12px;
   margin: 10px 0;
 }

@@ -41,7 +41,7 @@ class Add extends Component {
     const { word, definition, example, errors } = this.state;
 
     return (
-      <MainContainer classNames='post-form-container ai-c'>
+      <MainContainer classNames='form-container fixed-width ai-c tall'>
         <PostForm
           onSubmit={this.onSubmit}
           header='add a word'

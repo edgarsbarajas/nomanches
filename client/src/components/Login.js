@@ -46,7 +46,7 @@ class Login extends Component {
     if(redirect) return <Redirect to='/' />;
 
     return (
-      <MainContainer classNames='post-form-container ai-c'>
+      <MainContainer classNames='form-container fixed-width ai-c tall'>
         <PostForm
           onSubmit={this.onSubmit}
           header='login'

@@ -9,8 +9,8 @@ import './NavMenu.css';
 
 const NavMenu = (props) => {
   return (
-    <MainContainer classNames='post-form-container'>
-      <div className='menu'>
+    <MainContainer classNames='fixed-width tall ai-c jc-c ta-c fw-b'>
+      <div className=''>
         <Link to='/add' onClick={() => props.setGlobalModalComponent(null)}>add a word</Link>
           {
             isEmpty(props.user) ? (

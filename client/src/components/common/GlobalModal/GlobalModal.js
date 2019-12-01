@@ -19,7 +19,7 @@ class GlobalModal extends Component {
       case 'NavMenu':
         return <NavMenu />;
       case 'AddWordSuccess':
-        return <AddWordSuccess />
+        return <AddWordSuccess />;
       default:
         return null;
     }
