@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import MainContainer from './common/MainContainer';
 import PostForm from './common/PostForm';
 import Input from './common/Input';
 import { handleAuthSuccess } from '../actions/AuthActions';
@@ -45,35 +46,37 @@ class Login extends Component {
     if(redirect) return <Redirect to='/' />;
 
     return (
-      <PostForm
-        onSubmit={this.onSubmit}
-        header='login'
-        error={errors.login}
-      >
-        <Input
-          type='text'
-          name='username'
-          label='username'
-          value={username}
-          error={errors.username}
-          onChange={this.onInputChange}
-        />
-        <Input
-          type='password'
-          name='password'
-          label='password'
-          value={password}
-          error={errors.password}
-          onChange={this.onInputChange}
-        />
-        <Link
-          to='/register'
-          className='sub-message'
-          onClick={() => this.props.setGlobalModalComponent(null)}
+      <MainContainer classNames='form-container fixed-width ai-c tall'>
+        <PostForm
+          onSubmit={this.onSubmit}
+          header='login'
+          error={errors.login}
         >
-          new to no manches? <span>sign up</span>
-        </Link>
-      </PostForm>
+          <Input
+            type='text'
+            name='username'
+            label='username'
+            value={username}
+            error={errors.username}
+            onChange={this.onInputChange}
+          />
+          <Input
+            type='password'
+            name='password'
+            label='password'
+            value={password}
+            error={errors.password}
+            onChange={this.onInputChange}
+          />
+          <Link
+            to='/register'
+            className='sub-message'
+            onClick={() => this.props.setGlobalModalComponent(null)}
+          >
+            new to no manches? <span>sign up</span>
+          </Link>
+        </PostForm>
+      </MainContainer>
     )
   }
 }

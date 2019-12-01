@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { logoutUser } from '../../actions/AuthActions';
 import { setGlobalModalComponent } from '../../actions/GlobalModalActions';
+import MainContainer from '../common/MainContainer';
 import './NavMenu.css';
 
 const NavMenu = (props) => {
   return (
-    <div className='post-form-container white-container'>
-      <div className='menu'>
+    <MainContainer classNames='fixed-width tall ai-c jc-c ta-c fw-b'>
+      <div className=''>
         <Link to='/add' onClick={() => props.setGlobalModalComponent(null)}>add a word</Link>
           {
             isEmpty(props.user) ? (
@@ -30,7 +31,7 @@ const NavMenu = (props) => {
             )
           }
       </div>
-    </div>
+    </MainContainer>
   );
 }
 

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import MainContainer from '../MainContainer';
 import Login from '../../Login';
+import AddWordSuccess from '../../AddWordSuccess';
 import NavMenu from '../../nav/NavMenu';
 import { setGlobalModalComponent } from '../../../actions/GlobalModalActions';
 import './GlobalModal.css';
@@ -16,6 +18,8 @@ class GlobalModal extends Component {
         return <Login />;
       case 'NavMenu':
         return <NavMenu />;
+      case 'AddWordSuccess':
+        return <AddWordSuccess />;
       default:
         return null;
     }

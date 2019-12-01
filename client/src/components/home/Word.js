@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import MainContainer from '../common/MainContainer';
 import './Word.css';
 import VoteSection from './VoteSection';
 
@@ -19,8 +20,8 @@ class Word extends Component {
     const { votes } = word;
 
     return (
-      <div className='word white-container p-l mb-l lowercase'>
-        <h2 className='d-ib bg-dark fs-m fc-light mb-s pt-s pb-s pr-l pl-l'>{word.value}</h2>
+      <MainContainer classNames='word mb-l lowercase'>
+        <h2 className='w-fc d-ib bg-dark fs-m fc-light mb-s pt-s pb-s pr-l pl-l'>{word.value}</h2>
         <p className='definition fs-r mt-m mb-m'>{word.definition}</p>
         <p className='example fs-r italic mt-m mb-m'>{word.example}</p>
         <div className='publish-details fs-r mt-m mb-m'>
@@ -32,7 +33,7 @@ class Word extends Component {
           word={word}
           onVoteSuccess={this.onVoteSuccess}
         />
-      </div>
+    </MainContainer>
     );
   }
 }

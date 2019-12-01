@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const sgMail = require('@sendgrid/mail');
 const { authorizeUser } = require('../helpers');
 const Word = require('../models/Word');
 const User = require('../models/User');
@@ -9,7 +10,23 @@ router.post('/', authorizeUser, (req, res) => {
   // Add the current user's id as the user reference
   new Word({...req.body, value: req.body.value, user: req.current_user.id})
     .save()
-    .then(word => res.json(word))
+    .then(word => {
+      // Send email saying you've successfully added the word
+      // using Twilio SendGrid's v3 Node.js Library
+      // https://github.com/sendgrid/sendgrid-nodejs
+      // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      // const msg = {
+      //   to: 'alexisbratton@gmail.com',
+      //   from: 'edgarsbarajas@me.com',
+      //   subject: 'nomanches.io word confirmation',
+      //   text: 'you\'ve submitted a word',
+      //   html: '<strong>BABY CAKES</strong> i love you',
+      // };
+      // sgMail.send(msg);
+
+      // Retun the newly added word
+      return res.json(word)
+    })
     .catch(error => res.status(400).json(error));
 });
 
@@ -18,7 +35,7 @@ router.post('/', authorizeUser, (req, res) => {
 router.get('/', (req, res) => {
   if(req.query.potential_search) {
     // Find the user document using the username parameter
-    Word.find({ value: new RegExp(req.query.potential_search, 'i') }, '-_id value')
+    Word.find({ approved: undefined, value: new RegExp(req.query.potential_search, 'i') }, '-_id value')
       .limit(8)
       .then(words => {
         if(!words) return res.status(404).json({ Words: 'No words that match your term match.' });
@@ -43,6 +60,7 @@ router.get('/', (req, res) => {
 })
 
 // Option 1: return one word according to a an ID - used to edit the word (eventually to have a dynamic share page) /words/:id
+// Currently not in use
 router.get('/:id', (req, res) => {
   Word.findOne({ _id: req.params.id })
     .populate('user')
@@ -57,7 +75,7 @@ router.get('/:id', (req, res) => {
 // Option 2: return all words in pagination form (feed) words/feed/:page
 router.get('/feed/:page', (req, res) => {
   const wordsPerPage = 6;
-  Word.find()
+  Word.find({ approved: undefined })
     .lean()
     .populate('user', 'username')
     .populate('votes.up', 'user')
@@ -76,7 +94,7 @@ router.get('/feed/:page', (req, res) => {
 
 // Option 3: return defintions for all words with the sane term /words/value/:value
 router.get('/value/:value', (req, res) => {
-  Word.find({ value: req.params.value.toLowerCase() })
+  Word.find({ approved: undefined, value: req.params.value.toLowerCase() })
     .populate('user')
     .then(words => res.json(words))
     .catch(error => res.status(400).json(error));
@@ -85,7 +103,7 @@ router.get('/value/:value', (req, res) => {
 // Option 3.5: return defintions for all words with the sane term /words/value/:value/page/:page
 router.get('/value/:value/page/:page', (req, res) => {
   const wordsPerPage = 6;
-  Word.find({ value: req.params.value.toLowerCase() })
+  Word.find({ approved: undefined, value: req.params.value.toLowerCase() })
     .lean()
     .populate('user', 'username')
     .populate('votes.up', 'user')
@@ -102,13 +120,13 @@ router.get('/value/:value/page/:page', (req, res) => {
 // Option 4: return all word by a specific user /words/user/:username
 router.get('/user/:username/:page', (req, res) => {
   // Find the user document using the username parameter
-  User.findOne({ username: req.params.username })
+  User.findOne({ approved: undefined, username: req.params.username })
     .then(user => {
       if(!user) return res.status(404).json({ User: 'No user with that username found.' });
 
       // Find words with the user's id
       const wordsPerPage = 6;
-      return Word.find({ user: user.id })
+      return Word.find({ approved: undefined, user: user.id })
         .lean()
         .populate('user', 'username')
         .populate('votes.up', 'user')
@@ -116,8 +134,7 @@ router.get('/user/:username/:page', (req, res) => {
         .skip((req.params.page - 1) * wordsPerPage)
         .limit(wordsPerPage)
         .then(words => {
-          // res.json(words)
-          return Word.countDocuments({ user: user.id })
+          return Word.countDocuments({ approved: undefined, user: user.id })
             .then(count => {
               return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) })
             })
