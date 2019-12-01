@@ -84,7 +84,7 @@ router.get('/feed/:page', (req, res) => {
     .limit(wordsPerPage)
     .then(words => {
       // res.json(words)
-      return Word.countDocuments({ approved: false })
+      return Word.countDocuments({ approved: undefined })
         .then(count => {
           return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) })
         })
