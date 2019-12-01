@@ -69,7 +69,7 @@ class Pagination extends Component {
     if(this.state.loading) return <LoadingScreen />
 
     if(this.state.content.length <= 0 && !this.state.requestDone) return null;
-    if(this.state.content.length <= 0 && this.state.requestDone) return 'No results';
+    if(this.state.content.length <= 0 && this.state.requestDone) return <div className='content w-100 ta-c'>no results</div>;
 
     return (
       <Fragment>
