@@ -8,7 +8,7 @@ const User = require('../models/User');
 // Create word
 router.post('/', authorizeUser, (req, res) => {
   // Add the current user's id as the user reference
-  new Word({...req.body, value: req.body.value, user: req.current_user.id})
+  new Word({...req.body, value: req.body.value, user: req.current_user.id, approved: false})
     .save()
     .then(word => {
       // Send email saying you've successfully added the word
@@ -25,7 +25,7 @@ router.post('/', authorizeUser, (req, res) => {
       // sgMail.send(msg);
 
       // Retun the newly added word
-      return res.json(word)
+      return res.json(word);
     })
     .catch(error => res.status(400).json(error));
 });

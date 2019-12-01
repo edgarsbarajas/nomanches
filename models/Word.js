@@ -46,8 +46,7 @@ const wordSchema = new mongoose.Schema({
   },
   approved: {
     type: Boolean,
-    required: false,
-    default: false
+    required: false // No default value because when updating, the default value is readded
   }
 });
 
