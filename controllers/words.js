@@ -126,7 +126,7 @@ router.get('/user/:username/:page', (req, res) => {
 
       // Find words with the user's id
       const wordsPerPage = 6;
-      return Word.find({ user: user.id })
+      return Word.find({ approved: undefined, user: user.id })
         .lean()
         .populate('user', 'username')
         .populate('votes.up', 'user')
@@ -134,8 +134,7 @@ router.get('/user/:username/:page', (req, res) => {
         .skip((req.params.page - 1) * wordsPerPage)
         .limit(wordsPerPage)
         .then(words => {
-          // res.json(words)
-          return Word.countDocuments({ user: user.id })
+          return Word.countDocuments({ approved: undefined, user: user.id })
             .then(count => {
               return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) })
             })

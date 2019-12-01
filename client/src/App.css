@@ -104,6 +104,7 @@ a:not(.logo):hover {
 .fixed-width {
   width: 90vw;
   max-width: 375px;
+  margin: 0 auto;
 }
 .container {
   max-width: 1010px;
@@ -135,7 +136,6 @@ a:not(.logo):hover {
 
 /***** FORMS *****/
 div.form-container {
-  margin: 0 auto;
   position: relative;
 }
 
