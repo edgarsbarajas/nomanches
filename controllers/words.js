@@ -82,6 +82,7 @@ router.get('/feed/:page', (req, res) => {
     .populate('votes.down', 'user')
     .skip((req.params.page - 1) * wordsPerPage)
     .limit(wordsPerPage)
+    .sort({ 'createdAt': 'desc' })
     .then(words => {
       // res.json(words)
       return Word.countDocuments({ approved: undefined })
