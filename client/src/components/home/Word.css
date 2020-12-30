@@ -12,8 +12,16 @@ div.word > div.votes > svg.vote {
   transition: fill 0.2s ease-in;
 }
 
+div.word > div.votes > svg.vote:hover {
+  fill: #00B300;
+}
+
 div.word > div.votes > svg.vote.downvote {
   transform: rotate(180deg);
+}
+
+div.word > div.votes > svg.vote.downvote:hover {
+  fill: #DB162F;
 }
 
 div.word > div.votes > span {

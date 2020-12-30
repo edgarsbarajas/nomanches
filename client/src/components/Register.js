@@ -52,7 +52,7 @@ class Register extends Component {
     if(redirect) return <Redirect to='/' />;
 
     return (
-    <MainContainer classNames='form-container fixed-width tall'>
+    <MainContainer classNames='form-container fixed-width tall ai-c'>
         <PostForm
           onSubmit={this.onSubmit}
           header='register'
