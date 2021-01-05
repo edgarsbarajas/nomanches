@@ -4,7 +4,7 @@ const generateAuthToken = (req, res, payload) => {
   jwt.sign(
     { payload },
     process.env['JWT_SECRET'],
-    { expiresIn: '1h' },
+    { expiresIn: '1d' },
     (error, token) => {
       if(error) return res.status(400).json(error);
       return res.json({...payload, token});
@@ -19,10 +19,12 @@ const authorizeUser = (req, res, next) => {
 
     // check to see if the token is valid
     jwt.verify(token, process.env['JWT_SECRET'], (error, decoded) => {
-      if(error) return res.status(403).json({ token: 'Token expired.' });
+      const {id, username} = decoded.payload;
+
+      if(error) return res.status(403).json({ token: 'token is broken' });
 
       // if it is, attach the decoded to the req
-      req.current_user = { id: decoded.payload.id };
+      req.current_user = {id, username};
       next();
     });
   } else {

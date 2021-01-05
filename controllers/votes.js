@@ -4,7 +4,11 @@ const { authorizeUser } = require('../helpers');
 const Vote = require('../models/Vote');
 const Word = require('../models/Word');
 
-// Create vote
+// Create vote - Guest
+router.post('/word/:word_id/guest', (req, res) => {
+});
+
+// Create vote - Registered User
 router.post('/word/:word_id', authorizeUser, (req, res) => {
   // A user can vote on any word, including their own
   // Find Word document using the req param

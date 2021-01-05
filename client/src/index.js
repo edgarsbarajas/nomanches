@@ -15,7 +15,9 @@ if(authToken) {
   axios
     .get('/auth/authenticate')
     .then(response => store.dispatch(setCurrentUser(response.data)))
-    .catch(error => console.log('error!', error.response.data))
+    .catch(error => {
+      console.log('error!', error.response.data)
+    })
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));

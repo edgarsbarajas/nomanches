@@ -34,7 +34,10 @@ class Add extends Component {
         console.log(response.data);
         setGlobalModalComponent('AddWordSuccess');
       })
-      .catch(error => this.setState({errors: error.response.data.errors}))
+      .catch(error => { 
+        console.log(error.response.data);
+        return this.setState({errors: error.response.data.errors})
+      })
   }
 
   render() {

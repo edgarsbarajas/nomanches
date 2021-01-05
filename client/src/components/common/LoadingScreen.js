@@ -20,7 +20,7 @@ const LoadingScreen = () => {
          color='#DB162F'
          height={80}
          width={80}
-         timeout={20000}
+         timeout={0}
       />
     </div>
   );

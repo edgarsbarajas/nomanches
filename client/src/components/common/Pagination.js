@@ -32,10 +32,11 @@ class Pagination extends Component {
   }
 
   fetchWords() {
-    console.log(this.props.query);
+    console.log('QUERY', `http://localhost:3001${this.props.query}/${this.props.currentPage}`);
     axios
-      .get(`${this.props.query}/${this.props.currentPage}`)
+      .get(`http://localhost:3001${this.props.query}/${this.props.currentPage}`)
       .then(response => {
+        console.log('RESPONSE from pagination', response.data);
         this.setState({
           content: response.data.words,
           totalWordCount: response.data.totalWordCount,
@@ -66,6 +67,8 @@ class Pagination extends Component {
   }
 
   render() {
+    const {showApprovedFlags} = this.props;
+    
     if(this.state.loading) return <LoadingScreen />
 
     if(this.state.content.length <= 0 && !this.state.requestDone) return null;
@@ -75,7 +78,7 @@ class Pagination extends Component {
       <Fragment>
         { this.renderHeadline() }
         <div className='content w-100'>
-          { this.state.content.map(word => <Word key={word._id} word={word} />) }
+          { this.state.content.map(word => <Word key={word._id} word={word} showApprovedFlags={showApprovedFlags} />) }
           <div>
             <div className='pagination white-container flex flex-row jc-c ai-c p-a'>
               <Link

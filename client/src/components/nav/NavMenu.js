@@ -8,6 +8,8 @@ import MainContainer from '../common/MainContainer';
 import './NavMenu.css';
 
 const NavMenu = (props) => {
+  const {user} = props;
+
   return (
     <MainContainer classNames='fixed-width tall ai-c jc-c ta-c fw-b'>
       <div className=''>
@@ -19,15 +21,18 @@ const NavMenu = (props) => {
                 <Link to='/login' onClick={() => props.setGlobalModalComponent(null)}>login</Link>
               </div>
             ) : (
-              <Link
-                to='/'
-                onClick={() => {
-                  props.logoutUser()
-                  props.setGlobalModalComponent(null)
-                }}
-              >
-                logout
-              </Link>
+              <div>
+                <Link to={`/${user.username}`} onClick={() => props.setGlobalModalComponent(null)}>my words</Link>
+                <Link
+                  to='/'
+                  onClick={() => {
+                    props.logoutUser()
+                    props.setGlobalModalComponent(null)
+                  }}
+                >
+                  logout
+                </Link>
+              </div>
             )
           }
       </div>

@@ -6,6 +6,10 @@ span.bullet::after {
   margin: 0 7px;
 }
 
+div.word {
+  overflow: hidden;
+}
+
 div.word > div.votes > svg.vote {
   padding-bottom: 11px;
   cursor: pointer;
@@ -13,7 +17,7 @@ div.word > div.votes > svg.vote {
 }
 
 div.word > div.votes > svg.vote:hover {
-  fill: #00B300;
+  fill: #00b300;
 }
 
 div.word > div.votes > svg.vote.downvote {
@@ -21,10 +25,32 @@ div.word > div.votes > svg.vote.downvote {
 }
 
 div.word > div.votes > svg.vote.downvote:hover {
-  fill: #DB162F;
+  fill: #db162f;
 }
 
 div.word > div.votes > span {
   min-width: 10px;
   text-align: center;
+}
+
+div.word .flag {
+  position: absolute;
+  top: -42px;
+  right: -99px;
+  color: white;
+  transform: rotate(45deg);
+  padding: 4px 0;
+  text-align: center;
+  transform-origin: top left;
+  width: 200px;
+}
+
+div.word .flag.approved {
+  background: #00b300;
+  color: white;
+}
+
+div.word .flag.pending {
+  background: #000;
+  color: white;
 }

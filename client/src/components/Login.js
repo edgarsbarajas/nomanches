@@ -11,8 +11,8 @@ import { setGlobalModalComponent } from '../actions/GlobalModalActions';
 
 class Login extends Component {
   state = {
-    username: 'thebestever',
-    password: 'babycakes1',
+    username: 'edgar',
+    password: 'whokn0ws',
     errors: {},
     redirect: false
   };
@@ -25,6 +25,8 @@ class Login extends Component {
     event.preventDefault();
     const { loginUser } = this.props;
     const { username, password } = this.state;
+
+    console.log("logging in")
 
     axios
       .post('/auth/login', {

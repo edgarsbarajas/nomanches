@@ -15,6 +15,7 @@ app.use('/words', require('./controllers/words'));
 app.use('/votes', require('./controllers/votes'));
 
 // Connect to database
+// Previous DB Connect: DB_CONNECTION=mongodb://edgar:spanglish69@ds217438.mlab.com:17438/spanglish
 mongoose.connect(
   process.env['DB_CONNECTION'],
   { useNewUrlParser: true },

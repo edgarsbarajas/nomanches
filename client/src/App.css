@@ -1,17 +1,17 @@
 /***** TAGS *****/
 * {
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
-    -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
-    outline: none !important;
-    margin: 0;
-    padding: 0;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
+  -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
+  outline: none !important;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   margin: 0;
   padding: 0;
   background-color: #fafafa;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   position: relative;
 }
 
@@ -35,65 +35,176 @@ a.inactive-link {
 }
 
 a:not(.logo):hover {
-  color: #DB162F;
+  color: #db162f;
 }
 
 /***** COMMON *****/
-.d-b { display: block; }
-.d-ib { display: inline-block; }
-.flex { display: flex; }
-.fd-r { flex-direction: row; }
-.fd-c { flex-direction: column; }
-.jc-c { justify-content: center; }
-.ai-c { align-items: center; }
-.w-100 { width: 100%; }
-.w-fc { width: fit-content; }
-.bs-bb { box-sizing: border-box; }
-.p-a { position: absolute; }
-.p-r { position: relative; }
-.fs-r { font-size: 16px; }
-.fs-m { font-size: 18px; }
-.fs-l { font-size: 20px; }
-.italic { font-style: italic; }
-.fc-light { color: #fff; }
-.fc-dark { color: #DB162F; }
-.fw-r { font-weight: 400; }
-.fw-b { font-weight: 600; }
-.bg-dark { background-color: #DB162F; }
-.m-s { margin: 5px; }
-.m-m { margin: 10px; }
-.m-l { margin: 20px; }
-.mt-s { margin-top: 5px; }
-.mt-m { margin-top: 10px; }
-.mt-l { margin-top: 20px; }
-.mr-s { margin-right: 5px; }
-.mr-m { margin-right: 10px; }
-.mr-l { margin-right: 20px; }
-.mb-s { margin-bottom: 5px; }
-.mb-m { margin-bottom: 10px; }
-.mb-l { margin-bottom: 20px; }
-.ml-s { margin-left: 5px; }
-.ml-m { margin-left: 10px; }
-.ml-l { margin-left: 20px; }
-.p-s { padding: 5px; }
-.p-m { padding: 10px; }
-.p-l { padding: 20px; }
-.pt-s { padding-top: 5px; }
-.pt-m { padding-top: 10px; }
-.pt-l { padding-top: 20px; }
-.pr-s { padding-right: 5px; }
-.pr-m { padding-right: 10px; }
-.pr-l { padding-right: 20px; }
-.pb-s { padding-bottom: 5px; }
-.pb-m { padding-bottom: 10px; }
-.pb-l { padding-bottom: 20px; }
-.pl-s { padding-left: 5px; }
-.pl-m { padding-left: 10px; }
-.pl-l { padding-left: 20px; }
-.lowercase { text-transform: lowercase; }
-.br { border-radius: 2px; }
-.full { width: 100%; }
-.ta-c { text-align: center; }
+.d-b {
+  display: block;
+}
+.d-ib {
+  display: inline-block;
+}
+.flex {
+  display: flex;
+}
+.fd-r {
+  flex-direction: row;
+}
+.fd-c {
+  flex-direction: column;
+}
+.jc-c {
+  justify-content: center;
+}
+.ai-c {
+  align-items: center;
+}
+.w-100 {
+  width: 100%;
+}
+.w-fc {
+  width: fit-content;
+}
+.bs-bb {
+  box-sizing: border-box;
+}
+.p-a {
+  position: absolute;
+}
+.p-r,
+.relative {
+  position: relative;
+}
+.fs-r {
+  font-size: 16px;
+}
+.fs-m {
+  font-size: 18px;
+}
+.fs-l {
+  font-size: 20px;
+}
+.italic {
+  font-style: italic;
+}
+.fc-light {
+  color: #fff;
+}
+.fc-dark {
+  color: #db162f;
+}
+.fw-r {
+  font-weight: 400;
+}
+.fw-b {
+  font-weight: 600;
+}
+.bg-dark {
+  background-color: #db162f;
+}
+.m-s {
+  margin: 5px;
+}
+.m-m {
+  margin: 10px;
+}
+.m-l {
+  margin: 20px;
+}
+.mt-s {
+  margin-top: 5px;
+}
+.mt-m {
+  margin-top: 10px;
+}
+.mt-l {
+  margin-top: 20px;
+}
+.mr-s {
+  margin-right: 5px;
+}
+.mr-m {
+  margin-right: 10px;
+}
+.mr-l {
+  margin-right: 20px;
+}
+.mb-s {
+  margin-bottom: 5px;
+}
+.mb-m {
+  margin-bottom: 10px;
+}
+.mb-l {
+  margin-bottom: 20px;
+}
+.ml-s {
+  margin-left: 5px;
+}
+.ml-m {
+  margin-left: 10px;
+}
+.ml-l {
+  margin-left: 20px;
+}
+.p-s {
+  padding: 5px;
+}
+.p-m {
+  padding: 10px;
+}
+.p-l {
+  padding: 20px;
+}
+.pt-s {
+  padding-top: 5px;
+}
+.pt-m {
+  padding-top: 10px;
+}
+.pt-l {
+  padding-top: 20px;
+}
+.pr-s {
+  padding-right: 5px;
+}
+.pr-m {
+  padding-right: 10px;
+}
+.pr-l {
+  padding-right: 20px;
+}
+.pb-s {
+  padding-bottom: 5px;
+}
+.pb-m {
+  padding-bottom: 10px;
+}
+.pb-l {
+  padding-bottom: 20px;
+}
+.pl-s {
+  padding-left: 5px;
+}
+.pl-m {
+  padding-left: 10px;
+}
+.pl-l {
+  padding-left: 20px;
+}
+.lowercase {
+  text-transform: lowercase;
+}
+.br {
+  border-radius: 2px;
+}
+.full {
+  width: 100%;
+}
+.ta-c {
+  text-align: center;
+}
 
 /***** CONTAINER *****/
 .tall {
@@ -241,7 +352,7 @@ div.form-container form div.input-container > textarea {
 }
 
 .cta.button-dark {
-  background-color: #DB162F;
+  background-color: #db162f;
   color: #fff;
 }
 
@@ -274,7 +385,7 @@ div.form-container .form-error {
   margin: 10px 0;
 }
 
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   .feed .content {
     width: 70%;
   }

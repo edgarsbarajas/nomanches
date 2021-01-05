@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
+let wordValue;
+
 const wordSchema = new mongoose.Schema({
   value: {
     type: String,
     required: [true, 'word is required'],
     minlength: [2, 'word must be at least 2 characters'],
-    maxlength: [120, 'word can not be over 120 characters']
+    maxlength: [120, 'word can not be over 120 characters'],
+    validate: {
+      validator: (value) => {wordValue = value},
+      message: ''
+    }
   },
   definition: {
     type: String,
@@ -17,7 +23,11 @@ const wordSchema = new mongoose.Schema({
     type: String,
     required: [true, 'example is required'],
     minlength: [6, 'example must be at least 6 characters'],
-    maxlength: [120, 'example can not be over 120 characters']
+    maxlength: [120, 'example can not be over 120 characters'],
+    validate: {
+      validator: (example) => example.includes(wordValue),
+      message: () => `Your example must include the word you are defining: ${wordValue}`
+    }
   },
   user: {
     type: mongoose.Schema.ObjectId,

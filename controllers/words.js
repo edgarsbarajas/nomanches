@@ -74,8 +74,9 @@ router.get('/:id', (req, res) => {
 
 // Option 2: return all words in pagination form (feed) words/feed/:page
 router.get('/feed/:page', (req, res) => {
+  console.log('reuqesting feed!');
   const wordsPerPage = 6;
-  Word.find({ approved: undefined })
+  Word.find({ approved: true })
     .lean()
     .populate('user', 'username')
     .populate('votes.up', 'user')
@@ -83,12 +84,11 @@ router.get('/feed/:page', (req, res) => {
     .skip((req.params.page - 1) * wordsPerPage)
     .limit(wordsPerPage)
     .sort({ 'createdAt': 'desc' })
-    .then(words => {
+    .then(async words => {
+      console.log('respinse from server', words);
       // res.json(words)
-      return Word.countDocuments({ approved: undefined })
-        .then(count => {
-          return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) })
-        })
+      const count = await Word.countDocuments({ approved: true });
+      return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) });
     })
     .catch(error => res.status(400).json(error));
 });
@@ -127,7 +127,7 @@ router.get('/user/:username/:page', (req, res) => {
 
       // Find words with the user's id
       const wordsPerPage = 6;
-      return Word.find({ approved: undefined, user: user.id })
+      return Word.find({ user: user.id })
         .lean()
         .populate('user', 'username')
         .populate('votes.up', 'user')
@@ -135,7 +135,7 @@ router.get('/user/:username/:page', (req, res) => {
         .skip((req.params.page - 1) * wordsPerPage)
         .limit(wordsPerPage)
         .then(words => {
-          return Word.countDocuments({ approved: undefined, user: user.id })
+          return Word.countDocuments({ user: user.id })
             .then(count => {
               return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) })
             })

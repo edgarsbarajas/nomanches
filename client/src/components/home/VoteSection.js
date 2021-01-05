@@ -6,18 +6,11 @@ class VoteSection extends Component {
   renderUpvotes() {
     const { user, word, onVoteSuccess } = this.props;
     const currentUsersUpvote = user.id ? word.votes.up.filter(upvote => upvote.user === user.id) : [];
-
-    if(Object.keys(user).length > 0 && currentUsersUpvote.length > 0) {
-      return <VoteIcon
-               fill='#00B300'
-               upvote={true}
-               voted
-               wordId={word._id}
-               onVoteSuccess={onVoteSuccess}
-             />
-    }
+    const currentUserHasVoted = (Object.keys(user).length > 0 && currentUsersUpvote.length > 0);
 
     return <VoteIcon
+             fill={currentUserHasVoted ? '#00B300' : null}
+             vote={currentUserHasVoted}
              upvote={true}
              wordId={word._id}
              onVoteSuccess={onVoteSuccess}
@@ -27,18 +20,11 @@ class VoteSection extends Component {
   renderDownvotes() {
     const { user, word, onVoteSuccess } = this.props;
     const currentUsersDownvote = user.id ? word.votes.down.filter(downvote => downvote.user === user.id) : [];
-
-    if(Object.keys(user).length > 0 && currentUsersDownvote.length > 0) {
-      return <VoteIcon
-               fill='#DB162F'
-               upvote={false}
-               voted
-               wordId={word._id}
-               onVoteSuccess={onVoteSuccess}
-             />
-    }
+    const currentUserHasVoted = (Object.keys(user).length > 0 && currentUsersDownvote.length > 0);
 
     return <VoteIcon
+             fill={currentUserHasVoted ? '#DB162F' : null}
+             voted={currentUserHasVoted}
              upvote={false}
              wordId={word._id}
              onVoteSuccess={onVoteSuccess}

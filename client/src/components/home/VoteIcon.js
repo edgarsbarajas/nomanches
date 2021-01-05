@@ -7,18 +7,24 @@ import { setGlobalModalComponent } from '../../actions/GlobalModalActions';
 
 class VoteIcon extends Component {
   onVoteOptionClick = () => {
-    axios
-      .post(`/votes/word/${this.props.wordId}`, {
-        upvote: this.props.upvote
-      })
-      .then(response => this.props.onVoteSuccess(response.data))
-      .catch(error => {
-        // if there is an error, open a modal to login
-        if(error.response.data.token) {
-          this.props.logoutUser();
-          this.props.setGlobalModalComponent('Login');
-        }
-      })
+    // If user is a GUEST
+    if(Object.keys(this.props.user).length === 0) {
+      console.log("Do some guest shit");
+
+    } else {
+      axios
+        .post(`/votes/word/${this.props.wordId}`, {
+          upvote: this.props.upvote
+        })
+        .then(response => this.props.onVoteSuccess(response.data))
+        .catch(error => {
+          // if there is an error, open a modal to login
+          if(error.response.data.token) {
+            this.props.logoutUser();
+            this.props.setGlobalModalComponent('Login');
+          }
+        })
+    }
   }
 
   render() {
