@@ -13,6 +13,7 @@ app.use('/auth', require('./controllers/auth'));
 app.use('/users', require('./controllers/users'));
 app.use('/words', require('./controllers/words'));
 app.use('/votes', require('./controllers/votes'));
+app.use('/comments', require('./controllers/comments'));
 
 // Connect to database
 // Previous DB Connect: DB_CONNECTION=mongodb://edgar:spanglish69@ds217438.mlab.com:17438/spanglish

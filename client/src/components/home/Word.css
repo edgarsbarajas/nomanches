@@ -1,11 +1,3 @@
-span.bullet::after {
-  content: "•";
-  font-size: 14px;
-  display: inline-block;
-  color: #000;
-  margin: 0 7px;
-}
-
 div.word {
   overflow: hidden;
 }

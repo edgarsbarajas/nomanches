@@ -81,6 +81,7 @@ router.get('/feed/:page', (req, res) => {
     .populate('user', 'username')
     .populate('votes.up', 'user')
     .populate('votes.down', 'user')
+    .populate('comments', 'value')
     .skip((req.params.page - 1) * wordsPerPage)
     .limit(wordsPerPage)
     .sort({ 'createdAt': 'desc' })

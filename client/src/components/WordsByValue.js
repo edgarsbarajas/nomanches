@@ -3,8 +3,11 @@ import Pagination from './common/Pagination';
 
 class WordsByValue extends Component {
   render() {
+    alert();
     const dashedValue = this.props.location.pathname.replace('/words/', '');
     const value = dashedValue.split('-').join(' ');
+
+    console.log(dashedValue, " ", value);
 
     return (
       <div className='feed'>
