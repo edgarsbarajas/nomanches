@@ -86,16 +86,17 @@ router.get('/feed/:page', (req, res) => {
     .sort({ 'createdAt': 'desc' })
     .then(async words => {
       console.log('respinse from server', words);
-      // res.json(words)
-      const count = await Word.countDocuments({ approved: true });
-      return res.json({ words, totalWordCount: count, lastPage: Math.ceil(count / wordsPerPage) });
+      // Get the total word count
+      const totalWordCount = await Word.countDocuments({ approved: true });
+
+      return res.json({ words, totalWordCount, lastPage: Math.ceil(totalWordCount / wordsPerPage) });
     })
     .catch(error => res.status(400).json(error));
 });
 
 // Option 3: return defintions for all words with the sane term /words/value/:value
 router.get('/value/:value', (req, res) => {
-  Word.find({ approved: undefined, value: req.params.value.toLowerCase() })
+  Word.find({ approved: true, value: req.params.value.toLowerCase() })
     .populate('user')
     .then(words => res.json(words))
     .catch(error => res.status(400).json(error));
@@ -121,7 +122,7 @@ router.get('/value/:value/page/:page', (req, res) => {
 // Option 4: return all word by a specific user /words/user/:username
 router.get('/user/:username/:page', (req, res) => {
   // Find the user document using the username parameter
-  User.findOne({ approved: undefined, username: req.params.username })
+  User.findOne({ username: req.params.username })
     .then(user => {
       if(!user) return res.status(404).json({ User: 'No user with that username found.' });
 

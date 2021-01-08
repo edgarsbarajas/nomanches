@@ -14,12 +14,12 @@ class Input extends Component {
   }
 
   renderInputType = () => {
-    const { type, name, value, label, onChange, placeholder } = this.props;
+    const { type, name, value, onChange, placeholder, showCharacterCount=false, autoFocus=false } = this.props;
 
     if(type === 'textarea') {
       return (
         <Fragment>
-          <span className='char-count'>{value.length}/120</span>
+          {showCharacterCount && <span className='char-count'>{value.length}/120</span>}
           <textarea
             className='post-input'
             type={type}
@@ -28,6 +28,7 @@ class Input extends Component {
             placeholder={placeholder}
             onChange={event => onChange(event)}
             ref={input => (this.input = input)}
+            autoFocus={autoFocus}
           />
         </Fragment>
       )
@@ -40,6 +41,7 @@ class Input extends Component {
           value={value}
           onChange={event => onChange(event)}
           ref={input => (this.input = input)}
+          autoFocus={autoFocus}
         />
       )
     }

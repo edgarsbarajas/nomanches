@@ -66,6 +66,7 @@ class Add extends Component {
             value={definition}
             error={errors.definition}
             onChange={this.onInputChange}
+            showCharacterCount
           />
           <Input
             type='textarea'
@@ -75,6 +76,7 @@ class Add extends Component {
             value={example}
             error={errors.example}
             onChange={this.onInputChange}
+            showCharacterCount
           />
         </PostForm>
       </MainContainer>

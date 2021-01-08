@@ -44,6 +44,11 @@ const wordSchema = new mongoose.Schema({
       ref: 'Vote'
     }]
   },
+  commentCount: {
+    type: Number,
+    required: true,
+    default: 0
+  },
   createdAt: {
     type: Date,
     required: true,

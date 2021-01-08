@@ -5,13 +5,13 @@
   outline: none !important;
   margin: 0;
   padding: 0;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
   margin: 0;
   padding: 0;
   background-color: #fafafa;
-  font-family: "Poppins", sans-serif;
   position: relative;
 }
 
@@ -184,6 +184,9 @@ a:not(.logo):hover {
 .pb-l {
   padding-bottom: 20px;
 }
+.pb-l {
+  padding-bottom: 30px;
+}
 .pl-s {
   padding-left: 5px;
 }
@@ -205,6 +208,15 @@ a:not(.logo):hover {
 .ta-c {
   text-align: center;
 }
+.border-top-light {
+  border-top: 1px solid #e9e9e9;
+}
+.border-bottom-light {
+  border-bottom: 1px solid #e9e9e9;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
 
 /***** CONTAINER *****/
 .tall {
@@ -222,6 +234,7 @@ a:not(.logo):hover {
   margin: 90px auto 0;
   padding: 0 10px 90px;
 }
+
 /***** FEED / PAGINATION *****/
 .feed > .sidebar {
   display: none;
@@ -273,6 +286,11 @@ div.form-container a.sub-message span {
 div.form-container form {
   width: 80%;
   max-width: 250px;
+}
+
+div.form-container form.full-width {
+  width: 100%;
+  max-width: unset;
 }
 
 div.form-container h1 {
@@ -335,8 +353,29 @@ div.form-container form div.input-container > textarea {
   resize: none;
 }
 
-/***** BUTTONS *****/
+div.form-container form .button-container.right-align {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  right: 42px;
+}
 
+button.pre-input-focus {
+  display: block;
+  width: 100%;
+  padding-left: 8px;
+  padding-right: 9px;
+  background-color: #fafafa !important;
+  border: 1px solid #e9e9e9;
+  border-radius: 2px;
+  font-size: 14px;
+  box-sizing: border-box;
+  height: 42px;
+  text-align: left;
+  cursor: text;
+}
+
+/***** BUTTONS *****/
 .cta {
   display: inline-block;
   cursor: pointer;
@@ -398,4 +437,33 @@ div.form-container .form-error {
     width: 30%;
     margin-left: 20px;
   }
+}
+
+/* SPECIAL CHARS */
+span.bullet::after {
+  content: "•";
+  font-size: 14px;
+  display: inline-block;
+  color: #000;
+  margin: 0 7px;
+}
+
+span.carrot.open::after {
+  content: "\00bb";
+  font-size: 16px;
+  display: inline-block;
+  color: #000;
+  margin: 0 0 0 40px;
+  font-weight: 500;
+  transform: rotate(90deg);
+}
+
+span.carrot.closed::after {
+  content: "\00bb";
+  font-size: 16px;
+  display: inline-block;
+  color: #000;
+  margin: 0 0 0 40px;
+  font-weight: 500;
+  line-height: 1;
 }
