@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { authorizeUser } = require('../helpers');
 const Comment = require('../models/Comment');
+const { update } = require('../models/Word');
 const Word = require('../models/Word');
 
 // Create Comment on Word
@@ -34,41 +35,34 @@ router.post('/:parent_id', authorizeUser, async (req, res) => {
     })
     .save()
     .then(comment => {
-      parent.comments.push(comment.id);
+      parent.commentCount = parent.commentCount + 1;
 
-      return parent.save();
-    })
-    .then(updatedParent => {
-      return res.json(updatedParent);
+      return parent.save()
+        .then(() => {
+          return res.json(comment);
+        })
     })
   })
   .catch(error => {
     return res.status(400).json({error});
   })
-
-
-  // Comment.findById(req.params.word_id)
-  //   .then(word => {
-  //     if(!word) return res.status(404).json({ Word: 'No word found.'});
-
-  //     // If the word exists, create the new comment
-  //     return new Comment({
-  //       user: req.current_user.id,
-  //       value: req.body.value,
-  //       parent: word.id
-  //     })
-  //     .save()
-  //     .then(newComment => {
-  //       return res.json(newComment);
-  //     })
-  //     .catch(error => {
-  //       return res.status(400).json({error});
-  //     })
-
-  //   })
 });
 
-// Read Update
+// Read Comment
+// Option 1 - all comments for a Word 10 at a time
+router.get('/parent/:parent_id/page/:page_number', (req, res) => {
+  const commentsPerPage = 6;
+  Comment.find({parent: req.params.parent_id})
+    .lean()
+    .populate('user', 'username')
+    .skip((req.params.page - 1) * commentsPerPage)
+    .limit(commentsPerPage)
+    .then(comments => {
+      const count = comments.length;
+      return res.json({ comments, totalCommentCount: count, lastPage: Math.ceil(count / commentsPerPage) })
+    })
+    .catch(error => res.status(400).json(error));
+});
 
 // Update Comment
 

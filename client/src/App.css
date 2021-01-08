@@ -455,7 +455,7 @@ span.carrot.open::after {
   color: #000;
   margin: 0 0 0 40px;
   font-weight: 500;
-  transform: rotate(-90deg);
+  transform: rotate(90deg);
 }
 
 span.carrot.closed::after {
@@ -466,5 +466,4 @@ span.carrot.closed::after {
   margin: 0 0 0 40px;
   font-weight: 500;
   line-height: 1;
-  transform: rotate(90deg);
 }

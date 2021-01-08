@@ -44,10 +44,11 @@ const wordSchema = new mongoose.Schema({
       ref: 'Vote'
     }]
   },
-  comments: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'Comment'
-  }],
+  commentCount: {
+    type: Number,
+    required: true,
+    default: 0
+  },
   createdAt: {
     type: Date,
     required: true,

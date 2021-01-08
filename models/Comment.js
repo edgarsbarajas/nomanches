@@ -14,7 +14,7 @@ const commentSchema = new mongoose.Schema({
   },
   parent: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Word' || 'Comment',
+    ref: 'Word',
     required: true
   },
   comments: [{

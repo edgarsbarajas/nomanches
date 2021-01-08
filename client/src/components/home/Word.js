@@ -41,7 +41,7 @@ class Word extends Component {
           word={word}
           onVoteSuccess={this.onVoteSuccess}
         />
-        <CommentSection comments={word.comments} />
+        <CommentSection wordId={word._id} commentCount={word.commentCount} />
         {
           showApprovedFlags && (
             (user && (user.id === word.user._id)) && (
