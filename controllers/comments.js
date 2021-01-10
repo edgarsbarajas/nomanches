@@ -49,18 +49,19 @@ router.post('/:parent_id', authorizeUser, async (req, res) => {
 });
 
 // Read Comment
-// Option 1 - all comments for a Word 10 at a time
-router.get('/parent/:parent_id/page/:page_number', (req, res) => {
+// Option 1 - all comments for a Word 6 at a time
+router.get('/parent/:parent_id/page/:page', (req, res) => {
   const commentsPerPage = 6;
   Comment.find({parent: req.params.parent_id})
     .lean()
     .populate('user', 'username')
     .skip((req.params.page - 1) * commentsPerPage)
     .limit(commentsPerPage)
-    .then(comments => {
-      const count = comments.length;
-      return res.json({ comments, totalCommentCount: count, lastPage: Math.ceil(count / commentsPerPage) })
-    })
+    .then(async (comments) => {
+        const count = await Comment.countDocuments({ parent: req.params.parent_id });
+        
+        return res.json({ comments, lastPage: Math.ceil(count / commentsPerPage) });
+      })
     .catch(error => res.status(400).json(error));
 });
 

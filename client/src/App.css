@@ -208,6 +208,9 @@ a:not(.logo):hover {
 .ta-c {
   text-align: center;
 }
+.border-light {
+  border: 1px solid #e9e9e9 !important;
+}
 .border-top-light {
   border-top: 1px solid #e9e9e9;
 }
@@ -360,8 +363,9 @@ div.form-container form .button-container.right-align {
   right: 42px;
 }
 
-button.pre-input-focus {
-  display: block;
+.pre-input-focus {
+  display: flex;
+  align-items: center;
   width: 100%;
   padding-left: 8px;
   padding-right: 9px;
@@ -372,7 +376,7 @@ button.pre-input-focus {
   box-sizing: border-box;
   height: 42px;
   text-align: left;
-  cursor: text;
+  cursor: pointer;
 }
 
 /***** BUTTONS *****/
