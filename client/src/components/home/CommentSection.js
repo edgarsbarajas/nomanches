@@ -159,7 +159,7 @@ class CommentSection extends React.Component {
                       <div>
                         {
                           comments.map(comment => {
-                            return <Comment key={comment._id} value={comment.value} />
+                            return <Comment key={comment._id} comment={comment} />
                           })
                         }
                         {

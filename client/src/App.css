@@ -91,6 +91,9 @@ a:not(.logo):hover {
 .fc-light {
   color: #fff;
 }
+.fc-medium {
+  color: #b8b8b8;
+}
 .fc-dark {
   color: #db162f;
 }
@@ -198,6 +201,9 @@ a:not(.logo):hover {
 }
 .lowercase {
   text-transform: lowercase;
+}
+.uppercase {
+  text-transform: uppercase;
 }
 .br {
   border-radius: 2px;
