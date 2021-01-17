@@ -92,7 +92,7 @@ a:not(.logo):hover {
   color: #fff;
 }
 .fc-medium {
-  color: #b8b8b8;
+  color: #797979;
 }
 .fc-dark {
   color: #db162f;
@@ -226,6 +226,15 @@ a:not(.logo):hover {
 .cursor-pointer {
   cursor: pointer;
 }
+.no-bg {
+  background-color: transparent;
+}
+.no-outline {
+  outline: none;
+}
+.no-border {
+  border: none;
+}
 
 /***** CONTAINER *****/
 .tall {
@@ -241,7 +250,7 @@ a:not(.logo):hover {
 .container {
   max-width: 1010px;
   margin: 90px auto 0;
-  padding: 0 10px 90px;
+  padding: 0 0 90px;
 }
 
 /***** FEED / PAGINATION *****/
@@ -458,22 +467,42 @@ span.bullet::after {
   margin: 0 7px;
 }
 
-span.carrot.open::after {
+span.carrot::after {
   content: "\00bb";
   font-size: 16px;
   display: inline-block;
-  color: #000;
+  color: inherit;
   margin: 0 0 0 40px;
   font-weight: 500;
+}
+
+span.carrot.open::after {
   transform: rotate(90deg);
 }
 
 span.carrot.closed::after {
-  content: "\00bb";
-  font-size: 16px;
-  display: inline-block;
-  color: #000;
-  margin: 0 0 0 40px;
-  font-weight: 500;
-  line-height: 1;
+}
+
+.comment span.carrot::after {
+  margin: 0 10px 0 0;
+}
+
+/* Global */
+.profile-pic {
+  min-width: 40px;
+  height: 40px;
+  background-color: #fafafa !important;
+  border: 1px solid #e9e9e9;
+  border-radius: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+/* Comment's reply thread profile-pic */
+.comment .comment .profile-pic {
+  min-width: 25px;
+  height: 25px;
+  font-size: 12px;
 }

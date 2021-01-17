@@ -35,7 +35,7 @@ router.post('/', authorizeUser, (req, res) => {
 router.get('/', (req, res) => {
   if(req.query.potential_search) {
     // Find the user document using the username parameter
-    Word.find({ approved: undefined, value: new RegExp(req.query.potential_search, 'i') }, '-_id value')
+    Word.find({ approved: true, value: new RegExp(req.query.potential_search, 'i') }, '-_id value')
       .limit(8)
       .then(words => {
         if(!words) return res.status(404).json({ Words: 'No words that match your term match.' });
@@ -76,20 +76,22 @@ router.get('/:id', (req, res) => {
 router.get('/feed/:page', (req, res) => {
   console.log('reuqesting feed!');
   const wordsPerPage = 6;
-  Word.find({ approved: true })
+  Word.find({approved: true})
     .lean()
     .populate('user', 'username')
     .populate('votes.up', 'user')
     .populate('votes.down', 'user')
     .skip((req.params.page - 1) * wordsPerPage)
     .limit(wordsPerPage)
-    .sort({ 'createdAt': 'desc' })
+    .sort({'createdAt': 'desc'})
     .then(async words => {
       console.log('respinse from server', words);
       // Get the total word count
       const totalWordCount = await Word.countDocuments({ approved: true });
 
-      return res.json({ words, totalWordCount, lastPage: Math.ceil(totalWordCount / wordsPerPage) });
+      console.log('WORDS', words);
+
+      return res.json({words, totalWordCount, lastPage: Math.ceil(totalWordCount / wordsPerPage)});
     })
     .catch(error => res.status(400).json(error));
 });
@@ -105,7 +107,7 @@ router.get('/value/:value', (req, res) => {
 // Option 3.5: return defintions for all words with the sane term /words/value/:value/page/:page
 router.get('/value/:value/page/:page', (req, res) => {
   const wordsPerPage = 6;
-  Word.find({ approved: undefined, value: req.params.value.toLowerCase() })
+  Word.find({ approved: true, value: req.params.value.toLowerCase() })
     .lean()
     .populate('user', 'username')
     .populate('votes.up', 'user')

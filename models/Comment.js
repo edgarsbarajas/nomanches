@@ -14,13 +14,23 @@ const commentSchema = new mongoose.Schema({
   },
   parent: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Word',
+    refPath: 'parentType',
     required: true
   },
-  comments: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'Comment'
-  }],
+  parentType: {
+    type: String,
+    required: true,
+    enum: ['Comment', 'Word']
+  },
+  commentCount: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  commentable: {
+    type: Boolean,
+    required: true
+  },
   createdAt: {
     type: Date,
     required: true,

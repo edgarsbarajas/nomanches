@@ -7,9 +7,11 @@ import {connect} from 'react-redux';
 import Comment from './Comment';
 import Input from '../common/Input';
 import PostForm from '../common/PostForm';
+import Loading from '../common/LoadingScreen';
 
 class CommentSection extends React.Component {
   state = {
+    loading: false,
     comment: '',
     expandCommentSection: false,
     displayCommentInput: false,
@@ -57,7 +59,7 @@ class CommentSection extends React.Component {
     event.preventDefault();
 
     const {comment} = this.state;
-    const {wordId} = this.props;
+    const {wordId, user} = this.props;
 
     console.log(comment);
 
@@ -68,6 +70,9 @@ class CommentSection extends React.Component {
 	        value: comment
         })
         .then(response => {
+          // set the user's username with the new comment
+          response.data.user = {id: response.data.user, username: user.username};
+
           this.setState(prevState => ({
             comments: [...prevState.comments, response.data],
             commentCount: prevState.commentCount + 1,
@@ -80,12 +85,12 @@ class CommentSection extends React.Component {
   }
 
   requestComments = (event) => {
-    const {currentCommentPage, lastCommentPage} = this.state;
+    const {currentCommentPage, lastCommentPage, commentCount} = this.state;
     const {wordId} = this.props;
 
-    console.log((lastCommentPage)); 
+    this.setState({loading: true});
 
-    if(currentCommentPage <= lastCommentPage) {
+    if(commentCount > 0 && currentCommentPage <= lastCommentPage) {
       console.log('requesting some comments');
 
       this.setState({requestedFirstSetOfComments: true});
@@ -93,9 +98,9 @@ class CommentSection extends React.Component {
       axios
         .get(`/comments/parent/${wordId}/page/${currentCommentPage}`)
         .then(response => {
-          console.log(response.data);
           this.setState((prevState) => {
             return {
+              loading: false,
               currentCommentPage: prevState.currentCommentPage + 1,
               comments: [...prevState.comments, ...response.data.comments],
               lastCommentPage: response.data.lastPage
@@ -107,7 +112,7 @@ class CommentSection extends React.Component {
   }
 
   render() {
-    const {comment, errors, expandCommentSection, displayCommentInput, comments, commentCount} = this.state;
+    const {loading, comment, errors, expandCommentSection, displayCommentInput, comments, commentCount} = this.state;
     const {user} = this.props;
 
     return(
@@ -150,27 +155,29 @@ class CommentSection extends React.Component {
                       ) : (
                         <button className="pre-input-focus" onClick={this.toggleCommentInput}>add a public comment...</button>
                       )
-                      ) : (<Link to="/login" className="pre-input-focus">Sign in to comment...</Link>)
+                    ) : (<Link to="/login" className="pre-input-focus">Sign in to comment...</Link>)
                   }
                 </div>
                 <div>
                   {
-                    comments.length > 0 ? (
-                      <div>
-                        {
-                          comments.map(comment => {
-                            return <Comment key={comment._id} comment={comment} />
-                          })
-                        }
-                        {
-                          this.state.currentCommentPage <= this.state.lastCommentPage && (
-                            <button className="cta button-light border-light ta-c mt-m" onClick={this.requestComments}>
-                            load more comments...
-                          </button>
-                          )
-                        }
-                      </div>
-                    ) : null
+                    loading ? (<Loading />) : (
+                      comments.length > 0 ? (
+                        <div>
+                          {
+                            comments.map(comment => {
+                              return <Comment key={comment._id} comment={comment} />
+                            })
+                          }
+                          {
+                            this.state.currentCommentPage <= this.state.lastCommentPage && (
+                              <button className="cta button-light border-light ta-c mt-m" onClick={this.requestComments}>
+                              load more comments...
+                            </button>
+                            )
+                          }
+                        </div>
+                      ) : null
+                    )
                   }
                 </div>
               </div>
